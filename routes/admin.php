@@ -30,9 +30,12 @@ Route::get('/', [AdminController::class, 'showLoginForm'])->name('login');
 Route::get('/logout', [AdminController::class, 'signOut'])->name('logout');
 
  Route::post('admin/signin', [AdminController::class, 'create'])->name('admin.signin');
+ Route::post('create_district', [AdminController::class, 'create_district'])->name('create_district');
  Route::get('ca_cities', [AdminController::class, 'ca_cities']);
  Route::get('get_managers', [AdminController::class, 'get_managers']);
  Route::get('get_customers', [AdminController::class, 'get_customers']);
+ Route::get('get_cities', [AdminController::class, 'get_cities']);
+ 
  Route::match(array('GET','POST'),'/disctricts', 'AdminController@disctricts')->name('disctricts');
  
  Route::middleware(['admin'])->group(function () {
@@ -113,9 +116,10 @@ Route::group(['middleware' => ['admin'],'prefix'=>'customers','as'=>'customer.']
 
 Route::group(['middleware' => ['admin'],'prefix'=>'shops','as'=>'shop.'], function(){
     Route::post('/company', [ShopController::class, 'company_create'])->name('company_create');
+    Route::get('/company/edit/{id}', [ShopController::class, 'company_edit'])->name('company_edit');
     Route::match(array('GET','POST'),'/', 'ShopController@create')->name('create');
     Route::post('/update/{id}', [ShopController::class, 'update'])->name('update');
-    // Route::get('/delete/{id}', [CustomerController::class, 'delete'])->name('delete');
+    Route::get('/delete/{id}', [ShopController::class, 'delete'])->name('delete');
    Route::get('/list', [ShopController::class, 'index'])->name('list');
    Route::get('/edit/{id}', [ShopController::class, 'edit']);
 //    Route::get('/view/{id}', [CustomerController::class, 'show']);

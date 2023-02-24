@@ -9,23 +9,23 @@
     <link rel="icon" href="../images/favicon.ico">
 
     <title>Report - Dashboard</title>
-    
+
 	<!-- Vendors Style-->
 	<link rel="stylesheet" href="{{ asset('css/vendors_css.css') }}">
-	  
-	<!-- Style-->  
+
+	<!-- Style-->
 	<link rel="stylesheet" href="{{ asset('css/style.css') }}">
 	<link rel="stylesheet" href="{{ asset('css/skin_color.css') }}">
-     
+
   </head>
 
 <body class="hold-transition light-skin sidebar-mini theme-primary fixed">
-	
+
 <div class="wrapper">
   <div id="loader"></div>
-	
+
   @include('layouts.header.admin')
-  
+
   @include('layouts.sidebar.admin')
 
   <!-- Content Wrapper. Contains page content -->
@@ -36,11 +36,11 @@
 			<div class="row align-items-end">
 				<div class="col-xl-11 col-12">
 					<div class="box bg-primary-light pull-up">
-						<div class="box-body p-xl-0">							
+						<div class="box-body p-xl-0">
 							<div class="row align-items-center">
 								<div class="col-12 col-lg-3"><img src="{{ asset('images/svg-icon/color-svg/custom-14.svg')}}" alt=""></div>
 								<div class="col-12 col-lg-9">
-									<h2>Hello Johen, Welcome Back!</h2>
+									<h2>Hello {{auth('admin')->user()->name}}, Welcome Back!</h2>
 									<p class="text-dark mb-0 fs-16">
 										<!-- Your course Overcoming the fear of public speaking was completed by 11 New users this week! -->
 									</p>
@@ -49,19 +49,19 @@
 						</div>
 					</div>
 				</div>
-				
+
 			</div>
 			<div class="row">
-				<div class="col-12">														
+				<div class="col-12">
 					<div class="box no-shadow mb-0 bg-transparent">
 						<div class="box-header no-border px-0">
-							<h4 class="box-title"></h4>	
+							<h4 class="box-title"></h4>
 							<ul class="box-controls pull-right d-md-flex d-none">
 							  <li>
 								<button class="btn btn-primary-light px-10">View All</button>
 							  </li>
 							  <li class="dropdown">
-								<button class="dropdown-toggle btn btn-primary-light px-10" data-bs-toggle="dropdown" href="#" aria-expanded="false">Most Popular</button>										  
+								<button class="dropdown-toggle btn btn-primary-light px-10" data-bs-toggle="dropdown" href="#" aria-expanded="false">Most Popular</button>
 								<div class="dropdown-menu dropdown-menu-end" style="">
 								  <a class="dropdown-item active" href="#">Today</a>
 								  <a class="dropdown-item" href="#">Yesterday</a>
@@ -75,48 +75,48 @@
 				</div>
 				<div class="col-xl-3 col-md-6 col-12">
 					<div class="box bg-secondary-light pull-up" style="background-image: url(../images/svg-icon/color-svg/st-1.svg); background-position: right bottom; background-repeat: no-repeat;">
-						<div class="box-body">	
-							<div class="flex-grow-1">	
-								
+						<div class="box-body">
+							<div class="flex-grow-1">
+
 								<h4 class="mt-25 mb-5">Vendors<span style="float:right;font-size:200%;">{{$vendors}}</span></h4>
-								
-							</div>	
-						</div>					
+
+							</div>
+						</div>
 					</div>
 				</div>
 				<div class="col-xl-3 col-md-6 col-12">
 					<div class="box bg-secondary-light pull-up" style="background-image: url(../images/svg-icon/color-svg/st-2.svg); background-position: right bottom; background-repeat: no-repeat;">
-						<div class="box-body">	
-							<div class="flex-grow-1">	
-								
+						<div class="box-body">
+							<div class="flex-grow-1">
+
 								<h4 class="mt-25 mb-5">Managers<span style="float:right;font-size:200%;">{{$managers}}</span></h4>
-							</div>	
-						</div>					
+							</div>
+						</div>
 					</div>
 				</div>
 				<div class="col-xl-3 col-md-6 col-12">
 					<div class="box bg-secondary-light pull-up" style="background-image: url(../images/svg-icon/color-svg/st-3.svg); background-position: right bottom; background-repeat: no-repeat;">
-						<div class="box-body">	
-							<div class="flex-grow-1">	
-								
+						<div class="box-body">
+							<div class="flex-grow-1">
+
 								<h4 class="mt-25 mb-5">Owners<span style="float:right;font-size:200%;">{{$customers}}</span></h4>
-							</div>	
-						</div>					
+							</div>
+						</div>
 					</div>
 				</div>
 				<div class="col-xl-3 col-md-6 col-12">
 					<div class="box bg-secondary-light pull-up" style="background-image: url(../images/svg-icon/color-svg/st-4.svg); background-position: right bottom; background-repeat: no-repeat;">
-						<div class="box-body">	
-							<div class="flex-grow-1">	
-						
+						<div class="box-body">
+							<div class="flex-grow-1">
+
 								<h4 class="mt-25 mb-5">D Managers<span style="float:right;font-size:200%;">{{$districts}}</span></h4>
-							</div>	
-						</div>					
+							</div>
+						</div>
 					</div>
 				</div>
 			</div>
 			<div class="row">
-			    <h4 class="box-title">Reports Overview</h4>	
+			    <h4 class="box-title">Reports Overview</h4>
 				<div class="col-xl-6 col-12">
 					<div class="box">
 						<div class="box-body">
@@ -126,14 +126,14 @@
 						</div>
 					</div>
 				</div>
-				
+
 				<div class="col-xl-6 col-12">
 					<div class="box">
 						<div class="box-header with-border">
 							<h4 class="box-title">Last Month Earnings</h4>
 							<ul class="box-controls pull-right d-md-flex d-none">
 							  <li class="dropdown">
-								<button class="dropdown-toggle btn btn-warning-light px-10" data-bs-toggle="dropdown" href="#">Today</button>										  
+								<button class="dropdown-toggle btn btn-warning-light px-10" data-bs-toggle="dropdown" href="#">Today</button>
 								<div class="dropdown-menu dropdown-menu-end">
 								  <a class="dropdown-item active" href="#">Today</a>
 								  <a class="dropdown-item" href="#">Yesterday</a>
@@ -153,8 +153,8 @@
 					</div>
 				</div>
 			</div>
-			
-			
+
+
 		</section>
 		<!-- /.content -->
 	  </div>
@@ -175,30 +175,30 @@
   </footer>
 
 
-  
+
 </div>
 <!-- ./wrapper -->
-	
 
-		
-	
-	
+
+
+
+
 	<!-- Page Content overlay -->
-	
-	
+
+
 	<!-- Vendor JS -->
 	<script src="{{ asset('js/vendors.min.js') }}"></script>
 	<script src="{{ asset('js/pages/chat-popup.js') }}"></script>
-    <script src="{{ asset('../assets/icons/feather-icons/feather.min.js') }}"></script>	
+    <script src="{{ asset('../assets/icons/feather-icons/feather.min.js') }}"></script>
 
 	<script src="{{ asset('../assets/vendor_components/apexcharts-bundle/dist/apexcharts.js') }}"></script>
 	<script src="{{ asset('../assets/vendor_components/moment/min/moment.min.js') }}"></script>
 	<script src="{{ asset('../assets/vendor_components/fullcalendar/fullcalendar.js') }}"></script>
-	
+
 	<!-- EduAdmin App -->
 	<script src="{{ asset('js/template.js') }}"></script>
 	<script src="{{ asset('js/pages/dashboard3.js') }}"></script>
 	<script src="{{ asset('js/pages/calendar.js') }}"></script>
-	
+
 </body>
 </html>

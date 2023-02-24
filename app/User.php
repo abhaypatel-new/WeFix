@@ -18,8 +18,9 @@ class User extends Authenticatable
      *
      * @var array
      */
+    protected $guard = 'owner';
     protected $fillable = [
-        'f_name', 'l_name', 'name', 'email', 'password', 'phone', 'image', 'login_medium','is_active','social_id','is_phone_verified','temporary_token','remember_token',
+        'f_name', 'l_name', 'name', 'email', 'password', 'phone', 'image', 'login_medium', 'is_active', 'social_id', 'is_phone_verified', 'temporary_token', 'remember_token', 'device_token',
     ];
 
     /**
@@ -40,8 +41,8 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
         'is_active' => 'integer',
-        'is_phone_verified'=>'integer',
-        'is_email_verified' => 'integer'
+        'is_phone_verified' => 'integer',
+        'is_email_verified' => 'integer',
     ];
 
     public function wish_list()

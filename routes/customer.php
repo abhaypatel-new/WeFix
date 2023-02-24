@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\CustomerController;
+use App\Http\Controllers\customer\CustomerController;
 
 /*
 |--------------------------------------------------------------------------
@@ -13,15 +13,22 @@ use App\Http\Controllers\CustomerController;
 | contains the "web" middleware group. Now create something great!
 |
 */
+
+
 Route::middleware(['guest:owner'])->group(function () {
 
-    Route::get('/', [CustomerController::class, 'showLoginForm'])->name('login');
- });
+    Route::get('/', [CustomerController::class, 'showLoginForm'])->name('owner.login');
+    Route::post('/login', [CustomerController::class, 'owner_login'])->name('owner.signin');
     
+ });
 
-Route::get('/dashboard', function () {
-    return view('customer.dashboard');
-});
+
+ 
+ Route::middleware(['owner'])->group(function () {
+    Route::get('dashboard', [CustomerController::class, 'index'])->name('owner.dashboard'); 
+    Route::get('/logout', [CustomerController::class, 'signOut'])->name('owner.logout');  
+   
+    });
 
 
 // Auth::routes();

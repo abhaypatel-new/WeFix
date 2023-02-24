@@ -9,7 +9,7 @@
     <meta name="author" content="">
     <link rel="icon" href="../images/favicon.ico">
 
-    <title>Add Owner </title>
+    <title>Add Employee </title>
 
     <!-- Vendors Style-->
     <link rel="stylesheet" href="{{ asset('css/vendors_css.css') }}">
@@ -35,14 +35,14 @@
                 <div class="content-header">
                     <div class="d-flex align-items-center">
                         <div class="me-auto">
-                            <h3 class="page-title">Add Owner</h3>
+                            <h3 class="page-title">Add Employee</h3>
                             <div class="d-inline-block align-items-center">
                                 <nav>
                                     <ol class="breadcrumb">
                                         <li class="breadcrumb-item"><a href="#"><i class="mdi mdi-home-outline"></i></a>
                                         </li>
                                         <li class="breadcrumb-item" aria-current="page">Forms</li>
-                                        <li class="breadcrumb-item active" aria-current="page">Add Owner</li>
+                                        <li class="breadcrumb-item active" aria-current="page">Add Employee</li>
                                     </ol>
                                 </nav>
                             </div>
@@ -61,7 +61,7 @@
                 </div>
                 @endif
 
-            
+
 
                 <!-- Main content -->
                 <section class="content">
@@ -70,7 +70,7 @@
                         <div class="col-lg-12 col-12">
                             <div class="box">
                                 <div class="box-header with-border">
-                                    <h4 class="box-title">About Owner</h4>
+                                    <h4 class="box-title">About Employee</h4>
                                 </div>
                                 <!-- /.box-header -->
                                 <form class="form" novalidate method="post" action="{{ route('customer.create')}}">
@@ -141,19 +141,34 @@
                                                 placeholder="Company Name">
                                         </div> -->
                                         <div class="row">
-                                            <div class="col-md-12">
+
+                                            <div class="col-md-6">
                                                 <div class="form-group">
-                                                    <label class="fw-700 fs-16 form-label">Category</label><span
+                                                    <label class="fw-700 fs-16 form-label">Company</label><span
                                                         class="text-danger">*</span>
-                                                    <select class="form-select select2" multiple="multiple"
-                                                        data-placeholder="Choose a Category" name="category[]"
-                                                        tabindex="1" required
-                                                        data-validation-required-message="Category field is required">
-                                                        <option value="">Select Your Category</option>
-                                                        @foreach($categories as $category)
-                                                        <option value="{{ $category->id }}">{{ $category->name }}
+                                                    <select class="form-select" data-placeholder="Choose a Company"
+                                                        name="company_id" tabindex="1" required
+                                                        data-validation-required-message="Company field is required">
+                                                        <option value="">Select Company</option>
+                                                        @foreach($companies as $company)
+                                                        <option value="{{ $company->id }}">{{ $company->company_name }}
                                                         </option>
                                                         @endforeach
+                                                    </select>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label class="fw-700 fs-16 form-label">Job Position</label><span
+                                                        class="text-danger">*</span>
+                                                    <select class="form-select" data-placeholder="Choose a Job Position"
+                                                        name="roleid" tabindex="1" required
+                                                        data-validation-required-message="Job Position field is required">
+                                                        <option value="">Select Job Position</option>
+                                                        <option value="4">Owner</option>
+                                                        <option value="3">District Manager</option>
+                                                        <option value="2">Manager</option>
                                                     </select>
                                                 </div>
                                             </div>
@@ -173,11 +188,98 @@
                                                 </div>
                                             </div> -->
                                         </div>
-                                        <div class="form-group">
-                                            <label class="form-label">About Owner</label>
-                                            <textarea rows="5" class="form-control" name="desc"
-                                                placeholder="About Owner"></textarea>
+
+                                        <div class="row">
+
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label class="fw-700 fs-16 form-label">District Manager</label>
+                                                    <select class="form-select"
+                                                        data-placeholder="Choose a District Manager" name="d_manager_id"
+                                                        tabindex="1" >
+                                                        <option value="">Select District Manager</option>
+                                                        @foreach($d_managers as $user)
+                                                        <option value="{{ $user->id }}">{{ $user->first_name }}
+                                                        </option>
+                                                        @endforeach
+                                                    </select>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label class="fw-700 fs-16 form-label">Manager</label>
+                                                    <select class="form-select" data-placeholder="Choose a Manager"
+                                                        name="manager_id" tabindex="1" >
+                                                        <option value="">Select Manager</option>
+                                                        @foreach($managers as $user)
+                                                        <option value="{{ $user->id }}">{{ $user->first_name }}
+                                                        </option>
+                                                        @endforeach
+                                                    </select>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label class="fw-700 fs-16 form-label">Reporting Store</label>
+                                                    <select class="form-select"
+                                                        data-placeholder="Choose a Reporting Store" name="shop_id"
+                                                        tabindex="1" >
+                                                        <option value="">Select Reporting Store</option>
+                                                        @foreach($shops as $shop)
+                                                        <option value="{{ $shop->id }}">{{ $shop->name }}
+                                                        </option>
+                                                        @endforeach
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <!-- <div class="col-md-6">
+    <div class="form-group">
+        <label class="form-label">City</label><span
+            class="text-danger">*</span>
+        <select class="form-select select2" multiple="multiple"
+            name="city[]" required
+            data-validation-required-message="City field is required">
+            <option value="">Select Your City</option>
+            <option>Toronto</option>
+            <option>Montréal</option>
+            <option>Vancouver</option>
+            <option>Ottawa</option>
+        </select>
+    </div>
+</div> -->
                                         </div>
+                                        <div class="form-group">
+                                            <label class="form-label">About Employee</label>
+                                            <textarea rows="5" class="form-control" name="desc"
+                                                placeholder="About Employee"></textarea>
+                                        </div>
+                                    </div>
+
+                                    <div class="row mt-3">
+
+                                        <!--/span-->
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label class="fw-700 fs-16 form-label">Status</label>
+                                                <div class="radio-list">
+                                                    <label class="radio-inline p-0 me-10">
+                                                        <div class="radio radio-info">
+                                                            <input type="radio" name="status" value="publish" checked>
+                                                            <label for="radio1">Published</label>
+                                                        </div>
+                                                    </label>
+                                                    <label class="radio-inline">
+                                                        <div class="radio radio-info">
+                                                            <input type="radio" name="status" value="draft">
+                                                            <label for="radio2">Draft</label>
+                                                        </div>
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!--/span-->
                                     </div>
                                     <!-- /.box-body -->
                                     <div class="box-footer">

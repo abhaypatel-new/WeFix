@@ -75,7 +75,7 @@
 								<th>Category</th>
 								<th>Email</th>
 								<th>Contact</th>
-								<th>Shop</th>
+								<th>Role</th>
 								<th>Actions</th>
 							</tr>
 						</thead>
@@ -83,10 +83,10 @@
 						    @foreach($customers as $customer)
 							<tr>
 								<td>{{$customer->first_name.' '}}{{$customer->last_name}}</td>
-								<td>{{$customer->Category}}</td>
+								<td>{{$customer->company_name}}</td>
 								<td>{{$customer->email}}</td>
 								<td>{{$customer->phone}}</td>
-								<td>{{$customer->shop_name}}</td>
+								<td>{{$customer->role}}</td>
 								<td><a class="btn btn-info m-2 " href="{{ url('admin/customers/edit/'. encrypt($customer->id))}}" ><i class="mdi mdi-pencil"></i></a><a class="btn btn-danger mt-2 "  data-bs-toggle="modal" data-bs-target="#modal-center{{ $customer->id }}"><i class="mdi mdi-delete"></i></a></td>
 							</tr>
 							 <!-- Modal -->

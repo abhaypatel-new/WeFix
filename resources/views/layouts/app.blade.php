@@ -12,27 +12,9 @@
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.bunny.net/css?family=Nunito" rel="stylesheet">
-    <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"> -->
-   
+
     <!-- Scripts -->
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
-    <style>
-        .mm{
-            width: 50px;
-  height: 50px;
-  background: green;
-  color:white;
-  position: relative;
-  animation: myfirst 5s 2;
-  animation-direction: linear ;
-        }
-        @keyframes myfirst {
-            0%   {background: green; left: -400px; top: 0px;}
-  25%  {background: green; left: 200px; top: 0px;}
-  
- 
-}
-        </style>
 </head>
 <body>
     <div id="app">
@@ -95,4 +77,68 @@
         </main>
     </div>
 </body>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<script>
+    function getnotifications(){
+       $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+                    $.ajax({
+                        type: 'GET',
+                        url: 'get-notification-list',
+                        processData: false,
+                        contentType: false,
+                        success:function(data) {
+                            // console.log(data);
+                            $.each(data.data, function(index, value){
+                                // console.log(value);
+ $('.mm').append('<a style="cursor: pointer;" onclick="read('+value.id+')">('+ (index+1) + ") " + value.message +'</a></br>');
+});
+                        },
+                        error:function(err) {
+                            console.log(err);
+                        }
+                    });
+            
+        
+    }
+    function read(id){
+        $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+                    $.ajax({
+                        type: 'GET',
+                        url: 'read-notification/'+id,
+                        processData: false,
+                        contentType: false,
+                        success:function(data) {
+                            // console.log(data);
+                            if(data.status) {
+                                $('#notifDiv').fadeIn();
+                                $('#notifDiv').css('background', 'green');
+                                $('#notifDiv').text(data.message);
+                                setTimeout(() => {
+                                    $('#notifDiv').fadeOut();
+                                }, 3000);
+                             
+                            } else {
+                                $('#notifDiv').fadeIn();
+                                $('#notifDiv').css('background', 'red');
+                                $('#notifDiv').text('Something went wrong');
+                                setTimeout(() => {
+                                    $('#notifDiv').fadeOut();
+                                }, 3000);
+                            }
+                        },
+                        error:function(err) {
+                            console.log(err);
+                        }
+                    });
+    }
+    </script>
 </html>

@@ -6,7 +6,7 @@
                 <!-- sidebar menu-->
                 <ul class="sidebar-menu" data-widget="tree">
 
-                    <a href="{{url('admin/dashboard')}}">
+                <a href="{{url('admin/dashboard')}}">
                         <li class="header">
                             <h3>
                                 <span>
@@ -24,7 +24,7 @@
                     <li class="treeview">
                         <a href="#">
                             <i class="icon-User"><span class="path1"></span><span class="path2"></span></i>
-                            <span>Owner</span>
+                            <span>Employee</span>
                             <span class="pull-right-container">
                                 <i class="fa fa-angle-right pull-right"></i>
                             </span>
@@ -39,40 +39,8 @@
                         </ul>
                     </li>
 
-                    <li class="treeview">
-                        <a href="#">
-                            <i class="icon-User"><span class="path1"></span><span class="path2"></span></i>
-                            <span>District Manager</span>
-                            <span class="pull-right-container">
-                                <i class="fa fa-angle-right pull-right"></i>
-                            </span>
-                        </a>
-                        <ul class="treeview-menu">
-                            <li><a href="{{url('admin/district-manager')}}"><i class="icon-Commit"><span
-                                            class="path1"></span><span class="path2"></span></i>Add New</a></li>
-
-                            <li><a href="{{url('admin/district-manager/list')}}"><i class="icon-Commit"><span
-                                            class="path1"></span><span class="path2"></span></i>List</a></li>
-
-                        </ul>
-                    </li>
-                    <li class="treeview">
-                        <a href="#">
-                            <i class="icon-User"><span class="path1"></span><span class="path2"></span></i>
-                            <span>Managers</span>
-                            <span class="pull-right-container">
-                                <i class="fa fa-angle-right pull-right"></i>
-                            </span>
-                        </a>
-                        <ul class="treeview-menu">
-                            <li><a href="{{url('admin/managers')}}"><i class="icon-Commit"><span
-                                            class="path1"></span><span class="path2"></span></i>Add New</a></li>
-                            <li><a href="{{url('admin/managers/list')}}"><i class="icon-Commit"><span
-                                            class="path1"></span><span class="path2"></span></i>List</a></li>
-
-
-                        </ul>
-                    </li>
+                    
+                    
                     <li class="treeview">
                         <a href="#">
                             <i class="icon-User"><span class="path1"></span><span class="path2"></span></i>
@@ -124,6 +92,24 @@
                                             class="path1"></span><span class="path2"></span></i>List</a></li>
                             <!--<li><a href="{{url('admin/products/manage')}}"><i class="icon-Commit"><span class="path1"></span><span class="path2"></span></i>Manage</a></li> -->
                         </ul>
+                        
+                    </li>
+                    <li class="treeview">
+                        <a href="#">
+                            <i class="icon-Cart"><span class="path1"></span><span class="path2"></span></i>
+                            <span>Stores</span>
+                            <span class="pull-right-container">
+                                <i class="fa fa-angle-right pull-right"></i>
+                            </span>
+                        </a>
+                        <ul class="treeview-menu">
+                            <li><a href="{{url('admin/shops')}}"><i class="icon-Commit"><span class="path1"></span><span
+                                            class="path2"></span></i>Add New</a></li>
+                            <li><a href="{{url('admin/shops/list')}}"><i class="icon-Commit"><span
+                                            class="path1"></span><span class="path2"></span></i>List</a></li>
+                            <li><a href="{{url('admin/disctricts/')}}"><i class="icon-Commit"><span
+                                            class="path1"></span><span class="path2"></span></i>Districts</a></li>
+                        </ul>
                     </li>
                     <li class="header">REPORT & ANALYTICS</li>
                     <li class="treeview">
@@ -148,25 +134,7 @@
                         </ul>
                     </li>
 
-                    <li class="header">OTHERS</li>
-
-                    <li class="treeview">
-                        <a href="#">
-                            <i class="icon-Cart"><span class="path1"></span><span class="path2"></span></i>
-                            <span>Stores</span>
-                            <span class="pull-right-container">
-                                <i class="fa fa-angle-right pull-right"></i>
-                            </span>
-                        </a>
-                        <ul class="treeview-menu">
-                            <li><a href="{{url('admin/shops')}}"><i class="icon-Commit"><span class="path1"></span><span
-                                            class="path2"></span></i>Add New</a></li>
-                            <li><a href="{{url('admin/shops/list')}}"><i class="icon-Commit"><span
-                                            class="path1"></span><span class="path2"></span></i>List</a></li>
-                            <li><a href="{{url('admin/disctricts/')}}"><i class="icon-Commit"><span
-                                            class="path1"></span><span class="path2"></span></i>Districts</a></li>
-                        </ul>
-                    </li>
+                   
 
                 </ul>
             </div>

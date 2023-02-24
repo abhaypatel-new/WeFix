@@ -8,29 +8,29 @@
     <meta name="author" content="">
     <link rel="icon" href="../images/favicon.ico">
 
-    <title>Report - Log in </title>
-  
+    <title>  {{ config('app.name', 'Laravel') }} - Login </title>
+
 	<!-- Vendors Style-->
 	<link rel="stylesheet" href="{{ asset('css/vendors_css.css') }}">
-	  
-	<!-- Style-->  
+
+	<!-- Style-->
 	<link rel="stylesheet" href="{{ asset('css/style.css') }}">
-	<link rel="stylesheet" href="{{ asset('css/skin_color.css') }}">	
+	<link rel="stylesheet" href="{{ asset('css/skin_color.css') }}">
 
 </head>
-	
+
 <body class="hold-transition theme-primary bg-img" style="background-image: url(../images/auth-bg/bg-1.jpg)">
-	
+
 	<div class="container h-p100">
-		<div class="row align-items-center justify-content-md-center h-p100">	
-			
+		<div class="row align-items-center justify-content-md-center h-p100">
+
 			<div class="col-12">
 				<div class="row justify-content-center g-0">
 					<div class="col-lg-5 col-md-5 col-12">
 						<div class="bg-white rounded10 shadow-lg">
 							<div class="content-top-agile p-20 pb-0">
 								<h2 class="text-primary">Let's Get Started</h2>
-								<p class="mb-0">Sign in to continue as Admin.</p>							
+								<p class="mb-0">Sign in to continue as Admin.</p>
 							</div>
 						   @if (count($errors) > 0)
                             <div class="alert alert-danger m-4">
@@ -81,20 +81,20 @@
 										</div>
 										<!-- /.col -->
 									  </div>
-								</form>	
+								</form>
 								<div class="text-center">
 									<!--<p class="mt-15 mb-0">Don't have an account? <a href="auth_register.html" class="text-warning ms-5">Sign Up</a></p>-->
-								</div>	
-							</div>						
+								</div>
+							</div>
 						</div>
-						<div class="text-center">
+						<!-- <div class="text-center">
 						  <p class="mt-20 text-white">- Sign With -</p>
 						  <p class="gap-items-2 mb-20">
 							  <a class="btn btn-social-icon btn-round btn-facebook" href="#"><i class="fa fa-facebook"></i></a>
 							  <a class="btn btn-social-icon btn-round btn-twitter" href="#"><i class="fa fa-twitter"></i></a>
 							  <a class="btn btn-social-icon btn-round btn-instagram" href="#"><i class="fa fa-instagram"></i></a>
-							</p>	
-						</div>
+							</p>
+						</div> -->
 					</div>
 				</div>
 			</div>
@@ -105,7 +105,7 @@
 	<!-- Vendor JS -->
 	<script src="{{asset('js/vendors.min.js') }}"></script>
 	<script src="{{asset('js/pages/chat-popup.js') }}"></script>
-    <script src="{{asset('assets/icons/feather-icons/feather.min.js') }}"></script>	
+    <script src="{{asset('assets/icons/feather-icons/feather.min.js') }}"></script>
 
 </body>
 </html>

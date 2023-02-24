@@ -1,0 +1,603 @@
+/* * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  } */
+
+/* 
+  
+  nav {
+    width: 100%;
+    font-weight: 500;
+    text-align: center;
+    font-size: 20px;
+    justify-content: center;
+    display: flex;
+    align-items: center;
+    height: 100px;
+  }
+  */
+nav ul li {
+  list-style: none;
+  display: inline-block;
+  font-size: 22px;
+}
+.navbar-nav {
+  width: 50%;
+  display: flex;
+  justify-content: space-between;
+  margin-left: 250px;
+}
+
+.maindiv {
+  background-image: url(../../images/image/craftsman-tool-man-worker-wrenchin-hand_46370-270\ 1.png);
+  height: 388px;
+  width: 100%;
+  background-size: cover;
+  background-repeat: no-repeat;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-direction: column;
+}
+
+.maindiv h1 {
+  color: #fff;
+  font-size: 60px;
+  font-weight: 600;
+  text-align: center;
+  display: flex;
+  margin-left: 86px;
+}
+.maindiv p {
+  color: white;
+}
+
+.single-feature {
+  position: relative;
+  -webkit-box-shadow: 2px 2px 20px 4px rgb(0 0 0 / 7%);
+  box-shadow: 0px 0px 20px 0px #6759ff14;
+  padding-top: 25px;
+  padding-bottom: 15px;
+  padding-left: 20px;
+  background: #fff;
+  border-radius: 10px;
+  margin: 40px 0 0;
+  text-align: left;
+  width: 260px;
+}
+
+.img-div {
+  height: 100px;
+  width: 100px;
+  background: #ffffff;
+  box-shadow: 0px 0px 30px rgba(103, 89, 255, 0.1);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.feature-content {
+  font-size: 24px;
+  margin-right: 20px;
+  padding-top: 13px;
+}
+
+.feature-content-descripcetion {
+  text-align: left;
+  padding-left: 7px;
+  color: #6f767e;
+}
+
+.align-div {
+  display: flex;
+  flex-direction: row-reverse;
+  align-content: center;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: nowrap;
+}
+
+.container {
+  margin-top: -180px;
+}
+
+/* .about-sec{
+  box-sizing: border-box;
+  position: absolute;
+  width: 334px;
+  height: 50px;
+  left: 563px;
+  top: 1015px;
+  } */
+
+.body-about {
+  height: 50px;
+  margin: 0;
+  display: grid;
+  place-items: center;
+  background-color: transparent;
+  padding-left: 20px;
+}
+
+.module-border-wrap {
+  border: 3px solid transparent;
+  border-image: linear-gradient(
+    270deg,
+    #000000 -14.62%,
+    #000000 -14.62%,
+    rgba(0, 0, 0, 0) 100%
+  );
+  border-image-slice: 1;
+  height: 50px;
+  position: relative;
+  width: 350px;
+  letter-spacing: 5px;
+  margin-top: 80px;
+}
+
+.about-main {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.about-img {
+  padding-left: 110px;
+  padding-top: 70px;
+}
+
+.we-are-text {
+  margin-left: 580px;
+  margin-top: -470px;
+}
+
+.we-are-text p {
+  padding-top: 10px;
+  color: #6f767e;
+  letter-spacing: 1px;
+  line-height: 25px;
+  font-size: 18;
+}
+
+.we-are-text-h2 {
+  font-weight: 700;
+  font-size: 40px;
+  color: #6759ff;
+}
+
+.we-are-text-h5 {
+  color: #6f767e;
+  font-weight: 500;
+}
+
+.we-are-main {
+  padding-top: 70px;
+  margin-top: -40px;
+}
+
+.we-are-main-01 {
+  display: flex;
+  justify-content: space-evenly;
+  margin-left: -60px;
+  margin-left: -60px;
+}
+
+.we-are-text-h1 {
+  font-size: 45px;
+}
+
+.about-button {
+  width: 170px;
+  height: 60px;
+  background-color: #6759ff;
+  border-radius: 10px;
+  border: none;
+  color: #fff;
+  font-size: 22px;
+  margin-top: 50px;
+}
+
+.Product-01 {
+  text-align: center;
+  justify-content: center;
+  display: flex;
+  font-size: 40px;
+  margin-top: 20px;
+  font-family: "Open Sans", sans-serif;
+}
+
+.Product-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 16px;
+  gap: 10px;
+  width: 270px;
+  height: 360px;
+  background: #ffffff;
+  box-shadow: 0px 0px 30px rgba(103, 89, 255, 0.1);
+  border-radius: 16px;
+  margin-left: 40px;
+  text-align: center;
+}
+
+.Product-card h2 {
+  font-size: 28px;
+  font-weight: 600;
+  font-family: "Open Sans", sans-serif;
+}
+
+.Product-card p {
+  text-align: center;
+  font-size: 18px;
+  margin-top: -5px;
+  color: #6f767e;
+  font-weight: 400;
+  font-family: "Open Sans", sans-serif;
+}
+.Product-card h3 {
+  font-family: "Open Sans", sans-serif;
+}
+
+.Product-card-all {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  margin-left: -25px;
+  padding-top: 30px;
+}
+
+.carousel-slider {
+  display: flex;
+  width: 100px;
+  margin-top: 50px;
+  margin-left: 45%;
+  justify-content: space-around;
+}
+
+.carousel-slider-button {
+  height: 12px;
+  width: 12px;
+  border-radius: 50%;
+  background-color: #b7bbbf;
+  border: none;
+}
+
+.Get-a-discount {
+  background: #efeeff;
+  width: 100%;
+  height: 400px;
+
+  position: relative;
+}
+
+.Get-a-discount img {
+  position: absolute;
+}
+
+.Get-a-discount h2 {
+  padding-top: 100px;
+  padding-left: 130px;
+  font-size: 45px;
+  justify-content: space-between;
+  font-family: "Open Sans", sans-serif;
+}
+
+.Get-a-discount h1 {
+  padding-top: 20px;
+  padding-left: 130px;
+  font-size: 60px;
+  font-weight: 700;
+  font-family: "Open Sans", sans-serif;
+}
+
+.Get-a-discount h4 {
+  padding-left: 130px;
+  padding-top: 10px;
+  font-family: "Open Sans", sans-serif;
+}
+
+.TESTIMONIALS-card {
+  background: white;
+  box-shadow: 0px 0px 30px rgba(103, 89, 255, 0.1);
+  width: 365px;
+  height: 258px;
+  border: 1px solid #efefef;
+  /* margin-left: 90px; */
+  margin-top: 60px;
+}
+
+.TESTIMONIALS-card p {
+  color: #6f767e;
+  padding-top: 35px;
+  font-weight: 500;
+  padding-left: 15px;
+  font-family: "Open Sans", sans-serif;
+}
+
+.border-div {
+  height: 2px;
+  width: 100%;
+  background: #efeeff;
+  margin-top: 25px;
+}
+
+.TESTIMONIALS-card-02 {
+  margin-left: 20px;
+  margin-top: 15px;
+  font-family: "Open Sans", sans-serif;
+}
+
+.TESTIMONIALS-card-02-01 {
+  margin-top: -60px;
+  margin-left: 80px;
+  font-size: 24px;
+}
+
+.TESTIMONIALS-card-02-02 {
+  font-weight: 400;
+  font-size: 17px;
+  margin-top: -140px;
+  margin-left: 63px;
+  margin-top: -40px;
+}
+
+.TESTIMONIALS-card-png {
+  margin-top: -40px;
+  margin-left: 20px;
+  width: 54px;
+  height: 54px;
+}
+
+.TESTIMONIALS-card-main {
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.tema-card {
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+  gap: 10px;
+  width: 240px;
+  height: 360px;
+  background: #ffffff;
+  box-shadow: 0px 0px 30px rgb(103 89 255 / 10%);
+  border-radius: 16px;
+}
+
+.tema-card h5 {
+  font-size: 24px;
+  margin-left: 5px;
+  color: #1d2b4f;
+}
+
+.tema-card h6 {
+  font-size: 18px;
+  color: #6f767e;
+  margin-top: -10px;
+  margin-left: 5px;
+}
+
+.tema-card p {
+  font-size: 14px;
+  color: #6f767e;
+  margin-left: 5px;
+  margin-top: -10px;
+}
+
+.tema-card-all {
+  display: flex;
+  align-items: center;
+  margin-left: 75px;
+  padding-top: 30px;
+  flex-wrap: nowrap;
+  align-content: space-around;
+  justify-content: space-between;
+}
+
+.blog-img {
+  height: 380px;
+  width: 370px;
+  background: linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0) 0%,
+      rgba(103, 89, 255, 0.5) 115.78%
+    ),
+    url(../../images/image/Blog-card.jpg);
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+.blog-img h5 {
+  color: white;
+  margin-left: 20px;
+  padding-top: 270px;
+}
+
+.blog-img h4 {
+  color: white;
+  margin-left: 20px;
+  font-size: 25px;
+}
+
+.blog-img-main {
+  display: flex;
+  align-items: center;
+  flex-wrap: nowrap;
+  justify-content: space-evenly;
+  margin-top: 60px;
+}
+
+.blog-img-01 {
+  height: 380px;
+  width: 370px;
+  background: linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0) 0%,
+      rgba(103, 89, 255, 0.5) 115.78%
+    ),
+    url(../../images/image/Blog\ card\ 01.jpg);
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+.blog-img-01 h5 {
+  color: white;
+  margin-left: 20px;
+  padding-top: 270px;
+}
+
+.blog-img-01 h4 {
+  color: white;
+  margin-left: 20px;
+  font-size: 25px;
+}
+
+.blog-img-02 {
+  height: 380px;
+  width: 370px;
+  background: linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0) 0%,
+      rgba(103, 89, 255, 0.5) 115.78%
+    ),
+    url(../../images/image/Blog\ card\ 02.jpg);
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+.blog-img-02 h5 {
+  color: white;
+  margin-left: 20px;
+  padding-top: 270px;
+}
+
+.blog-img-02 h4 {
+  color: white;
+  margin-left: 20px;
+  font-size: 25px;
+}
+
+.footers {
+  height: 600px;
+  width: 100%;
+  background: #efeeff;
+  display: flex;
+  flex-wrap: wrap;
+  /* align-items: center;*/
+  justify-content: space-around;
+  margin-top: 120px;
+}
+.footer-first-div {
+  width: 465px;
+  height: 353px;
+  margin-left: 60px;
+  margin-top: 80px;
+}
+.footer-first-div p {
+  color: #6f767e;
+
+  margin-top: 00px;
+}
+.footer-second-div {
+  width: 143px;
+  height: 259px;
+  margin-top: 80px;
+}
+.footers h1 {
+  color: #6759ff;
+  margin-bottom: 20px;
+}
+.footers h6 {
+  color: #6759ff;
+  margin-top: 20px;
+}
+.footers ul li {
+  color: #6f767e;
+  list-style: none;
+  margin-top: 16px;
+  font-family: "poppins";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 190.9%;
+}
+.footer-third-div {
+  width: 125px;
+  height: 216px;
+  margin-top: 80px;
+}
+.footer-four-div {
+  width: 211px;
+  height: 303px;
+  margin-top: 80px;
+}
+
+.footer-first-div p {
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+}
+
+/* login and register buttons */
+.logout-btn {
+  border-radius: 10px;
+  border: none;
+
+  height: 46px;
+  width: 116px;
+  background-color: white;
+  border: 2px solid #6759ff;
+  color: #6759ff;
+  position: absolute;
+  right: 70px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  font-family: "Poppins" sans-serif;
+  font-weight: 700;
+  font-size: 16px;
+}
+.logout-btn:hover {
+  background: #6759ff;
+  color: white;
+}
+.login-btn {
+  background-color: white;
+  border-radius: 10px;
+  border: none;
+  color: #6759ff;
+  width: 90px;
+  height: 35px;
+  border: 1px solid #6759ff;
+  position: absolute;
+  right: 200px;
+}
+@media screen and (max-width: 600px) {
+  .topnav.responsive {
+    position: relative;
+  }
+  .topnav.responsive .icon {
+    position: absolute;
+    right: 0;
+    top: 0;
+  }
+  .topnav.responsive li {
+    float: none;
+    display: block;
+    text-align: center;
+  }
+  .maindiv {
+    background-size: contain;
+    height: 320px;
+  }
+
+  .maindiv h1 {
+    font-size: 5vw;
+  }
+  .btn-div {
+  }
+}

@@ -107,8 +107,7 @@
                                                     <td>
                                                         <table>
                                                             <tr>
-                                                                <td><a class="btn btn-info m-2 " data-bs-toggle="modal"
-                                                                        data-bs-target="#modal-edit{{ $company->id }}"><i
+                                                                <td><a class="btn btn-info m-2 "  href="{{ url('admin/shops/company/edit/'. encrypt($company->id))}}" ><i
                                                                             class="mdi mdi-pencil"></i></a></td>
                                                                 <td><a class="btn btn-danger mt-2 "
                                                                         data-bs-toggle="modal"
@@ -265,8 +264,8 @@
 
                                                     <th>Name</th>
                                                     <th>Company</th>
-                                                    <th>D Manager</th>
-                                                    <th>Manager</th>
+                                                    <th>Store Number</th>
+                                                    <th>District</th>
                                                     <th>Owner</th>
                                                     <th>Total Earning</th>
                                                     <th>Actions</th>
@@ -277,9 +276,9 @@
                                                 <tr>
                                                     <td>{{$shop->name}}</td>
                                                     <td>{{$shop->company_name}}</td>
-                                                    <td>{{$shop->district_manager}}</td>
-                                                    <td>{{$shop->manager}}</td>
-                                                    <td>{{$shop->customer_name}}</td>
+                                                    <td>{{$shop->store_number}}</td>
+                                                    <td>{{$shop->district_name}}</td>
+                                                    <td></td>
                                                     <td></td>
                                                     <td>
                                                         <table>

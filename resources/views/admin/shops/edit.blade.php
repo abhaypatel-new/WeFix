@@ -21,7 +21,6 @@
 </head>
 
 <body class="hold-transition light-skin sidebar-mini theme-primary fixed">
-
     <div class="wrapper">
         <div id="loader"></div>
         @include('layouts.header.admin')
@@ -110,12 +109,87 @@
                                                             data-validation-required-message="Store field is required">
                                                     </div>
                                                 </div>
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <h5>Store Number <span class="text-danger">*</span></h5>
+                                                        <div class="controls">
+                                                            <input type="text" class="form-control" name="store_number"
+                                                                placeholder="Store Number" required value="{{ $shop->store_number }}"
+                                                                data-validation-required-message="Store Number field is required">
+                                                        </div>
+                                                    </div>
+
+
+                                                </div>
+                                                <div class="col-md-12">
+                                                    <div class="form-group">
+                                                        <label class="fw-700 fs-16 form-label">Address</label>
+                                                        <input type="text" class="form-control" name="address"
+                                                                placeholder="Address" required value="{{ $shop->address }}"
+                                                                data-validation-required-message="Address field is required">
+                                                          </div>
+                                                </div>
+
                                                 <div class="col-md-12">
                                                     <div class="form-group">
                                                         <label class="fw-700 fs-16 form-label">Store Description</label>
                                                         <textarea class="form-control p-15" rows="4" name="description"
                                                             placeholder="Store description goes here...">{{$shop->description}}</textarea>
                                                     </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="row">
+                                                <div class="col-md-4">
+                                                    <label class="fw-700 fs-16 form-label">Province <span
+                                                            class="text-danger">*</span> </label>
+                                                    <select class="form-select" data-placeholder="Choose a Province"
+                                                        name="province" tabindex="1" required
+                                                        data-validation-required-message="Province field is required"
+                                                        id="shop_province" onClick="getCitys()">
+                                                        <option value="">Select Province</option>
+                                                        @foreach($provinces as $province)
+                                                        <option  <?php if ($shop->province == $province->province) echo "selected='selected'";?>  value="{{ $province->province }}">{{ $province->province }}</option>
+
+                                                        @endforeach
+                                                    </select>
+
+
+                                                </div>
+                                                <div class="col-md-4">
+
+
+                                                    <div class="form-group">
+                                                        <label class="fw-700 fs-16 form-label">City <span
+                                                                class="text-danger">*</span></label>
+                                                        <select class="form-select" data-placeholder="Choose a City"
+                                                            name="city_id" tabindex="1" required
+                                                            data-validation-required-message="City field is required"
+                                                            id="shop_cities">
+                                                            <option value="">Select City</option>
+                                                            {{$shop->city}}
+                                                        @foreach($cities as $city)
+
+                                                            <option  <?php if ($shop->city == $city->id) echo "selected='selected'";?>  value="{{ $city->id }}">{{ $city->name }}</option>
+                                                            @endforeach
+
+                                                        </select>
+
+
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <div class="form-group">
+                                                        <label class="fw-700 fs-16 form-label">Postal Code <span
+                                                                class="text-danger">*</span></label>
+                                                        <div class="controls">
+                                                            <input type="text" class="form-control" name="postal_code"
+                                                                placeholder="Postal Code" required value="{{ $shop->postal_code }}"
+                                                                data-validation-required-message="Postal Code field is required">
+                                                        </div>
+                                                    </div>
+
+
                                                 </div>
                                             </div>
 
@@ -136,103 +210,18 @@
 
                                             </div>
 
-                                            <div class="row mt-3">
-                                                <div class="col-md-12">
-                                                    <div class="form-group">
-                                                        <?php $selected_cat=explode(',', $shop->category); ?>
-                                                        <label class="fw-700 fs-16 form-label">Category</label><span
-                                                            class="text-danger">*</span>
-                                                        <select class="form-select select2" multiple="multiple"
-                                                            data-placeholder="Choose a Category" name="category[]"
-                                                            tabindex="1" required
-                                                            data-validation-required-message="Category field is required">
-                                                            <option value="">Select Your Category</option>
-                                                            @foreach($categories as $category)
-                                                            <option @foreach($selected_cat as $cats)
-                                                                {{$category->id == $cats  ? 'selected' : ''}}
-                                                                @endforeach value="{{ $category->id }}">
-                                                                {{ $category->name }}
-                                                            </option>
-                                                            @endforeach
-                                                        </select>
-                                                    </div>
-                                                </div>
+                                            
+
+                                            <div class="col-md-6">
+                                                 <a class="btn btn-primary mt-3" data-bs-toggle="modal"
+                                                    data-bs-target="#modal-center"> Add District</a>
                                             </div>
+
+                                            
 
                                         </div>
-                                        <div class="row">
-                                            <div class="col-md-4">
-                                                <label class="fw-700 fs-16 form-label">District Manager</label>
-                                                <select class="form-select" data-placeholder="Choose a District Manager"
-                                                    name="districtid" tabindex="1" required
-                                                    data-validation-required-message="Category field is required">
-                                                    <option value="">Select District Manager</option>
-                                                    @foreach($districts as $district)
-                                                    <option value="{{ $district->id }}"
-                                                        {{ $shop->districtid == $district->id  ? 'selected' : ''}}>
-                                                        {{$district->first_name.' '}}{{$district->last_name}}
-                                                    </option>
-                                                    @endforeach
-                                                </select>
-
-
-                                            </div>
-                                            <div class="col-md-4">
-                                                <label class="fw-700 fs-16 form-label">Manager</label>
-                                                <select class="form-select" data-placeholder="Choose a Manager"
-                                                    name="managerid" tabindex="1" required
-                                                    data-validation-required-message="Manager field is required"
-                                                    id="managers">
-                                                    <option value="{{ $managers[0]->id }}"
-                                                        {{ $shop->managerid == $managers[0]->id  ? 'selected' : ''}}>
-                                                        {{$managers[0]->first_name.' '}}{{$managers[0]->last_name}}
-                                                    </option>
-
-                                                </select>
-
-
-                                            </div>
-                                            <div class="col-md-4">
-                                                <label class="fw-700 fs-16 form-label">Owner</label>
-                                                <div class="controls">
-                                                    <select id="customers" class="form-select"
-                                                        data-placeholder="Choose a Customer" name="customerid"
-                                                        tabindex="1" required
-                                                        data-validation-required-message="Customer field is required">
-
-                                                        <option value="{{ $customers[0]->id }}"
-                                                            {{ $shop->customerid == $customers[0]->id  ? 'selected' : ''}}>
-                                                            {{$customers[0]->first_name.' '}}{{$customers[0]->last_name}}
-                                                        </option>
-
-                                                    </select>
-                                                </div>
-
-
-                                            </div>
-                                        </div>
-                                        <div class="row mt-5">
-                                            <div class="col-md-12">
-                                                <div class="form-group">
-                                                    <?php $selected_vendors=explode(',', $shop->vendors); ?>
-
-                                                    <label class="fw-700 fs-16 form-label">Vendors</label>
-                                                    <select class="form-select select2" id="cities" multiple="multiple"
-                                                        data-placeholder="Choose a Vendors" name="vendors[]"
-                                                        tabindex="1" required>
-                                                        <option value="">Select Vendors</option>
-                                                        @foreach($vendors as $vendor)
-                                                        <option value="{{ $vendor->id }}" @foreach($selected_vendors as
-                                                            $v) {{$vendor->id == $v  ? 'selected' : ''}}
-                                                            @endforeach>
-                                                            {{$vendor->first_name.' '}}{{$vendor->last_name}}
-                                                        </option>
-                                                        @endforeach
-
-                                                    </select>
-                                                </div>
-                                            </div>
-                                        </div>
+                                        
+                                       
 
                                         <div class="row mt-3">
 
@@ -275,7 +264,50 @@
                             </div>
                             <!-- /.box -->
                         </div>
+                        <div class="modal center-modal fade" id="modal-center" tabindex="-1">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title">Add District</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                            aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <form novalidate action="{{ route('create_district')}}" method="post">
+                                            @csrf
+                                            <div class="col-md-12">
+                                                <h5>Company<span class="text-danger">*</span></h5>
 
+                                                <select class="form-select" data-placeholder="Choose a Company"
+                                                    name="company_id" tabindex="1" required
+                                                    data-validation-required-message="Company field is required">
+                                                    <option value="">Select Company</option>
+                                                    @foreach($companies as $company)
+                                                    <option value="{{ $company->id }}">{{ $company->company_name }}
+                                                    </option>
+                                                    @endforeach
+
+                                                </select>
+
+
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="fw-700 fs-16 form-label">District Name</label>
+                                                <input type="text" class="form-control" name="district_name"
+                                                    placeholder="District Name" required
+                                                    data-validation-required-message="District Name field is required">
+                                            </div>
+                                    </div>
+                                    <div class="modal-footer modal-footer-uniform">
+                                        <button type="button" class="btn btn-default"
+                                            data-bs-dismiss="modal">Close</button>
+                                        <button type="submit" class="btn btn-primary float-end">Save</button>
+                                    </div>
+                                    </form>
+
+                                </div>
+                            </div>
+                        </div>
 
                     </div>
 
@@ -331,13 +363,17 @@
         $('.alert-success').fadeOut('fast');
     }, 2000);
     </script>
-    <script>
-    getManagers()
-    getCustomers()
+ <script>
+    // getManagers()
+    // getCustomers()
 
-    function getCustomers() {
+    function getCitys() {
+        $("#cities option").remove();
+        var province = $('#shop_province').val();
 
-        var url = 'https://mactosys.com/Report/admin/get_customers';
+             
+        console.log(province)
+        var url = 'http://209.97.156.170/WeFix/admin/get_cities?province=' + province;
         $.ajaxSetup({
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -351,55 +387,19 @@
                 var obj = JSON.parse(data);
                 var option = '';
                 for (i = 0; i < obj.length; i++) {
-                    var is_select = "";
 
-                    if (obj[i].status == 1) {
-                        is_select = 'disabled="disabled"'
-                    }
-
-                    console.log(is_select)
-                    option += '<option value="' + obj[i].id + '" ' + is_select + '>' + obj[i].first_name + ' ' +
-                        obj[i].last_name + '</option>';
+                    option += '<option value="' + obj[i].id + '" >' + obj[i].name + '</option>';
 
                 }
-                $('#customers').append(option);
+
+                console.log(option)
+                $('#cities').append(option);
+                $('#shop_cities').append(option);
 
             });
 
     }
 
-    function getManagers() {
-
-        var url = 'https://mactosys.com/Report/admin/get_managers';
-        $.ajaxSetup({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            },
-        });
-        $.ajax({
-                method: "GET",
-                url: url,
-            })
-            .done(function(data) {
-                var obj = JSON.parse(data);
-                var option = '';
-                for (i = 0; i < obj.length; i++) {
-                    var is_select = "";
-
-                    if (obj[i].status == 1) {
-                        is_select = 'disabled="disabled"'
-                    }
-
-                    console.log(is_select)
-                    option += '<option value="' + obj[i].id + '" ' + is_select + '>' + obj[i].first_name + ' ' +
-                        obj[i].last_name + '</option>';
-
-                }
-                $('#managers').append(option);
-
-            });
-
-    }
     </script>
 </body>
 

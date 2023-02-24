@@ -110,10 +110,7 @@
                                                     <td>
                                                         <table>
                                                             <tr>
-                                                                <td><a class="btn btn-primary mt-2"
-                                                                        href="{{ url('admin/products/view/1')}}"><i
-                                                                            class="mdi mdi-magnify"></i></a>
-                                                                </td>
+                                                                
                                                                 <td><a class="btn btn-info m-2 "
                                                                         href="{{ url('admin/products/edit/'. encrypt($product->id))}}"><i
                                                                             class="mdi mdi-pencil"></i></a>

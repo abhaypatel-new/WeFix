@@ -163,38 +163,111 @@
                                             <input type="text" class="form-control" name="company"
                                                 placeholder="Shop Name">
                                         </div> -->
+
                                         <div class="row">
-                                            <div class="col-md-12">
+                                            <div class="col-md-6">
                                                 <div class="form-group">
-                                                    <label class="fw-700 fs-16 form-label">Category</label><span
+                                                <div class="controls">
+
+                                                    <label class="form-label">Company Name</label><span
                                                         class="text-danger">*</span>
-                                                    <select class="form-select select2" multiple="multiple"
-                                                        data-placeholder="Choose a Category" name="category[]"
-                                                        tabindex="1" required
-                                                        data-validation-required-message="Category field is required">
-                                                        <option value="">Select Your Category</option>
-                                                        @foreach($categories as $category)
-                                                        <option value="{{ $category->id }}">{{ $category->name }}
+                                                    <input type="text" name="company" value=""  required
+                                                            data-validation-required-message="Company Name field is required" class="form-control"
+                                                        placeholder="Company Name">
+                                                </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <div class="controls">
+                                                        <label class="form-label">Address</label><span
+                                                            class="text-danger">*</span>
+                                                        <input type="text" name="address" required
+                                                            data-validation-required-message="Address field is required"
+                                                            value="" class="form-control" placeholder="Address">
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    <label class="form-label">Province</label><span
+                                                        class="text-danger">*</span>
+                                                    <select class="form-select" name="province" id="province" required
+                                                        data-validation-required-message="Province field is required"
+                                                        onClick="getCitys()">
+                                                        <option value="">Select Your Province</option>
+                                                        @foreach($proviences as $province)
+                                                        <option value="{{$province->province}}">{{$province->province}}
                                                         </option>
                                                         @endforeach
                                                     </select>
                                                 </div>
                                             </div>
-                                            <!-- <div class="col-md-6">
+                                            <div class="col-md-4">
                                                 <div class="form-group">
                                                     <label class="form-label">City</label><span
                                                         class="text-danger">*</span>
-                                                    <select class="form-select select2" multiple="multiple"
-                                                        name="city[]" required
+                                                    <select class="form-select" id="cities" name="city" required
                                                         data-validation-required-message="City field is required">
                                                         <option value="">Select Your City</option>
-                                                        <option>Toronto</option>
-                                                        <option>Montréal</option>
-                                                        <option>Vancouver</option>
-                                                        <option>Ottawa</option>
                                                     </select>
                                                 </div>
-                                            </div> -->
+                                            </div>
+
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    <label class="form-label">Postal Code</label>
+                                                    <input type="text" name="postal_code" class="form-control"
+                                                        placeholder="Postal Code">
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label class="form-label">Category</label><span
+                                                        class="text-danger">*</span>
+                                                    <select class="form-select" name="category" required
+                                                        data-validation-required-message="Category field is required">
+                                                        <option value="">Select Your Category</option>
+                                                        @foreach($categories as $category)
+                                                        <option value="{{$category->id}}">{{$category->name}}</option>
+                                                        @endforeach
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label class="form-label">GST Number</label><span
+                                                        class="text-danger">*</span>
+                                                    <input type="text" name="gst_number" value="" class="form-control"
+                                                        placeholder="GST Number">
+                                                </div>
+                                            </div>
+
+                                        </div>
+
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <div class="controls">
+                                                <label class="form-label">Service Area</label><span
+                                                    class="text-danger">*</span>
+                                                <select class="form-select  select2" multiple="multiple"
+                                                    name="service_area[]" required
+                                                    data-validation-required-message="Service Area field is required">
+                                                    <option value="">Select Service Area</option>
+                                                    @foreach($cities as $city)
+                                                    <option value="{{ $city->id}}">{{$city->name}}</option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+                                            </div>
+
                                         </div>
                                         <div class="form-group">
                                             <label class="form-label">About Vendor</label>
@@ -202,6 +275,33 @@
                                                 placeholder="About Vendor"></textarea>
                                         </div>
                                     </div>
+
+                                    <div class="row mt-3">
+
+                                            <!--/span-->
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label class="fw-700 fs-16 form-label">Status</label>
+                                                    <div class="radio-list">
+                                                        <label class="radio-inline p-0 me-10">
+                                                            <div class="radio radio-info">
+                                                                <input type="radio" name="status" 
+                                                                    value="publish" checked>
+                                                                <label for="radio1">Published</label>
+                                                            </div>
+                                                        </label>
+                                                        <label class="radio-inline">
+                                                            <div class="radio radio-info">
+                                                                <input type="radio" name="status"
+                                                                    value="draft">
+                                                                <label for="radio2">Draft</label>
+                                                            </div>
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!--/span-->
+                                        </div>
                                     <!-- /.box-body -->
                                     <div class="box-footer">
                                         <button type="button" class="btn btn-warning me-1">
@@ -271,5 +371,38 @@
     <script src="{{ asset('js/pages/advanced-form-element.js') }}"></script>
     <script src="{{ asset('assets/vendor_components/select2/dist/js/select2.full.js') }}"></script>
 </body>
+<script>
+function getCitys() {
+    $("#cities option").remove();
+
+    var province = $('#province').val();
+
+    console.log(province)
+    var url = 'http://209.97.156.170/WeFix/admin/get_cities?province=' + province;
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+    });
+    $.ajax({
+            method: "GET",
+            url: url,
+        })
+        .done(function(data) {
+            var obj = JSON.parse(data);
+            var option = '';
+            for (i = 0; i < obj.length; i++) {
+
+                option += '<option value="' + obj[i].id + '" >' + obj[i].name + '</option>';
+
+            }
+
+            console.log(option)
+            $('#cities').append(option);
+
+        });
+
+}
+</script>
 
 </html>

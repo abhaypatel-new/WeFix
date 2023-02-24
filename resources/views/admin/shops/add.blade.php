@@ -69,7 +69,8 @@
                                     <h4 class="box-title">Add Company</h4>
                                 </div>
                                 <div class="box-body">
-                                    <form class="form" method="post" action="{{ route('shop.company_create')}}">
+                                    <form novalidate class="form" method="post"
+                                        action="{{ route('shop.company_create')}}">
                                         @csrf
 
                                         <div class="col-md-12">
@@ -81,6 +82,153 @@
                                                         data-validation-required-message="Company field is required">
                                                 </div>
                                             </div>
+                                            <div class="form-group">
+                                                <h5>Addresss <span class="text-danger">*</span></h5>
+                                                <div class="controls">
+                                                    <input type="text" class="form-control" name="address"
+                                                        placeholder="Company Address" required
+                                                        data-validation-required-message="Company Address field is required">
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-4">
+                                                    <label class="fw-700 fs-16 form-label">Province <span
+                                                            class="text-danger">*</span> </label>
+                                                    <select class="form-select" data-placeholder="Choose a Province"
+                                                        name="province" tabindex="1" required
+                                                        data-validation-required-message="Province field is required"
+                                                        id="province" onClick="getCitys()">
+                                                        <option value="">Select Province</option>
+                                                        @foreach($provinces as $province)
+                                                        <option value="{{ $province->province }}">
+                                                            {{ $province->province }}</option>
+                                                        @endforeach
+                                                    </select>
+
+
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <div class="form-group">
+                                                        <label class="fw-700 fs-16 form-label">City <span
+                                                                class="text-danger">*</span></label>
+                                                        <select class="form-select" data-placeholder="Choose a City"
+                                                            name="city_id" tabindex="1" required
+                                                            data-validation-required-message="City field is required"
+                                                            id="cities">
+                                                            <option value="">Select City</option>
+
+                                                        </select>
+
+
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <div class="form-group">
+                                                        <label class="fw-700 fs-16 form-label">Postal Code <span
+                                                                class="text-danger">*</span></label>
+                                                        <div class="controls">
+                                                            <input type="text" class="form-control" name="postal_code"
+                                                                placeholder="Postal Code" required
+                                                                data-validation-required-message="Postal Code field is required">
+                                                        </div>
+                                                    </div>
+
+
+                                                </div>
+                                            </div>
+
+                                            <div class="row mt-3">
+
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label class="fw-700 fs-16 form-label">Work Phone <span
+                                                                class="text-danger">*</span></label>
+                                                        <div class="controls">
+                                                            <input type="number" class="form-control" name="work_phone"
+                                                                placeholder="Work Phone" required
+                                                                data-validation-required-message="Work Phone field is required">
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label class="fw-700 fs-16 form-label">GST Number <span
+                                                                class="text-danger">*</span></label>
+                                                        <div class="controls">
+                                                            <input type="text" class="form-control" name="gst_number"
+                                                                placeholder="GST Number" required
+                                                                data-validation-required-message="GST Number field is required">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <h4>Owner's Information</h4>
+                                            <div class="row mt-3">
+
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label class="fw-700 fs-16 form-label">First Name<span
+                                                                class="text-danger">*</span></label>
+                                                        <div class="controls">
+                                                            <input type="text" class="form-control" name="first_name"
+                                                                placeholder="First Name" required
+                                                                data-validation-required-message="First Name field is required">
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label class="fw-700 fs-16 form-label">Last Number<span
+                                                                class="text-danger">*</span></label>
+                                                        <div class="controls">
+                                                            <input type="text" class="form-control" name="last_name"
+                                                                placeholder="Last Name" required
+                                                                data-validation-required-message="Last Name field is required">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="row mt-3">
+
+                                                <div class="col-md-4">
+                                                    <div class="form-group">
+                                                        <label class="fw-700 fs-16 form-label">Email<span
+                                                                class="text-danger">*</span></label>
+                                                        <div class="controls">
+                                                            <input type="text" class="form-control" name="email"
+                                                                placeholder="First Name" required
+                                                                data-validation-required-message="First Name field is required">
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-md-4">
+                                                    <div class="form-group">
+                                                        <label class="fw-700 fs-16 form-label">Password<span
+                                                                class="text-danger">*</span></label>
+                                                        <div class="controls">
+                                                            <input type="password" class="form-control" name="password"
+                                                                placeholder="Password" required
+                                                                data-validation-required-message="Password field is required">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <div class="form-group">
+                                                        <label class="fw-700 fs-16 form-label">Phone<span
+                                                                class="text-danger">*</span></label>
+                                                        <div class="controls">
+                                                            <input type="text" class="form-control" name="phone"
+                                                                placeholder="Phone" required
+                                                                data-validation-required-message="Phone field is required">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
                                             <div class="col-md-12">
                                                 <div class="form-group">
                                                     <label class="fw-700 fs-16 form-label">Company Description</label>
@@ -88,7 +236,37 @@
                                                         placeholder="Company description goes here..."></textarea>
                                                 </div>
                                             </div>
+
+                                            <div class="row mt-3">
+
+                                                <!--/span-->
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label class="fw-700 fs-16 form-label">Status</label>
+                                                        <div class="radio-list">
+                                                            <label class="radio-inline p-0 me-10">
+                                                                <div class="radio radio-info">
+                                                                    <input type="radio" name="status" 
+                                                                        value="active" checked>
+                                                                    <label for="radio1">Active</label>
+                                                                </div>
+                                                            </label>
+                                                            <label class="radio-inline">
+                                                                <div class="radio radio-info">
+                                                                    <input type="radio" name="status"
+                                                                        value="inactive">
+                                                                    <label for="radio2">Inactive</label>
+                                                                </div>
+                                                            </label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <!--/span-->
+                                            </div>
+
+
                                         </div>
+
 
                                 </div>
                                 <div class="box-footer">
@@ -119,7 +297,7 @@
                                 </div>
                                 @endif
                                 <!-- /.box-header -->
-                                <form class="form" method="post" action="{{ route('shop.create')}}">
+                                <form novalidate class="form" method="post" action="{{ route('shop.create')}}">
                                     <div class="box-body">
                                         @csrf
 
@@ -140,21 +318,100 @@
 
 
                                             </div>
+
+
+                                            <div class="row mt-3">
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <h5>Store Name <span class="text-danger">*</span></h5>
+                                                        <div class="controls">
+                                                            <input type="text" class="form-control" name="name"
+                                                                placeholder="Store Name" required
+                                                                data-validation-required-message="Store field is required">
+                                                        </div>
+                                                    </div>
+
+
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <h5>Store Number <span class="text-danger">*</span></h5>
+                                                        <div class="controls">
+                                                            <input type="text" class="form-control" name="store_number"
+                                                                placeholder="Store Number" required
+                                                                data-validation-required-message="Store Number field is required">
+                                                        </div>
+                                                    </div>
+
+
+                                                </div>
+
+                                            </div>
                                             <div class="col-md-12 mt-3">
-                                                <div class="form-group">
-                                                    <h5>Store Name <span class="text-danger">*</span></h5>
-                                                    <div class="controls">
-                                                        <input type="text" class="form-control" name="name"
-                                                            placeholder="Store Name" required
-                                                            data-validation-required-message="Store field is required">
+
+                                            <div class="form-group">
+                                                        <h5>Address <span class="text-danger">*</span></h5>
+                                                        <div class="controls">
+                                                            <input type="text" class="form-control" name="address"
+                                                                placeholder="Address" required
+                                                                data-validation-required-message="Address field is required">
+                                                        </div>
+                                                    </div>
+                                            </div>
+
+                                            <div class="row">
+                                                <div class="col-md-4">
+                                                    <label class="fw-700 fs-16 form-label">Province <span
+                                                            class="text-danger">*</span> </label>
+                                                    <select class="form-select" data-placeholder="Choose a Province"
+                                                        name="province" tabindex="1" required
+                                                        data-validation-required-message="Province field is required"
+                                                        id="shop_province" onClick="getCitys()">
+                                                        <option value="">Select Province</option>
+                                                        @foreach($provinces as $province)
+                                                        <option value="{{ $province->province }}">
+                                                            {{ $province->province }}</option>
+                                                        @endforeach
+                                                    </select>
+
+
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <div class="form-group">
+                                                        <label class="fw-700 fs-16 form-label">City <span
+                                                                class="text-danger">*</span></label>
+                                                        <select class="form-select" data-placeholder="Choose a City"
+                                                            name="city_id" tabindex="1" required
+                                                            data-validation-required-message="City field is required"
+                                                            id="shop_cities">
+                                                            <option value="">Select City</option>
+
+                                                        </select>
+
+
                                                     </div>
                                                 </div>
-                                                <div class="col-md-12">
+                                                <div class="col-md-4">
                                                     <div class="form-group">
-                                                        <label class="fw-700 fs-16 form-label">Store Description</label>
-                                                        <textarea class="form-control p-15" rows="4" name="description"
-                                                            placeholder="Store description goes here..."></textarea>
+                                                        <label class="fw-700 fs-16 form-label">Postal Code <span
+                                                                class="text-danger">*</span></label>
+                                                        <div class="controls">
+                                                            <input type="text" class="form-control" name="postal_code"
+                                                                placeholder="Postal Code" required
+                                                                data-validation-required-message="Postal Code field is required">
+                                                        </div>
                                                     </div>
+
+
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-12 mt-3">
+
+                                                <div class="form-group">
+                                                    <label class="fw-700 fs-16 form-label">Store Description</label>
+                                                    <textarea class="form-control p-15" rows="4" name="description"
+                                                        placeholder="Store description goes here..."></textarea>
                                                 </div>
                                             </div>
 
@@ -174,90 +431,17 @@
 
 
                                             </div>
-
-
-
-                                            <div class="row mt-3">
-                                                <div class="col-md-12">
-                                                    <div class="form-group">
-                                                        <label class="fw-700 fs-16 form-label">Category</label><span
-                                                            class="text-danger">*</span>
-                                                        <select class="form-select select2" multiple="multiple"
-                                                            data-placeholder="Choose a Category" name="category[]"
-                                                            tabindex="1" required
-                                                            data-validation-required-message="Category field is required">
-                                                            <option value="">Select Your Category</option>
-                                                            @foreach($categories as $category)
-                                                            <option value="{{ $category->id }}">{{ $category->name }}
-                                                            </option>
-                                                            @endforeach
-                                                        </select>
-                                                    </div>
-                                                </div>
+                                            <div class="col-md-6">
+                                                <a class="btn btn-primary mt-3" data-bs-toggle="modal"
+                                                    data-bs-target="#modal-center"> Add District</a>
                                             </div>
 
                                         </div>
-                                        <div class="row">
-                                            <div class="col-md-4">
-                                                <label class="fw-700 fs-16 form-label">District Manager</label>
-                                                <select class="form-select" data-placeholder="Choose a District Manager"
-                                                    name="districtid" tabindex="1" required
-                                                    data-validation-required-message="Category field is required">
-                                                    <option value="">Select District Manager</option>
-                                                    @foreach($districts as $district)
-                                                    <option value="{{ $district->id }}">
-                                                        {{$district->first_name.' '}}{{$district->last_name}}
-                                                    </option>
-                                                    @endforeach
-                                                </select>
 
+                                        <!-- Modal -->
 
-                                            </div>
-                                            <div class="col-md-4">
-                                                <label class="fw-700 fs-16 form-label">Manager</label>
-                                                <select class="form-select" data-placeholder="Choose a Manager"
-                                                    name="managerid" tabindex="1" required
-                                                    data-validation-required-message="Category field is required"
-                                                    id="managers">
-                                                    <option value="">Select Manager</option>
+                                        <!-- /.modal -->
 
-                                                </select>
-
-
-                                            </div>
-                                            <div class="col-md-4">
-                                                <label class="fw-700 fs-16 form-label">Owner</label>
-                                                <div class="controls">
-                                                    <select id="customers" class="form-select"
-                                                        data-placeholder="Choose a Customer" name="customerid"
-                                                        tabindex="1" required
-                                                        data-validation-required-message="Customer field is required">
-                                                        <option value="">Select Owner</option>
-
-                                                    </select>
-                                                </div>
-
-
-                                            </div>
-                                        </div>
-                                        <div class="row mt-5">
-                                            <div class="col-md-12">
-                                                <div class="form-group">
-                                                    <label class="fw-700 fs-16 form-label">Vendors</label>
-                                                    <select class="form-select select2" id="cities" multiple="multiple"
-                                                        data-placeholder="Choose a Vendors" name="vendors[]"
-                                                        tabindex="1" required>
-                                                        <option value="">Select Vendors</option>
-                                                        @foreach($vendors as $vendor)
-                                                        <option value="{{ $vendor->id }}">
-                                                            {{$vendor->first_name.' '}}{{$vendor->last_name}}
-                                                        </option>
-                                                        @endforeach
-
-                                                    </select>
-                                                </div>
-                                            </div>
-                                        </div>
 
                                         <div class="row mt-3">
 
@@ -268,14 +452,14 @@
                                                     <div class="radio-list">
                                                         <label class="radio-inline p-0 me-10">
                                                             <div class="radio radio-info">
-                                                                <input type="radio" name="status" id="radio1"
+                                                                <input type="radio" name="status" 
                                                                     value="publish" checked>
                                                                 <label for="radio1">Published</label>
                                                             </div>
                                                         </label>
                                                         <label class="radio-inline">
                                                             <div class="radio radio-info">
-                                                                <input type="radio" name="status" id="radio2"
+                                                                <input type="radio" name="status"
                                                                     value="draft">
                                                                 <label for="radio2">Draft</label>
                                                             </div>
@@ -301,7 +485,50 @@
                             <!-- /.box -->
                         </div>
 
+                        <div class="modal center-modal fade" id="modal-center" tabindex="-1">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title">Add District</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                            aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <form novalidate action="{{ route('create_district')}}" method="post">
+                                            @csrf
+                                            <div class="col-md-12">
+                                                <h5>Company<span class="text-danger">*</span></h5>
 
+                                                <select class="form-select" data-placeholder="Choose a Company"
+                                                    name="company_id" tabindex="1" required
+                                                    data-validation-required-message="Company field is required">
+                                                    <option value="">Select Company</option>
+                                                    @foreach($companies as $company)
+                                                    <option value="{{ $company->id }}">{{ $company->company_name }}
+                                                    </option>
+                                                    @endforeach
+
+                                                </select>
+
+
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="fw-700 fs-16 form-label">District Name</label>
+                                                <input type="text" class="form-control" name="district_name"
+                                                    placeholder="District Name" required
+                                                    data-validation-required-message="District Name field is required">
+                                            </div>
+                                    </div>
+                                    <div class="modal-footer modal-footer-uniform">
+                                        <button type="button" class="btn btn-default"
+                                            data-bs-dismiss="modal">Close</button>
+                                        <button type="submit" class="btn btn-primary float-end">Save</button>
+                                    </div>
+                                    </form>
+
+                                </div>
+                            </div>
+                        </div>
                     </div>
 
                     <!--/.col (left) -->
@@ -352,8 +579,47 @@
     <script src="{{ asset('js/pages/advanced-form-element.js') }}"></script>
     <script src="{{ asset('assets/vendor_components/select2/dist/js/select2.full.js') }}"></script>
     <script>
-    getManagers()
-    getCustomers()
+    // getManagers()
+    // getCustomers()
+
+    function getCitys() {
+        $("#cities option").remove();
+        $('#shop_cities option').remove();
+        var province=''  
+        var province = $('#province').val();
+        if(province =='')
+        {
+             province = $('#shop_province').val();
+
+        }
+        console.log(province)
+        var url = 'http://209.97.156.170/WeFix/admin/get_cities?province=' + province;
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+        });
+        $.ajax({
+                method: "GET",
+                url: url,
+            })
+            .done(function(data) {
+                var obj = JSON.parse(data);
+                var option = '';
+                for (i = 0; i < obj.length; i++) {
+
+                    option += '<option value="' + obj[i].id + '" >' + obj[i].name + '</option>';
+
+                }
+
+                console.log(option)
+                $('#cities').append(option);
+                $('#shop_cities').append(option);
+
+            });
+
+    }
+
 
     function getCustomers() {
 

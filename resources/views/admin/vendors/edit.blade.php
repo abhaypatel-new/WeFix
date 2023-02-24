@@ -9,7 +9,7 @@
     <meta name="author" content="">
     <link rel="icon" href="../images/favicon.ico">
 
-    <title>Edit Vendor</title>
+    <title>Edit Vendor </title>
 
     <!-- Vendors Style-->
     <link rel="stylesheet" href="{{ asset('css/vendors_css.css') }}">
@@ -50,16 +50,17 @@
 
                     </div>
                 </div>
-                @if(session()->has('message'))
-                <div class="alert alert-danger m-4">
-                    {{ session()->get('message') }}
+
+                @if ($errors->any())
+                <div class="alert alert-danger">
+                    <ul>
+                        @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
                 </div>
                 @endif
-                @if(session()->has('success'))
-                <div class="alert alert-success m-4">
-                    {{ session()->get('success') }}
-                </div>
-                @endif
+
                 <!-- Main content -->
                 <section class="content">
                     <div class="row">
@@ -69,8 +70,7 @@
                                     <h4 class="box-title">About Vendor</h4>
                                 </div>
                                 <!-- /.box-header -->
-                                <form class="form" method="post"
-                                    action="{{ route('vendor.update',encrypt($vendor->id))}}">
+                                <form class="form" novalidate method="post" action="{{ route('vendor.update',encrypt($vendor->id))}}">
                                     @csrf
                                     <div class="box-body">
                                         <h4 class="box-title text-info mb-0"><i class="ti-user me-15"></i> Personal Info
@@ -79,43 +79,56 @@
                                         <div class="row">
                                             <div class="col-md-6">
                                                 <div class="form-group">
-                                                    <label class="form-label">First Name</label>
-                                                    <input type="text" class="form-control" placeholder="First Name"
-                                                        name="first_name" value="{{$vendor->first_name}}">
+                                                    <label class="form-label">First Name</label> <span
+                                                        class="text-danger">*</span>
+                                                    <div class="controls">
+                                                        <input type="text" value="{{ $vendor->first_name }}" name="first_name" placeholder="First Name"
+                                                            class="form-control" required
+                                                            data-validation-required-message="First Name field is required">
+                                                    </div>
                                                 </div>
                                             </div>
                                             <div class="col-md-6">
                                                 <div class="form-group">
-                                                    <label class="form-label">Last Name</label>
-                                                    <input type="text" class="form-control" name="last_name"
-                                                        placeholder="Last Name" value="{{$vendor->last_name}}">
+                                                    <label class="form-label">Last Name</label> <span
+                                                        class="text-danger">*</span>
+                                                    <div class="controls">
+                                                        <input type="text"  value="{{ $vendor->last_name }}"  name="last_name" class="form-control"
+                                                            required
+                                                            data-validation-required-message="Last Name field is required">
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="row">
                                             <div class="col-md-6">
                                                 <div class="form-group">
-                                                    <label class="form-label">E-mail</label>
-                                                    <input type="text" class="form-control" name="email"
-                                                        placeholder="E-mail" value="{{$vendor->email}}">
+                                                    <label class="form-label">E-mail</label><span
+                                                        class="text-danger">*</span>
+                                                    <div class="controls">
+                                                        <input type="email"  value="{{ $vendor->email }}"  name="email" class="form-control" required
+                                                            data-validation-required-message="Email field is required">
+                                                    </div>
                                                 </div>
                                             </div>
                                             <div class="col-md-6">
                                                 <div class="form-group">
                                                     <label class="form-label">Contact Number</label>
-                                                    <input type="text" class="form-control" placeholder="Phone"
-                                                        name="phone" value="{{$vendor->phone}}">
+                                                    <input type="text"  value="{{ $vendor->phone }}"  name="phone" class="form-control"
+                                                        placeholder="Phone">
                                                 </div>
                                             </div>
                                             <div class="form-group">
-                                                <label class="form-label">Password</label>
-                                                <div class="input-group mb-3">
+                                                <label class="form-label">Password</label><span
+                                                    class="text-danger">*</span>
+                                                <div class="input-group mb-3 controls">
                                                     <span class="input-group-text"><i class="ti-lock"></i></span>
-                                                    <input type="password" class="form-control" placeholder="Password"
-                                                        name="password">
+                                                    <input type="password" class="form-control" name="password"
+                                                        placeholder="Password">
                                                 </div>
                                             </div>
                                         </div>
+
                                         <!-- <h4 class="box-title text-info mb-0 mt-20"><i class="ti-save me-15"></i>
                                             Assign Manager</h4>
                                         <hr class="my-15">
@@ -123,21 +136,22 @@
                                         <div class="row">
                                             <div class="col-md-6">
                                                 <div class="form-group">
-                                                    <?php $selected_cat=explode(',', $vendor->category); ?>
-                                                    <label class="fw-700 fs-16 form-label">Managers</label>
-                                                    <select class="form-select" name="district_name"
-                                                        data-placeholder="Choose a Managers" tabindex="1">
+                                                    <label class="fw-700 fs-16 form-label">Manager</label><span
+                                                        class="text-danger">*</span>
+                                                    <select class="form-select" 
+                                                        data-placeholder="Choose a Manager" name="district_name"
+                                                        tabindex="1" required
+                                                        data-validation-required-message="Manager field is required">
                                                         <option value="">Select Managers</option>
+
                                                         @foreach($managers as $manager)
-
-                                                        <option value="{{$manager->id}}"
-                                                            {{$vendor->district_name == $manager->id  ? 'selected' : ''}}>
-                                                            {{$manager->first_name.' '}}{{$manager->last_name}}</option>
-
+                                                        <option value="{{ $manager->id }}">{{$manager->first_name.' '}}{{$manager->last_name}}
+                                                        </option>
                                                         @endforeach
                                                     </select>
                                                 </div>
                                             </div>
+                                            
                                         </div> -->
 
                                         <h4 class="box-title text-info mb-0 mt-20"><i class="ti-save me-15"></i>
@@ -145,49 +159,151 @@
                                         <hr class="my-15">
                                         <!-- <div class="form-group">
                                             <label class="form-label">Shop</label>
-                                            <input type="text" class="form-control" placeholder="Shop Name"
-                                                name="company" value="{{$vendor->company}}">
+                                            <input type="text" class="form-control" name="company"
+                                                placeholder="Shop Name">
                                         </div> -->
+
                                         <div class="row">
-                                            <div class="col-md-12">
+                                            <div class="col-md-6">
                                                 <div class="form-group">
-                                                    <?php $selected_cat=explode(',', $vendor->category); ?>
-                                                    <label class="fw-700 fs-16 form-label">Category</label>
-                                                    <select class="form-select select2" multiple="multiple"
-                                                        name="category[]" data-placeholder="Choose a Category"
-                                                        tabindex="1">
-                                                        <option value="">Select Category</option>
-                                                        @foreach($categories as $category)
+                                                <div class="controls">
 
-                                                        <option value="{{$category->id}}" @foreach($selected_cat as
-                                                            $cats) {{$category->id == $cats  ? 'selected' : ''}}
-                                                            @endforeach>{{$category->name}}</option>
+                                                    <label class="form-label">Company Name</label><span
+                                                        class="text-danger">*</span>
+                                                    <input type="text"   value="{{ $vendor->company }}"  name="company" value=""  required
+                                                            data-validation-required-message="Company Name field is required" class="form-control"
+                                                        placeholder="Company Name">
+                                                </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <div class="controls">
+                                                        <label class="form-label">Address</label><span
+                                                            class="text-danger">*</span>
+                                                        <input type="text"   value="{{ $vendor->address }}"  name="address" required
+                                                            data-validation-required-message="Address field is required"
+                                                            value="" class="form-control" placeholder="Address">
+                                                    </div>
+                                                </div>
+                                            </div>
 
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    <label class="form-label">Province</label><span
+                                                        class="text-danger">*</span>
+                                                    <select class="form-select" name="province" id="province" required
+                                                        data-validation-required-message="Province field is required"
+                                                        onClick="getCitys()">
+                                                        <option value="">Select Your Province</option>
+                                                        @foreach($proviences as $province)
+                                                        <option  {{ $vendor->country == $province->province  ? 'selected' : ''}} value="{{$province->province}}">{{$province->province}}
+                                                        </option>
                                                         @endforeach
                                                     </select>
                                                 </div>
                                             </div>
-                                            <!-- <div class="col-md-6">
+                                            <div class="col-md-4">
                                                 <div class="form-group">
-
-                                                    <label class="form-label">City</label>
-                                                    <select class="form-select" name="city[]">
-                                                        <option>City</option>
-                                                        <option>Toronto</option>
-                                                        <option>Montréal</option>
-                                                        <option>Vancouver</option>
-                                                        <option>Ottawa</option>
+                                                    <label class="form-label">City</label><span
+                                                        class="text-danger">*</span>
+                                                    <select class="form-select" id="cities" name="city" required
+                                                        data-validation-required-message="City field is required">
+                                                        <option value="">Select Your City</option>
+                                                        @foreach($cities as $city)
+                                                        <option value="{{$city->id}}"  {{ $vendor->city == $city->id  ? 'selected' : ''}}>{{$city->name}}</option>
+                                                        @endforeach
                                                     </select>
                                                 </div>
-                                            </div> -->
+                                            </div>
+
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    <label class="form-label">Postal Code</label>
+                                                    <input type="text"    value="{{ $vendor->postal_code }}"  name="postal_code" class="form-control"
+                                                        placeholder="Postal Code">
+                                                </div>
+                                            </div>
                                         </div>
 
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label class="form-label">Category</label><span
+                                                        class="text-danger">*</span>
+                                                    <select class="form-select" name="category" required
+                                                        data-validation-required-message="Category field is required">
+                                                        <option value="">Select Your Category</option>
+                                                        @foreach($categories as $category)
+                                                        <option  {{ $vendor->category == $category->id  ? 'selected' : ''}} value="{{$category->id}}">{{$category->name}}</option>
+                                                        @endforeach
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label class="form-label">GST Number</label><span
+                                                        class="text-danger">*</span>
+                                                    <input type="text"   value="{{ $vendor->gst_number }}"  name="gst_number" value="" class="form-control"
+                                                        placeholder="GST Number">
+                                                </div>
+                                            </div>
+
+                                        </div>
+
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <div class="controls">
+                                                <label class="form-label">Service Area</label><span
+                                                    class="text-danger">*</span>
+                                                <select class="form-select  select2" multiple="multiple"
+                                                    name="service_area[]" required
+                                                    data-validation-required-message="Service Area field is required">
+                                                    <option value="">Select Service Area</option>
+                                                    @foreach($cities as $city)
+                                                    <option @foreach(explode(',',$vendor->service_area) as $area)  {{ $area == $city->id  ? 'selected' : ''}} @endforeach value="{{ $city->id}}">{{$city->name}}</option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+                                            </div>
+
+                                        </div>
                                         <div class="form-group">
                                             <label class="form-label">About Vendor</label>
-                                            <textarea rows="5" class="form-control" placeholder="About Vendor"
-                                                name="desc">{{$vendor->desc}}</textarea>
+                                            <textarea rows="5" class="form-control" name="desc"
+                                                placeholder="About Vendor">  {{ $vendor->desc }} </textarea>
                                         </div>
                                     </div>
+
+                                    <div class="row mt-3">
+
+                                            <!--/span-->
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label class="fw-700 fs-16 form-label">Status</label>
+                                                    <div class="radio-list">
+                                                        <label class="radio-inline p-0 me-10">
+                                                            <div class="radio radio-info">
+                                                                <input type="radio" name="status" id="radio1"
+                                                                    value="publish"  {{$vendor->is_active == "publish"  ? 'checked' : ''}}>
+                                                                <label for="radio1">Published</label>
+                                                            </div>
+                                                        </label>
+                                                        <label class="radio-inline">
+                                                            <div class="radio radio-info">
+                                                                <input type="radio" name="status" id="radio2"
+                                                                    value="draft"  {{$vendor->is_active == "draft"  ? 'checked' : ''}}>
+                                                                <label for="radio2">Draft</label>
+                                                            </div>
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!--/span-->
+                                        </div>
                                     <!-- /.box-body -->
                                     <div class="box-footer">
                                         <button type="button" class="btn btn-warning me-1">
@@ -231,9 +347,13 @@
         </div>
         &copy; 2021 <a href="https://www.multipurposethemes.com/">Multipurpose Themes</a>. All Rights Reserved.
     </footer>
+    <!-- Control Sidebar -->
+
+
+    <!-- Add the sidebar's background. This div must be placed immediately after the control sidebar -->
+    <div class="control-sidebar-bg"></div>
     </div>
     <!-- ./wrapper -->
-
 
 
     <!-- Page Content overlay -->
@@ -247,15 +367,44 @@
     <!-- EduAdmin App -->
     <script src="{{ asset('js/template.js') }}"></script>
 
+    <script src="{{ asset('js/pages/validation.js') }}"></script>
+    <script src="{{ asset('js/pages/form-validation.js') }}"></script>
 
     <script src="{{ asset('js/pages/advanced-form-element.js') }}"></script>
     <script src="{{ asset('assets/vendor_components/select2/dist/js/select2.full.js') }}"></script>
-    <script>
-    setTimeout(function() {
-        $('.alert-success').fadeOut('fast');
-    }, 2000);
-    </script>
-
 </body>
+<script>
+function getCitys() {
+    $("#cities option").remove();
+
+    var province = $('#province').val();
+
+    console.log(province)
+    var url = 'http://209.97.156.170/WeFix/admin/get_cities?province=' + province;
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+    });
+    $.ajax({
+            method: "GET",
+            url: url,
+        })
+        .done(function(data) {
+            var obj = JSON.parse(data);
+            var option = '';
+            for (i = 0; i < obj.length; i++) {
+
+                option += '<option value="' + obj[i].id + '" >' + obj[i].name + '</option>';
+
+            }
+
+            console.log(option)
+            $('#cities').append(option);
+
+        });
+
+}
+</script>
 
 </html>

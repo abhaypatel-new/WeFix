@@ -28,13 +28,13 @@ class CustomerController extends Controller
         return view('customer.login');
     }
 
-
+    
     /**
      * Show the form for creating a new resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function create(Request $request)
+    public function register(Request $request)
     {
               if ($request->isMethod('post'))
         {
@@ -142,6 +142,31 @@ class CustomerController extends Controller
          }else{
              return   redirect()->back()->with('message', 'Email Already exists!');
          }
+    }
+    public function login(Request $request)
+    {
+       $request->validate([
+        
+            'email' => 'required|email|max:255',
+            'password' => 'required|min:6|max:255',
+        ]);
+        
+        
+    $credentials = [
+        'email' => $request['email'],
+        'password' => $request['password'],
+    ];
+
+    // Dump data
+    // dd($credentials);
+
+    if (Auth::guard('owner')->attempt($credentials)) {
+        return redirect()->route('owner.dashboard');
+        exit;
+    }
+
+    return   redirect()->back()->with('message', 'You have entered an invalid username or password!');
+     
     }
 
     /**
