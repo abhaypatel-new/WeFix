@@ -158,7 +158,7 @@ class CustomerController extends Controller
     ];
 
     // Dump data
-    // dd($credentials);
+     dd($credentials);
 
     if (Auth::guard('owner')->attempt($credentials)) {
         return redirect()->route('owner.dashboard');

@@ -122,8 +122,6 @@ body.layout-boxed {
   padding: 5px;
   
   transition: transform .2s; /* Animation */
-  width: 180px;
-  height: 180px;
   margin: 0 auto;
 }
 
@@ -36255,7 +36253,6 @@ textarea.form-control {
 /*---card---*/
 .card {
   border-radius: 10px;
-  box-shadow: 0px 2px 5px 0px rgba(19, 23, 38, 0.05);
   margin-bottom: 1.5rem !important;
 }
 
@@ -36300,7 +36297,6 @@ textarea.form-control {
 
 .card-title {
   margin-bottom: 0;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.07);
 }
 
 .card-controls {
@@ -37618,7 +37614,6 @@ ul.flexbox {
   height: 40%;
   width: 100%;
   /* background: #7d2ae8; */
-  border-radius: 20px 20px 0 0;
 }
 
 .card .card-content {
@@ -43033,7 +43028,7 @@ img.online {
 }
 .homediv {
   background-image: url(/WeFix/public/images/image/backgroung\ for\ top.png);
-  height: 592px;
+  height: 650px;
   width: 100%;
   background-size: cover;
   background-repeat: no-repeat;
@@ -43045,7 +43040,7 @@ img.online {
 
 .homediv h1 {
   color: #fff;
-  font-size: 60px;
+  font-size: 50px;
   font-weight: 400;
   text-align: center;
   display: flex;
@@ -43160,7 +43155,7 @@ img.online {
 }
 
 .container {
-  margin-top: -180px;
+  margin-top: -250px;
 }
 
 /* .about-sec{
@@ -43861,7 +43856,9 @@ product-car .about-button {
   color: #ffffff;
   margin-top: 75px;
 }
-
+.foot h5{
+  color: white;
+}
 * {
   box-sizing: border-box;
   font-family: "poppins";
@@ -44331,13 +44328,14 @@ ck-blurred:110px;
 }
 
 .Proposal-card-01 {
-  height: 427px;
+  height: 410px;
   width: 295px;
   background-color: #fff;
   border-radius: 10px;
   margin-top: 30px;
   position: relative;
-  padding: 15px;
+  padding: 8px;
+border: 2px solid #efefef;
 }
 
 .img-fluid {
@@ -44346,30 +44344,33 @@ ck-blurred:110px;
 .float-start {
   height: 50px;
 }
+
 .Proposal-card-01 h4 {
-  margin-left: 15px;
-  font-size: 25px;
-  margin-top: 10px;
-  font-family: "Inter";
+    margin-left: 15px;
+    font-size: 24px;
+    margin-top: 10px;
+    font-family: "Inter";
+    font-weight: 500;
 }
 
+
 .Proposal-card-01 p {
-  margin-left: 15px;
-  margin-top: 6px;
-  color: #6f767e;
-  font-size: 20px;
-  font-family: "Inter";
+margin-left: 15px;
+    margin-top: -6px;
+    color: #6f767e;
+    font-size: 14px;
+    font-weight: 400;
+    font-family: "Inter";
 }
 
 .Proposal-card-01 ul {
-  margin-left: 32px;
-  font-size: 13px;
+    font-size: 18px;
+    margin-left: 15px;
   color: #6f767e;
   margin-top: 10px;
   font-family: "Inter";
 }
 .vendor-name {
-  height: 76px;
   width: 70%;
   position: relative;
   display: flex;
@@ -44380,33 +44381,29 @@ ck-blurred:110px;
   margin-top: -3px;
 }
 .vendor-name h4 {
-  margin-left: 50px;
+margin-top: 5px;
+  margin-left: 30px;
   font-size: 19px;
   margin-bottom: -10px;
 }
 
 .vendor-name p {
-  margin-left: 48px;
-  margin-bottom: 13px;
-  margin-top: 10px;
-  font-size: 15px;
+margin-left: 30px;
+    margin-bottom: 13px;
+    margin-top: 10px;
+    font-size: 14px;
 }
 .Group-img {
-  height: 49px;
-  width: 51px;
-  border-radius: 50%;
-  border: 1px solid #efefef;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  position: absolute;
-  left: 5px;
+height: 49px;
+    width: 51px;
+    border-radius: 50%;
+    border: 1px solid #efefef;
 }
 .vendor-class {
+    margin-left: 15px;
   height: 90px;
   width: 100%;
-  border-top: 1px solid #efefef;
-  margin-top: 20px;
+    margin-top: -7px;
 }
 .text-dark {
   color: #212529 !important;
@@ -44448,4 +44445,45 @@ p {
   display: flex;
   height: -webkit-fill-available;
   width: -webkit-fill-available;
+}
+
+.main-Button{
+     padding-top: 12px;
+    border-radius: 10px;
+width: 130px;
+ height: 45px;
+    text-align: center;
+background-color: #F0EEFF;
+}
+
+.main-Button-3{
+    padding-top: 12px;
+    border-radius: 10px;
+width: 130px;
+ height: 45px;
+    text-align: center;
+background-color: #F0EEFF;
+}
+.main-Button-1{
+ padding-top: 12px;
+    color: #fff !important;
+    border-radius: 10px;
+    width: 130px;
+    background-color: #6759FF;
+    border-color: #6759FF;
+    text-align: center;
+    height: 45px;
+}
+.main-Button-2{
+    padding-top: 12px;
+    border-radius: 10px;
+width: 130px;
+ height: 45px;
+    text-align: center;
+background-color: #F0EEFF;
+}
+
+.swiper-slide-swipe-res{
+    width: 250.333px;
+    margin-right: 30px;
 }

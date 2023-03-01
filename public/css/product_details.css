@@ -226,7 +226,7 @@ textarea {
 
 .vendor-name-history {
   border-bottom: 1px solid #efefef;
-  height: 150px;
+  height: auto;
   width: 99%;
   position: relative;
   align-items: center;
@@ -314,7 +314,7 @@ textarea {
     margin-right: 10px;
   } */
 .history-main-details {
-  height: 500px;
+  height: 450px;
   background: #ffffff;
   overflow: scroll;
   border-radius: 15px;
@@ -443,6 +443,3 @@ figure {
   margin-left: 15.5em !important;
 }
 
-.btn-tab{
-color: #6759FF !important;
-}

@@ -192,8 +192,8 @@
     padding-bottom: 40px;
 ">
           <div class="list-div-today">
-            <img src="@if(auth('owner')->user()->image != null){{env('PROFILE_URL')}}/{{auth('owner')->user()->image}}@else  {{env('ASSET_URL')}}default-profile.png @endif" height="100" alt="" id="get-upload1">
-
+         
+        <img src="" height="100" alt="" id="profile-pic2">
             <div class="list-title" style="margin-right: 500px !important;">
               <h6>@if(auth('owner')->user()){{auth('owner')->user()->first_name}}@else User @endif</h6>
               <p>@if(auth('owner')->user()){{auth('owner')->user()->email}}@else User@gmail.com @endif</p>
@@ -227,7 +227,8 @@
         <div class="list-div-today">
           <div class="row">
             <div class="col-sm-4 text-white">
-              <img src="@if(auth('owner')->user()->image != null){{env('PROFILE_URL')}}/{{auth('owner')->user()->image}}@else  {{env('ASSET_URL')}}default-profile.png @endif" height="80" alt="" id="get-upload">
+            <!--   <img src="@if(auth('owner')->user()->image != null){{env('PROFILE_URL')}}/{{auth('owner')->user()->image}}@else  {{env('ASSET_URL')}}default-profile.png @endif" height="80" alt="" id="get-upload"> -->
+                <img src="" height="80" alt="" id="profile-pic1">
               <input type="file" name="file" id="upload" style="width:90px; margin-left:25px;">
             </div>
             <div class="col-sm-8 mt-5">
@@ -271,8 +272,8 @@
         </button>
       </div>
       <div class="profile">
-        <img src="@if(auth('owner')->user()->image != null){{env('PROFILE_URL')}}/{{auth('owner')->user()->image}}@else  {{env('ASSET_URL')}}default-profile.png @endif" height="100" alt="" id="get-upload1" class="rounded-circle bg-white">
-        <!-- <img src="{{ asset('images') }}/image/Profile.png" alt=""> -->
+        <img src="{{ asset('images') }}/image/Profile.png" height="100" alt="" id="profile-pic3" class="rounded-circle bg-white">
+       
       </div>
     </div>
     <div class="Proposal-heding">
@@ -284,29 +285,29 @@
     <div class="row g-0 ml-0 mr-0">
     <div class="col-md-2" >
     <div class="card-body">
-    <div class="main-Button" id="confirm" style="cursor: pointer;">
+    <div class="main-Button" id="confirm" style="cursor: pointer;pointer;padding: 8px 0px 2px 15px;">
         <h5 style="color: #6759FF;">Confirmed</h5>
        </div>
 </div>
     </div>
     <div class="col-md-2">
        <div class="card-body">
-       <div class="main-Button-1" id="pending" style="cursor: pointer;">
+       <div class="main-Button-1" id="pending" style="cursor: pointer;padding: 8px 0px 2px 15px;">
         <h5>Pending</h5>
        </div>
 </div>
     </div>
     <div class="col-md-2">
     <div class="card-body">
-    <div class="main-Button-2"  style="cursor: pointer;" id="history">
-        <h5 style="color: #6759FF;">History</h5>
+    <div class="main-Button-2"  style="cursor: pointer;pointer;padding: 8px 0px 2px 15px;" id="history">
+        <h5 style="color: #6759FF">History</h5>
        </div>
 </div>
     </div>
     <div class="col-md-2">
 
        <div class="card-body">
-       <div class="main-Button-3" id="Workorder" style="cursor: pointer;">
+       <div class="main-Button-3" id="Workorder" style="cursor: pointer;pointer;padding: 8px 0px 2px 15px;">
         <h5 style="color: #6759FF;">Work Order</h5>
 
 
@@ -439,7 +440,7 @@
         <div class="title-div" style="
     padding-bottom: 40px;">
           <div class="list-div-today">
-            <img src="@if(auth('owner')->user()->image != null){{env('PROFILE_URL')}}/{{auth('owner')->user()->image}}@else  {{env('ASSET_URL')}}default-profile.png @endif" height="100" alt="" id="get-upload1">
+            <img src="@if(auth('owner')->user()->image != null){{env('PROFILE_URL')}}/{{auth('owner')->user()->image}}@else  {{env('ASSET_URL')}}default-profile.png @endif" height="100" alt="" id="profile-pic1">
 
             <div class="list-title" style="margin-right: 500px !important;">
               <h6>@if(auth('owner')->user()){{auth('owner')->user()->first_name}}@else User @endif</h6>
@@ -469,7 +470,8 @@
         <div class="list-div-today">
           <div class="row">
             <div class="col-sm-4 text-white">
-              <img src="@if(auth('owner')->user()->image != null){{env('PROFILE_URL')}}/{{auth('owner')->user()->image}}@else  {{env('ASSET_URL')}}default-profile.png @endif" height="80" alt="" id="get-upload">
+             <!--  <img src="@if(auth('owner')->user()->image != null){{env('PROFILE_URL')}}/{{auth('owner')->user()->image}}@else  {{env('ASSET_URL')}}default-profile.png @endif" height="80" alt="" id="get-upload"> -->
+                <img src="" height="80" alt="" id="get-upload">
               <input type="file" name="file" id="upload" style="width:90px; margin-left:25px;">
             </div>
             <div class="col-sm-8 mt-5">
@@ -587,7 +589,7 @@
     var assetUrl = "{{env('ASSET_URL')}}";
 
     var appUrl = "{{env('APP_URL')}}";
-
+   alert(appUrl)
     const api_url =
       appUrl + "/owner/get_all_notifications?owner_id=" + id;
 
@@ -2204,9 +2206,10 @@ text-align: center;><div class="images-div"></div>
       $("#show-profile").show();
       $("#edit-profile-details").hide();
       var assetUrl = "{{env('ASSET_URL')}}";
-
+       var profileUrl = "{{env('PROFILE_URL')}}";
+     
       var appUrl = "{{env('APP_URL')}}";
-
+  
       const api_url =
         appUrl + "/owner/Get_owner_details?id=" + id;
 
@@ -2240,8 +2243,12 @@ text-align: center;><div class="images-div"></div>
           console.log(data.status);
           for (let r of data.data) {
             let img = r.thumbnail_image == null ? assetUrl + "product-dummy.png" : r.thumbnail_image;
-            let user = r.image_name == null ? assetUrl + "default-profile.png" : r.image_name;
-
+            let user = r.image == null ? profileUrl + "default-profile.png" : r.image;
+          
+            
+           $('#profile-pic1').attr('src', user);
+          $('#profile-pic2').attr('src', user); 
+          $('#profile-pic').attr('src', user);
             tab += `
 
     <div class="input-div">

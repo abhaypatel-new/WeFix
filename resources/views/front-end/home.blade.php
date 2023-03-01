@@ -509,7 +509,7 @@
 
      $(document).ready(function() {
         var appUrl ="{{env('APP_URL')}}";
-
+  
         const api_url =
         appUrl+"/owner/get_all_product";
 
