@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\WebNotificationController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\api\ReportController;
 
 /*
 |--------------------------------------------------------------------------
@@ -43,6 +44,8 @@ Route::post('save_task', [WebNotificationController::class, 'save_task']);
 Route::get('/push-notificaiton', [WebNotificationController::class, 'index'])->name('push-notificaiton');
 Route::post('/store-token', [WebNotificationController::class, 'storeToken'])->name('store.token');
 Route::post('/send-web-notification', [WebNotificationController::class, 'sendWebNotification'])->name('send.web-notification');
+Route::get('report', [ReportController::class, 'index'])->name('report');
+ Route::get('delete-report', [ReportController::class, 'destroy'])->name('delete.report');
 // Auth::routes();
 // Route::get('/login', [HomeController::class, 'index'])->name('customer.login');
 // Route::get('/signup', [HomeController::class, 'register']);

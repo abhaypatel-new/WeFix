@@ -64,5 +64,9 @@ class User extends Authenticatable
     {
         return $this->belongsTo(ShippingAddress::class, 'shipping_address');
     }
+      public function Order()
+    {
+        return $this->hasMany(Order::class, 'owner_id', 'vendor_id');
+    }
 
 }

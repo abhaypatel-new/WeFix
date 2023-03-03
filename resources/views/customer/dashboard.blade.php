@@ -17,7 +17,13 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600&display=swap" rel="stylesheet">
+  <link href="https://cdn.datatables.net/1.13.3/css/jquery.dataTables.min.css" rel="stylesheet">
+  <script src='https://kit.fontawesome.com/a076d05399.js' crossorigin='anonymous'></script>
   <style>
+   
+  
+    
+    
     @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600&display=swap');
   </style>
 </head>
@@ -82,10 +88,7 @@
   <input type="hidden" value="{{auth('owner')->user()->roleid}}" id="ownerid">
   @if(auth('owner')->user()->roleid === 4)
   <div class="side-bar">
-    <!-- <div class="Dashboard" id="dashboard" style="cursor: pointer;">
-      <img src="{{ asset('images') }}/image/Notification.png" alt="">
-      <h3 class="notification-color">Dashboard</h3>
-    </div> -->
+ 
   <button class="Proposal" id="proposal" style="cursor: pointer;">
       <img src="{{ asset('images') }}/image/Proposal.png" alt="">
       <h3 class="Proposal-color">Dashboard</h3>
@@ -98,10 +101,15 @@
       <h3 class="setting-color">Setting</h3>
       <!-- <img class="dropdown-img" src="./image/dropdown.png" alt=""> -->
     </div>
+     <div class="Report" style="cursor: pointer;" id="report">
+      <img src="{{ asset('images') }}/image/settings.png" alt="">
+      <h3 class="report-color">Report</h3>
+      <!-- <img class="dropdown-img" src="./image/dropdown.png" alt=""> -->
+    </div>
 
     <div class="Setting Logout" style="cursor: pointer;">
       <img src="{{ asset('images') }}/image/SignOut.png" alt="">
-      <h3><a href="{{ url('owner/logout') }}" class="logout-color">Log Out</a></h3>
+      <h3><a href="{{ url('owner/logout') }}" class="logout-color hide-effect">Log Out</a></h3>
       <!-- <img class="dropdown-img" src="./image/dropdown.png" alt=""> -->
     </div>
 
@@ -132,6 +140,31 @@
       </div>
     </div>
     <div class="card" id="get-proposal">
+    </div>
+  </div>
+   <div class="card m-90" id="show-report">
+    <h5 class="card-header">Report</h5>
+    >
+    <div class="card" id="get-report">
+      <table id="example">
+    <thead>
+        <tr>
+            <th>No</th>
+            <th>OrderId</th>
+            <th>Product</th>
+            <th>Date</th>
+            <th>Owner</th>
+            <th>Vendor</th>
+            <th>Amount</th>
+            <th>Status</th>
+            <th>Action</th>
+
+        </tr>
+    </thead>
+    <tbody>
+      
+    </tbody>
+  </table>
     </div>
   </div>
   <div class="card m-90 cnf" id="show-confirm">
@@ -285,21 +318,21 @@
     <div class="row g-0 ml-0 mr-0">
     <div class="col-md-2" >
     <div class="card-body">
-    <div class="main-Button" id="confirm" style="cursor: pointer;pointer;padding: 8px 0px 2px 15px;">
+    <div class="main-Button" id="confirm" style="cursor: pointer;pointer;">
         <h5 style="color: #6759FF;">Confirmed</h5>
        </div>
 </div>
     </div>
     <div class="col-md-2">
        <div class="card-body">
-       <div class="main-Button-1" id="pending" style="cursor: pointer;padding: 8px 0px 2px 15px;">
+       <div class="main-Button-1" id="pending" style="cursor: pointer;">
         <h5>Pending</h5>
        </div>
 </div>
     </div>
     <div class="col-md-2">
     <div class="card-body">
-    <div class="main-Button-2"  style="cursor: pointer;pointer;padding: 8px 0px 2px 15px;" id="history">
+    <div class="main-Button-2"  style="cursor: pointer;pointer;" id="history">
         <h5 style="color: #6759FF">History</h5>
        </div>
 </div>
@@ -307,7 +340,7 @@
     <div class="col-md-2">
 
        <div class="card-body">
-       <div class="main-Button-3" id="Workorder" style="cursor: pointer;pointer;padding: 8px 0px 2px 15px;">
+       <div class="main-Button-3" id="Workorder" style="cursor: pointer;pointer;">
         <h5 style="color: #6759FF;">Work Order</h5>
 
 
@@ -347,7 +380,11 @@
       <h3 class="setting-color">Setting</h3>
       <!-- <img class="dropdown-img" src="./image/dropdown.png" alt=""> -->
     </div>
-
+     <div class="Report" style="cursor: pointer;" id="report">
+      <img src="{{ asset('images') }}/image/settings.png" alt="">
+      <h3 class="report-color">Report</h3>
+      <!-- <img class="dropdown-img" src="./image/dropdown.png" alt=""> -->
+    </div>
     <div class="Setting Logout" style="cursor: pointer;">
       <img src="{{ asset('images') }}/image/SignOut.png" alt="">
       <h3><a href="{{ url('owner/logout') }}" class="logout-color">Log Out</a></h3>
@@ -381,6 +418,31 @@
       </div>
     </div>
     <div class="card" id="get-proposal">
+    </div>
+  </div>
+  <div class="card m-90" id="show-report">
+    <h5 class="card-header">Report</h5>
+    >
+    <div class="card" id="get-report">
+      <table id="example">
+    <thead>
+        <tr>
+            <th>No</th>
+            <th>OrderId</th>
+            <th>Product</th>
+            <th>Date</th>
+            <th>Owner</th>
+            <th>Vendor</th>
+            <th>Amount</th>
+            <th>Status</th>
+            <th>Action</th>
+
+        </tr>
+    </thead>
+    <tbody>
+      
+    </tbody>
+  </table>
     </div>
   </div>
   <div class="card m-90 cnf" id="show-confirm">
@@ -576,7 +638,9 @@
 <script src="https://code.jquery.com/jquery-1.9.1.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js" integrity="sha512-VEd+nq25CkR676O+pLBnDW09R7VQX9Mdiij052gVCp5yVH3jGtH70Ho/UUv4mJDsEdTvqRCFZg0NKGiojGnUCw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
   </script>
+  <script src="https://cdn.datatables.net/1.13.3/js/jquery.dataTables.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-toast-plugin/1.3.2/jquery.toast.min.js" integrity="sha512-zlWWyZq71UMApAjih4WkaRpikgY9Bz1oXIW5G0fED4vk14JjGlQ1UmkGM392jEULP8jbNMiwLWdM8Z87Hu88Fw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+ 
 <script>
   function getNotification() {
     let id = '<?php echo auth('owner')->user()->id; ?>';
@@ -586,10 +650,10 @@
     $("#show-confirm").hide();
     $("#show-pending").hide();
     $("#show-profile").hide();
+    $("#show-report").hide();
     var assetUrl = "{{env('ASSET_URL')}}";
 
     var appUrl = "{{env('APP_URL')}}";
-   alert(appUrl)
     const api_url =
       appUrl + "/owner/get_all_notifications?owner_id=" + id;
 
@@ -658,7 +722,63 @@
       }
     }
   }
+  /*--------Delete-Report-Start---------*/
 
+  function deleteReport(id)
+  {
+      var assetUrl = "{{env('ASSET_URL')}}";
+
+    var appUrl = "{{env('APP_URL')}}";
+   
+    const api_url =
+      '{!! route("delete.report")!!}?id=' + id;
+
+    // Defining async function
+    async function getapi(url, options) {
+
+      // Storing response
+      const response = await fetch(url);
+
+      // Storing data in form of JSON
+      var data = await response.json();
+      console.log(data);
+      if (response) {
+        hideloader();
+      }
+      show(data);
+    }
+    // Calling that async function
+    getapi(api_url);
+
+    function hideloader() {
+      document.getElementById('loading').style.display = 'none';
+    }
+
+    function show(data) {
+
+      let tab = '';
+      let count = 0;
+      // Loop to access all rows
+      if (data.status == 'true') {
+
+
+        $.toast({
+          heading: 'Alert',
+          text: 'Record has been deleted',
+          icon: 'info',
+          loader: true, // Change it to false to disable loader
+          loaderBg: '#9EC600' // To change the background
+        })
+       $('#example').DataTable().ajax.reload();
+        $("#show-report").load();
+        $("#show-report").show();
+      } else {
+        alert("failed")
+        $("#show-report").show();
+      }
+    }
+  }
+  /*--------Delete-Report-End---------*/
   function del() {
 
     $("#main-tab").hide();
@@ -732,6 +852,7 @@
     // card2.classList.add("hidden");
   });
   $(document).ready(function() {
+    $("#show-report").hide();
      $("#pending h5").css("color","white");
     function readURL(input) {
       if (input.files && input.files[0]) {
@@ -782,6 +903,7 @@
       $("#show-confirm").hide();
       $("#show-pending").hide();
       $("#show-profile").hide();
+       $("#show-report").hide();
       var assetUrl = "{{env('ASSET_URL')}}";
 
       var appUrl = "{{env('APP_URL')}}";
@@ -890,6 +1012,7 @@ text-align: center;><div class="images-div"></div>
       $("#show-confirm").hide();
       $("#show-pending").hide();
       $("#show-profile").hide();
+      $("#show-report").hide();
       var assetUrl = "{{env('ASSET_URL')}}";
 
       var appUrl = "{{env('APP_URL')}}";
@@ -1229,6 +1352,8 @@ text-align: center;><div class="images-div"></div>
       $(".Logout").css("background-color", "#ffffff");
       $(".pending-color").css("color", "#000");
       $(".Pending").css("background-color", "#ffffff");
+       $(".report-color").css("color", "#000");
+      $(".Report").css("background-color", "#ffffff");
       $(".history-color").css("color", "#000");
       $(".History").css("background-color", "#ffffff");
       $("#main-tab").hide();
@@ -1237,6 +1362,7 @@ text-align: center;><div class="images-div"></div>
       $("#show-confirm").hide();
       $("#show-pending").hide();
       $("#show-profile").hide();
+      $("#show-report").hide();
       $("#edit-profile-details").hide();
       var assetUrl = "{{env('ASSET_URL')}}";
 
@@ -2184,16 +2310,19 @@ text-align: center;><div class="images-div"></div>
 
     /*------End Pending Proposal---------*/
 
-    /*------Get Profile Details---------*/
+    /*--------Start-Report---------------*/
 
-    $("#profile").click(function() {
+     $("#report").click(function() {
+      
       $(".proposal-card-div").css("display", "none");
-      $(".Setting").css("background-color", "#e4e6ef");
-      $(".setting-color").css("color", "#6759ff");
+      $(".Report").css("background-color", "#e4e6ef");
+       $(".report-color").css("color", "#6759ff");
+      $(".Setting").css("background-color", "#ffffff");
       $(".Proposal").css("background-color", "#ffffff");
-      $(".Proposal-color").css("color", "#000");
-      $(".notification-color").css("color", "#000");
       $(".Notification").css("background-color", "#ffffff");
+      $(".Proposal-color").css("color", "#000");
+      $(".setting-color").css("color", "#000");
+      $(".notification-color").css("color", "#000");
       $(".logout-color").css("color", "#000");
       $(".Logout").css("background-color", "#ffffff");
 
@@ -2203,6 +2332,70 @@ text-align: center;><div class="images-div"></div>
       $("#show-proposal").hide();
       $("#show-confirm").hide();
       $("#show-pending").hide();
+      $("#show-profile").hide();
+       $("#show-report").show();
+      $("#edit-profile-details").hide();
+      var assetUrl = "{{env('ASSET_URL')}}";
+       var profileUrl = "{{env('PROFILE_URL')}}";
+     
+      var appUrl = "{{env('APP_URL')}}";
+  
+      // const api_url = '{{route('report')}}';
+
+        $('#example').DataTable({
+            retrieve:true,
+            destroy:true,
+            ajax: '{!! route('report') !!}',
+            columns: [
+                { data: 'id', name: 'id' },
+                { data: 'order_id', name: 'order_id' },
+                 { data: 'product_name', name: 'product_name' },
+                  { data: 'date', name: 'date' },
+                { data: 'owner_name', name: 'owner_name' },
+                { data: 'vendor_name', name: 'vendor_name' },
+                { data: 'order_amount', name: 'order_amount' },
+                { data: 'order_status', name: 'order_status' },
+                { data: 'action', name: 'action' },
+   
+               
+                 ],
+                 "fnRowCallback": function( nRow, aData, iDisplayIndex, iDisplayIndexFull ) {
+       
+                $('th', nRow).css('background-color', '#dacfcf');
+                
+        }
+    
+        });
+    
+
+   
+
+    });
+
+    /*-------------End-Report-----------*/
+
+    /*------Get Profile Details---------*/
+
+    $("#profile").click(function() {
+      $(".proposal-card-div").css("display", "none");
+      $(".Setting").css("background-color", "#e4e6ef");
+      $(".Proposal").css("background-color", "#ffffff");
+      $(".Notification").css("background-color", "#ffffff");
+      $(".Proposal-color").css("color", "#000");
+      $(".setting-color").css("color", "#6759ff");
+      $(".notification-color").css("color", "#000");
+      $(".report-color").css("color", "#000");
+      $(".Report").css("background-color", "#ffffff");
+      $(".logout-color").css("color", "#000");
+      $(".Logout").css("background-color", "#ffffff");
+
+      $("#main-tab").hide();
+      $("#show-notification").hide();
+      $("#show-history").hide();
+      $("#show-proposal").hide();
+      $("#show-confirm").hide();
+      $("#show-pending").hide();
+      $("#show-report").hide();
       $("#show-profile").show();
       $("#edit-profile-details").hide();
       var assetUrl = "{{env('ASSET_URL')}}";
