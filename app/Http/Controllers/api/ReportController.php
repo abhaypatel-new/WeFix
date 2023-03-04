@@ -8,6 +8,7 @@ use App\User;
 use DataTables;
 use App\Model\Order;
 use App\Model\Product;
+use App\Model\ProductImage;
 use Auth;
 
 class ReportController extends Controller
@@ -29,7 +30,7 @@ class ReportController extends Controller
          }
          $report[$key]['product_name'] = $product_name->product_name;
          $report[$key]['owner_name'] = $reports->customer->first_name.' '.$reports->customer->last_name;
-         $report[$key]['action'] ='<a class="btn btn-info btn-sm"title="view" href="'. $reports->id.'"> <i class="fa fa-eye"></i></a>&nbsp;&nbsp;<a class="btn btn-info btn-sm"title="Delete" href="#" onclick="deleteReport('.$reports->id.')"> <i class="fa fa-trash"></i></a>';
+         $report[$key]['action'] ='<a class="btn btn-info btn-sm"title="view" href="#" onclick="viewReport('.$reports->id.')"> <i class="fa fa-eye"></i></a>&nbsp;&nbsp;<a class="btn btn-info btn-sm"title="Delete" href="#" onclick="deleteReport('.$reports->id.')"> <i class="fa fa-trash"></i></a>';
         }
         if($report)
         {
@@ -70,9 +71,35 @@ class ReportController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Request $request)
     {
-        //
+        $viewReport = Order::find($request->id);
+
+        $productReport = Product::find($viewReport->product_id);
+        $viewReport['product_name'] = $productReport->product_name;
+        $viewReport['thumbnail_image'] = $productReport->thumbnail_image;
+        $owner_name = User::find($viewReport->owner_id);
+        $viewReport['owner_name'] = $owner_name->first_name.' '.$owner_name->last_name;
+        $viewReport['phone'] = $owner_name->phone;
+        $viewReport['image'] = $owner_name->image;
+        $viewReport['street_address'] = $owner_name->street_address;
+         $vendore_name = User::find($viewReport->vendor_id);
+          $viewReport['vname'] = $vendore_name->first_name.' '.$vendore_name->last_name;
+        $viewReport['vendor_phone'] = $vendore_name->phone;
+        $viewReport['vendor_image'] = $vendore_name->image;
+        $viewReport['vendor_street_address'] = $vendore_name->street_address;
+        // $viewReport['product_image'] = ProductImage::where('pid', $viewReport->product_id)->take(3)->get();
+        // $viewReport['product_image'] = $product_image->images;
+       if($viewReport)
+        {
+            
+             $response['status'] = 'true';
+             $response['data'] = $viewReport;
+             }else{
+             $response['error'] = 'false';
+             $response['message'] = 'Record Not Found';
+         }
+          return response()->json($response);
     }
 
     /**

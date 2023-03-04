@@ -142,6 +142,12 @@
     <div class="card" id="get-proposal">
     </div>
   </div>
+   <div class="card m-90" id="view-report" style="height:fit-content;">
+    <h5 class="card-header">Report Details</h5>
+    
+    <div class="card-body" id="getsingledetails">
+    </div>
+  </div>
    <div class="card m-90" id="show-report">
     <h5 class="card-header">Report</h5>
     >
@@ -420,6 +426,12 @@
     <div class="card" id="get-proposal">
     </div>
   </div>
+   <div class="card m-90" id="view-report">
+    <h5 class="card-header">View-report</h5>
+   
+    <div class="card" id="getsingledetails">
+    </div>
+  </div>
   <div class="card m-90" id="show-report">
     <h5 class="card-header">Report</h5>
     >
@@ -636,6 +648,9 @@
 
 
 <script src="https://code.jquery.com/jquery-1.9.1.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.5.3/jspdf.min.js"></script>
+<script type="text/javascript" src="https://html2canvas.hertzen.com/dist/html2canvas.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/printThis/1.15.0/printThis.min.js" integrity="sha512-d5Jr3NflEZmFDdFHZtxeJtBzk0eB+kkRXWFQqEc1EKmolXjHm2IKCA7kTvXBNjIYzjXfD5XzIjaaErpkZHCkBg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js" integrity="sha512-VEd+nq25CkR676O+pLBnDW09R7VQX9Mdiij052gVCp5yVH3jGtH70Ho/UUv4mJDsEdTvqRCFZg0NKGiojGnUCw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
   </script>
   <script src="https://cdn.datatables.net/1.13.3/js/jquery.dataTables.min.js"></script>
@@ -779,6 +794,188 @@
     }
   }
   /*--------Delete-Report-End---------*/
+
+  /*--------View-Report-Start---------*/
+
+  function viewReport(id)
+  {
+     $("#show-report").hide();
+     $("#view-report").show();
+      var assetUrl = "{{env('ASSET_URL')}}";
+      var purl = "{{env('PROFILE_URL')}}";
+      var appUrl = "{{env('APP_URL')}}";
+      var uid = $("#ownerid").val();
+    const api_url =
+      '{!! route("view.report")!!}?id=' + id;
+
+    // Defining async function
+    async function getapi(url, options) {
+
+      // Storing response
+      const response = await fetch(url);
+
+      // Storing data in form of JSON
+      var data = await response.json();
+      console.log(data);
+      if (response) {
+        hideloader();
+      }
+      show(data);
+    }
+    // Calling that async function
+    getapi(api_url);
+
+    function hideloader() {
+      document.getElementById('loading').style.display = 'none';
+    }
+
+    function show(data) {
+
+      let tab = '';
+      let count = 0;
+      // Loop to access all rows
+      if (data.status == 'true') {
+       
+       
+           let pimg = data.data.thumbnail_image == null ? assetUrl + "product-dummy.png" : assetUrl+'images/products/'+data.data.thumbnail_image;
+            let user = data.data.image == null ? purl + "default-profile.png" : data.data.image;
+            let name = uid == 4?data.data.vname:data.data.owner_name;
+            let phone = uid == 4?data.data.vendor_phone:data.data.phone;
+            let address = uid == 4?data.data.vendor_street_address:data.data.street_address;
+ 
+           tab =`
+      <div class="row d-flex align-items-baseline">
+        <div class="col-xl-9">
+          <p style="color: #7e8d9f;font-size: 20px;">Invoice >> <strong>ID: #123-123</strong></p>
+        </div>
+        <div class="col-xl-3 float-end">
+          <a class="btn btn-light text-capitalize border-0" data-mdb-ripple-color="dark" style="color:#6759FF" onclick="myfunction()"><i
+              class="fas fa-print text-danger"></i> Print</a>
+          <a class="btn btn-light text-capitalize" data-mdb-ripple-color="dark" style="color:#6759FF" onclick="myfunction1()"><i
+              class="far fa-file-pdf text-danger"></i> Export</a>
+              <div id="editor"></div>
+        </div>
+        <hr>
+      </div>
+
+      <div class="container" style="margin:0px;">
+        <div class="col-md-12">
+          <div class="text-center">
+            <i class="fa fa-tools fa-4x ms-0" style="color:#6759FF ;"></i>
+            <p class="pt-0">Maintenance Report</p>
+          </div>
+
+        </div>
+
+
+        <div class="row">
+          <div class="col-xl-8">
+            <ul class="list-unstyled">
+              <li class="text-muted">From: <span style="color:#5d9fc5 ;">${name}</span></li>
+              <li class="text-muted">${address}, Indore</li>
+              <li class="text-muted">MP, India</li>
+              <li class="text-muted"><i class="fa fa-phone-alt" style="color:black;"></i>${phone}</li>
+            </ul>
+          </div>
+          <div class="col-xl-4">
+            <p class="text-muted">Invoice</p>
+            <ul class="list-unstyled">
+              <li class="text-muted"><i class="fas fa-circle" style="color:#6759FF ;"></i> <span
+                  class="fw-bold text-dark">ID:</span>#${data.data.order_id}</li>
+              <li class="text-muted"><i class="fas fa-circle" style="color:#6759FF ;"></i> <span
+                  class="fw-bold text-dark">Creation Date: </span>${data.data.date} ${data.data.time}</li>
+              <li class="text-muted"><i class="fas fa-circle" style="color:#6759FF ;"></i> <span
+                  class="me-1 fw-bold text-dark">Status:</span><span class="badge bg-warning text-black fw-bold">
+                  ${data.data.payment_status}</span></li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="row my-2 mx-1 justify-content-center">
+          <table class="table table-striped table-borderless">
+            <thead style="background-color:#6759FF ;" class="text-white">
+              <tr>
+                <th scope="col">#</th>
+                 <th scope="col">Image</th>
+                <th scope="col">Name</th>
+                <th scope="col">Description</th>
+                <th scope="col">Qty</th>
+                <th scope="col">Unit Price</th>
+                <th scope="col">Amount</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td scope="row">1</td>
+                <td><img src="${pimg}" height="50" width="50" alt="" class="img-thumbnail hover-zoom"></td>
+                <td>${data.data.product_name}</td>
+                <td>${data.data.description}</td>
+                <td>1</td>
+                <td>$${data.data.order_amount}</td>
+                <td>$${data.data.order_amount}</td>
+              </tr>
+             
+            </tbody>
+
+          </table>
+        </div>
+        <div class="row">
+          <div class="col-xl-8">
+            <p class="ms-3">Vendor Note: ${data.data.note}</p>
+
+          </div>
+          <div class="col-xl-3 text-right">
+            <ul class="list-unstyled">
+              <li class="text-muted ms-3"><span class="text-black me-4">SubTotal</span>$${data.data.order_amount}</li>
+              <li class="text-muted ms-3 mt-2"><span class="text-black me-4">Tax(15%)</span>$000</li>
+            </ul>
+            <p class="text-black float-start"><span class="text-black me-3"> Total Amount</span><span
+                style="font-size: 25px;">$${data.data.order_amount}</span></p>
+          </div>
+        </div>
+        <hr>
+        <div class="row">
+          <div class="col-xl-10">
+            <p>Thank you for your Maintenance</p>
+          </div>
+          <div class="col-xl-2">
+            <button type="button" class="btn btn-primary text-capitalize"
+              style="background-color:#60bdf3 ;">${data.data.owner_name}</button>
+          </div>
+        </div>
+
+    
+</div>`;
+           document.getElementById("getsingledetails").innerHTML = tab;
+    
+      } else {
+        alert("failed")
+        $("#view-report").show();
+      }
+    }
+  }
+  /*--------View-Report-End---------*/
+function myfunction1() {
+  console.log("sdfsd")
+  var doc = new jsPDF();
+  var specialElementHandlers = {
+    '#editor': function (element, renderer) {
+        return true;
+    }
+};
+    doc.fromHTML($('#getsingledetails').html(), 15, 15, {
+        'width': 170,
+        'color':  170,
+            'elementHandlers': specialElementHandlers
+    });
+    doc.save('sample-file.pdf');
+}
+ function myfunction()
+ {
+ 
+  $("#getsingledetails").printThis();
+   
+ }
   function del() {
 
     $("#main-tab").hide();
@@ -853,6 +1050,7 @@
   });
   $(document).ready(function() {
     $("#show-report").hide();
+     $("#view-report").hide();
      $("#pending h5").css("color","white");
     function readURL(input) {
       if (input.files && input.files[0]) {
@@ -903,7 +1101,8 @@
       $("#show-confirm").hide();
       $("#show-pending").hide();
       $("#show-profile").hide();
-       $("#show-report").hide();
+      $("#show-report").hide();
+      $("#view-report").hide();
       var assetUrl = "{{env('ASSET_URL')}}";
 
       var appUrl = "{{env('APP_URL')}}";
@@ -1363,6 +1562,7 @@ text-align: center;><div class="images-div"></div>
       $("#show-pending").hide();
       $("#show-profile").hide();
       $("#show-report").hide();
+      $("#view-report").hide();
       $("#edit-profile-details").hide();
       var assetUrl = "{{env('ASSET_URL')}}";
 
@@ -2316,7 +2516,7 @@ text-align: center;><div class="images-div"></div>
       
       $(".proposal-card-div").css("display", "none");
       $(".Report").css("background-color", "#e4e6ef");
-       $(".report-color").css("color", "#6759ff");
+      $(".report-color").css("color", "#6759ff");
       $(".Setting").css("background-color", "#ffffff");
       $(".Proposal").css("background-color", "#ffffff");
       $(".Notification").css("background-color", "#ffffff");
@@ -2333,7 +2533,8 @@ text-align: center;><div class="images-div"></div>
       $("#show-confirm").hide();
       $("#show-pending").hide();
       $("#show-profile").hide();
-       $("#show-report").show();
+      $("#show-report").show();
+      $("#view-report").hide();
       $("#edit-profile-details").hide();
       var assetUrl = "{{env('ASSET_URL')}}";
        var profileUrl = "{{env('PROFILE_URL')}}";
@@ -2349,8 +2550,8 @@ text-align: center;><div class="images-div"></div>
             columns: [
                 { data: 'id', name: 'id' },
                 { data: 'order_id', name: 'order_id' },
-                 { data: 'product_name', name: 'product_name' },
-                  { data: 'date', name: 'date' },
+                { data: 'product_name', name: 'product_name' },
+                { data: 'date', name: 'date' },
                 { data: 'owner_name', name: 'owner_name' },
                 { data: 'vendor_name', name: 'vendor_name' },
                 { data: 'order_amount', name: 'order_amount' },
