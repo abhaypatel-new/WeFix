@@ -1,69 +1,120 @@
 @include('layouts.header.front-end')
-    <div class="maindiv">
-        <div class="btn-div">
+   <!--  <div class="top-head">
+       <div class="btn-div">
             <h1 class="main-h1">Product Details</h1>
             <p></p>
-            <!-- <a class="box-btn">Our Services</a>
-                <a class="border-btn">Contact Us </a> -->
+
 
         </div>
 
-    </div>
-    <section class="main-sec">
+    </div> -->
+    <section class="main-sec vendor-main">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-8">
+    @if(auth('owner')->check())
+                           
+                           @if(auth('owner')->user()->roleid == 1 && Request::get('order_id'))
+    
 
-        <div class="appointment-div">
-            <h1>Service Note</h1>
-            <div id="editor" height="150"></div>
+                           
+                            <div class="appointmentOuter">
+                            <h1>Service Note</h1>
+                            <!-- <div id="editor" height="150"></div> -->
 
-            <input name="description" id="description" class="text-dark" type="hidden">
-            <div class="image-drop">
-                <img src="{{ asset('images')}}/image/Upload icon.png" height="50" alt="">
+                            <h3>Description </h3>
+                           <textarea name="description" id="description" placeholder="Enter Your Description" style="width: 100% !important; color:black;font-size: 20px; text-align: center;"></textarea>
+                            <div class="image-drop">
+                                <img src="{{ asset('images')}}/image/Upload icon.png" height="50" alt="">
 
 
-                <h3>Drop you image here </h3>
-               <div class="file-upload-wrapper btn btn-success">
-               <input type="file" class="file-upload" name="product-img" id="product-img" alt="product-img"/>
-            </div>
-            </div>
+                                <h3>Drop you image here </h3>
+                               <div class="file-upload-wrapper btn btn-success" style="opacity: 1 !important; background:transparent;">
+                               <input type="file" class="file-upload" name="product-img" id="product-img" alt="product-img" multiple style="opacity: 0;"/>
+                               <img id="frame" src="" width="100px" height="100px" style="display:none;" class="rounded-circle" style="border:2px solid;"/>
+                               <!-- <span style="display:none; color: #7FFFD4; text-align: start;" id="upload-alert"><i class="fa fa-check-circle" style="font-size:48px;color:green"></i></span> -->
+                               <i class="fa fa-check-circle yes" style="font-size:48px;color:green; display:none;text-align: left;"></i>
+                            </div>
+                            </div>
+                            <div class="servicesForm">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <h5>Price</h5>
+                                            <input type="text" placeholder="Enter Price" class="search-input" id="price">
+                                        </div>
+                                        <div class="col-md-6">
+                                           <!-- <h5>Labour Charge</h5>
+                                            <input type="text" placeholder="Enter Labour Charge Amount" class="search-input" id="labour_charge"> -->
+                                        </div>
+                                        <div class="col-md-6">
+                                             <h5 class="ml-2">Please Select Date</h5>
+                                                <input type="date" id="date" name="birthday" class="search-input">
+                                        </div>
+                                        <div class="col-md-6">
+                                             <h5 class="ml-2">Please Select  Time</h5>
+                                           <input type="time" id="time" name="appt" class="search-input">
+                           
+                                        </div>
+                                        <div class="col-md-12"> <button class="last-btn" id="add_notes">Submit</button></div>
+                                    </div>
+                            </div>
+                            
+                            
+                           
+                         
+                            
+                            @endif
+                            @if(auth('owner')->user()->roleid == 4)
+                          
+                            <div class="appointmentOuter">
+                            <h1 class="title">Add Work Order</h1>
+                            <!-- <div id="editor" height="150"></div> -->
+                            <div class="form-group">
+                            <h3>Description </h3>
+                           <textarea name="description" id="description" placeholder="Enter Your Description" style="width: 100% !important; color:black;font-size: 20px; text-align: center;"></textarea>
+                              </div>
+                            <!-- <textarea name="description" id="description" class="search-input" type="text"> -->
+                            <div class="image-drop">
+                                <img src="{{ asset('images')}}/image/Upload icon.png" height="50" alt="">
 
-            @if(auth('owner')->check())
 
-            @if(auth('owner')->user()->roleid == 1)
-            <h5>Price</h5>  @csrf
-            <input type="text" placeholder="Enter Price" class="search-input" id="price">
-            <h5 class="ml-2">Please Select Date and Time</h5>
-            <input type="date" id="date" name="birthday" class="search-input">
-            <p></p>
-            <input type="time" id="time" name="appt" class="search-input">
-            <button class="last-btn" id="add_notes">Submit</button>
-            @else
-            <h5>Select Vendor</h5>
-            <input type="text" placeholder="Search the Vendor Name" class="search-input" id="vendor-search">
-            <div id="vendor-list" class="text-dark overflow-scroll" >
+                                <h3>Drop you image here </h3>
+                               <div class="file-upload-wrapper btn btn-success" style="opacity: 1 !important;background:transparent;">
+                               <input type="file" class="file-upload" name="product-img" id="product-img" alt="product-img" multiple style="opacity: 0;"/>
+                               <img id="frame" src="" width="100px" height="100px" class="rounded-circle" style="border:2px solid;"/>
+                               <!-- <span style="display:none; color: #7FFFD4; text-align: start;" id="upload-alert"><i class="fa fa-check-circle" style="font-size:48px;color:green"></i></span> -->
+                               <i class="fa fa-check-circle yes" style="font-size:48px;color:green;text-align: left;"></i>
+                            </div>
+                            </div>
+                            <div class="venderList"><h5 class="title">Select Vendor</h5>
+                            <input type="text" placeholder="Search the Vendor Name" class="search-input" id="vendor-search">
+                            <div id="vendor-list" class="overflow-scroll" >
 
-                </div>
+                                </div>
+                            </div>
+                                <button class="last-btn" id="submit-issue">Submit</button>
+                            @endif
+                            <!-- @else
+                            <h5>Select Vendor</h5>
+                            <input type="text" placeholder="Search the Vendor Name" class="search-input" id="vendor-search">
+                            <div id="vendor-list" class="text-dark overflow-scroll" >
 
-                <button class="last-btn" id="submit-issue">Submit</button>
-            @endif
-            @else
-            <h5>Select Vendor</h5>
-            <input type="text" placeholder="Search the Vendor Name" class="search-input" id="vendor-search">
-            <div id="vendor-list" class="text-dark overflow-scroll" >
+                                </div>
 
-                </div>
+                                <button class="last-btn" id="submit-issue">Submit</button>
+                            @endif -->
 
-                <button class="last-btn" id="submit-issue" disabled>Submit</button>
-            @endif
-
-        </div>
-        <div class="history-details">
+                        </div>
+                    </div>
+    <div class="col-md-4">
+        <div class="historyOuter">
         <div class="d-flex justify-content-center">
             <div class="spinner-border"
                  role="status" id="loading">
                 <span class="sr-only">Loading...</span>
             </div>
         </div>
-            <div class="img-div-details">
+            <div class="imgDetail">
                 <div id="product-details-data">
                </div>
                 <div class="befor">
@@ -71,7 +122,7 @@
 
                     </div>
                     <div class="accordion" id="myAccordion">
-        <div class="accordion-item">
+              <div class="accordion-item">
             <h2 class="accordion-header" id="headingOne">
                 <button type="button" class="accordion-button collapsed" data-bs-toggle="collapse" data-bs-target="#collapseOne">History</button>
             </h2>
@@ -89,6 +140,10 @@
 
 
             </div>
+        </div>
+    </div>
+</div>
+
 
         </div>
     </section>
@@ -160,9 +215,31 @@
     </section>
 </body>
 <!-- <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script> -->
+<script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
      $(document).ready(function() {
-        // $('.file-upload').file_upload();
+        $("#frame").css('display', 'none');
+        $(".yes").css('display', 'none');
+        $("#product-img").change(function() {
+        $("#frame").css('display', 'block');
+        $(".yes").css('display', 'block');
+        $("#upload-alert").text('Image Uploaded');
+        $("#upload-alert").css('display', 'block');
+        frame.src=URL.createObjectURL(event.target.files[0]);
+        Swal.fire({
+    title: 'Upload',
+    heading: 'success',
+    text: 'Image uploaded',
+    icon: 'success',
+    position:"top-center",
+    fadeDelay: 10000,
+    offset: 40,
+    loader: true,        // Change it to false to disable loader
+    loaderBg: '#9EC600'
+    });
+    });
+       
         var getUrlParameter = function getUrlParameter(sParam) {
     var sPageURL = window.location.search.substring(1),
         sURLVariables = sPageURL.split('&'),
@@ -223,7 +300,7 @@ function show(data) {
              if(r.images != null){
                 x = r.images
              }else{
-              tab1 += `<img src="${assetUrl + 'product-dummy.png'}" height="100" width="100" alt="" class="img-thumbnail hover-zoom" style="height: 100px !important;">`;
+              tab1 += `<img src="${imgUrl + 'product-dummy.png'}" height="100" width="100" alt="" class="img-thumbnail hover-zoom" style="height: 100px !important;">`;
              }
 
 
@@ -236,14 +313,12 @@ function show(data) {
     //  let img1 = r.images == null?"https://miro.medium.com/max/600/0*jGmQzOLaEobiNklD":r.images;
 
      $("orderid").val(r.order_id)
-     tab += ` <div class="hover03"><div><figure><img src="${imgUrl}/images/products/${img}" height="400" width="700" alt="" class="img-thumbnail" style="height: 400px !important;"></figure></div></div>
-                <div class="container mt-3" width="500" id="multi-img">${tab1}</div>
+     tab += ` <div class="hover03"><div><figure><img src="${imgUrl}/images/products/${img}" height="200" width="500" alt="" class="img-thumbnail" ></figure></div></div>
+                <div class="container mt-3" width="300" id="multi-img">${tab1}</div>
                 <h1 class="">${r.product_name}<small class="text-muted" style="font-size: 20px;">(${r.brand})</small></h1>
                 <h6>${r.product_name} services we provide include</h6>
 
-                <p>
-                ${r.product_description}
-                </p>`;
+               `;
  }
     // // Setting innerHTML as tab variable
      document.getElementById("product-details-data").innerHTML = tab;
@@ -319,7 +394,8 @@ function show1(data) {
 // Vendor List Start
 let ownerid = $("#ownerid").val();
 let owner_id = $("#owner_id").val();
-if(ownerid == 4 || owner_id == null)
+
+if(owner_id != null)
 {
 
 
@@ -347,21 +423,31 @@ function showVendor(data) {
     let tab ='';
     let count = 0;
     // Loop to access all rows
-     for (let r of data.data) {
+    if (data.status == true) {
+        for (let r of data.data) {
 
-       let img = r.image == null?"{{ asset('images')}}/default-profile.png":r.image;
-     tab += ` <div class="list-vendor"><div class="image-div"><img src="${img}" alt="" width="50" class="float-start rounded-circle" id="${r.vendor_id}"><small class="text-muted h5 muted" id="vname">${r.first_name} ${r.last_name}</small> <div class="form-check">
-  <input type="radio" class="form-check-input" id="radio1" name="optradio" value="${r.id}, ${r.first_name} ${r.last_name}" checked>
+let img = r.image == null?"{{ asset('images')}}/default-profile.png":r.image;
+tab += ` <div class="list-vendor"><div class="image-div"><img src="${img}" alt="" width="50" class="float-start rounded-circle" id="${r.vendor_id}"><small class="text-muted h5 muted" id="vname">${r.first_name} ${r.last_name}</small> <div class="form-check">
+<input type="radio" class="form-check-input" id="radio1" name="optradio" value="${r.id}, ${r.first_name} ${r.last_name}">
 
 </div></div>
 
-                <p>Code: #D-V00${r.id}<input type="hidden" value="${r.id}" id="vid"></p>
+       <input type="hidden" value="${r.id}" id="vid">
 
-            </div><hr style="width:490">`;
+     </div><hr style="width:490">`;
 
-         }
-         console.log(tab)
-      document.getElementById("vendor-list").innerHTML = tab;
+  }
+  console.log(tab)
+document.getElementById("vendor-list").innerHTML = tab;
+    }else{
+        tab += ` 
+
+<p>Vendor Not assigned for this product!
+</p>
+`;
+            document.getElementById("vendor-list").innerHTML = tab;
+    }
+    
 }
      }
 
@@ -380,10 +466,15 @@ function showVendor(data) {
         let description = $('#description').val();
 
 
-        var files = $('#product-img')[0].files[0];
+        // var files = $('#product-img')[0].files[0];
+        var files = $('#product-img').prop('files');
+
         let formData = new FormData();
+        for(i=0; i<files.length; i++) {
+        formData.append('image', files[i]);
+         }
         formData.append('product_id', pid);
-        formData.append('image', files);
+        // formData.append('image', files);
         formData.append('vendor_id', vname[0]);
         formData.append('description', description);
         formData.append('vendor_name', vname[1]);
@@ -407,18 +498,26 @@ async function getapi3(api_url, options) {
     // Storing data in form of JSON
     var data1 = await response.json();
     console.log(response);
-    sendNotification(data1);
    if(data1.status== true)
    {
 
-    $.toast({
+    Swal.fire({
+  title: data1.message,
     heading: 'Alert',
     text: data1.message,
-    icon: 'info',
+    icon: 'success',
+    position:"top-center",
+    fadeDelay: 10000,
+    offset: 40,
     loader: true,        // Change it to false to disable loader
-    loaderBg: '#9EC600'  // To change the background
+    loaderBg: '#9EC600'
 });
-// location.href = 'owner/dashboard';
+setTimeout(
+  function() 
+  {
+    location.href = 'owner/dashboard';
+  }, 4000);
+
 
    }
 
@@ -426,7 +525,7 @@ async function getapi3(api_url, options) {
 }
 }else{
 
-            $.toast({
+    Swal.fire({
     heading: 'Alert',
     text: 'You are not authorized',
     icon: 'info',
@@ -439,51 +538,31 @@ async function getapi3(api_url, options) {
 });
 
 /*-----------Add Notes----------*/
-function sendNotification(data){
-
-
-    let userId = $('#owner_id').val();
-
-
-                $.ajaxSetup({
-                    headers: {
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                    }
-                });
-                $.ajax({
-                    url: '{{  route("send.web-notification") }}',
-                    type: 'POST',
-                    data: {
-                        orderId: data.data,
-                        id:userId
-                    },
-                    dataType: 'JSON',
-                    success: function (response) {
-                        alert('notification sent');
-                    }
-                });
-
-    }
 
 
 /*-----------Add Notes----------*/
 $('#add_notes').click(function(){
         let ownerid = $('#ownerid').val();
 
+        var files = $('#product-img').prop('files');
 
+        let formData = new FormData();
+        for(i=0; i<files.length; i++) {
+        formData.append('images', files[i]);
+         }
         let pid = getUrlParameter('id');
         let vid = $('#radio1').val();
         let description = $('#description').val();
         let date = $('#date').val();
         let time = $('#time').val();
+        let labour_charge = $('#labour_charge').val();
         console.log(description);
         let order_amount = $('#price').val();
-        var files = $('#product-img')[0].files[0];
-        let formData = new FormData();
+
         formData.append('order_id', order_id);
-        formData.append('images', files);
         formData.append('order_amount', order_amount);
         formData.append('note', description);
+        formData.append('labour_charge', labour_charge);
         formData.append('time', time);
         formData.append('date', date);
         console.log(formData);
@@ -504,21 +583,40 @@ async function getapi3(api_url, options) {
 
     // Storing data in form of JSON
     var data1 = await response.json();
+    console.log(data1)
    if(data1.status== true)
    {
 
-    $.toast({
+    Swal.fire({
     heading: 'Alert',
     text: 'Notes has been submitted',
-    icon: 'info',
-    loader: true,        // Change it to false to disable loader
+    icon: 'success',
+    loader: true, 
+    timer: 5000,       // Change it to false to disable loader
     loaderBg: '#9EC600'  // To change the background
 });
-location.href = 'owner/dashboard';
+setTimeout(
+  function() 
+  {
+    location.href = 'owner/dashboard';
+  }, 4000);
+  }else{
+    Swal.fire({
+    heading: 'Alert',
+    text: data1.message,
+    icon: 'danger',
+    offset: 50,
+    loader: true, 
+    timer: 5000,       // Change it to false to disable loader
+    loaderBg: '#9EC600'
+    });
+  }
+
+
    }
 
 
-}
+
 
 // Calling that async function
 
@@ -561,12 +659,12 @@ function showVendor(data) {
 
        let img = r.image == null?"{{ asset('images')}}/default-profile.png":r.image;
      tab += ` <div class="list-vendor"><div class="image-div"><img src="${img}" alt="" width="50" class="float-start rounded-circle" id="${r.vendor_id}"><small class="text-muted h5 muted" id="vname">${r.first_name} ${r.last_name}</small> <div class="form-check">
-  <input type="radio" class="form-check-input" id="" name="optradio" value="${r.id},${r.first_name} ${r.last_name}" checked onclick="vendor_id(${r.id})">
+  <input type="radio" class="form-check-input" id="radio1" name="optradio" value="${r.id}, ${r.first_name} ${r.last_name}" checked>
 
 </div></div>
 
-                <p>Code: #D-V00${r.id}<input type="hidden" value="${r.id}" id="vid"></p>
-            </div>
+              <input type="hidden" value="${r.id}" id="vid">
+
             </div><hr style="width:490">`;
 
          }

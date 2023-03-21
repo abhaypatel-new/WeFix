@@ -2,8 +2,7 @@
     <div class="maindiv">
         <div class="btn-div">
             <h1>About Us</h1>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit ut aliquam, purus sitsit amet <br>, consectetur
-                adipiscing elit ut aliquam, purus sit</p>
+            <p>WeFix is a Maintenance service provider company which is include both <br> hardware maintenance and support services, and network software maintenance and support services.</p>
             <!-- <a class="box-btn">Our Services</a>
                 <a class="border-btn">Contact Us </a> -->
 
@@ -32,9 +31,9 @@
             </p>
             <div class="row">
                 <div class="we-are-main-01">
-                    <div class="we-are-main">
+                <div class="we-are-main">
                         <h2 class="we-are-text-h2">
-                            80
+                        <span id="vendor-count" class="we-are-text-h2"></span>
                         </h2>
                         <h5 class="we-are-text-h5">
                             Member
@@ -43,16 +42,16 @@
                     </div>
                     <div class="we-are-main">
                         <h2 class="we-are-text-h2">
-                            44
+                        <span id="user-count"  class="we-are-text-h2"></span>
                         </h2>
                         <h5 class="we-are-text-h5">
                             Total
-                            <br> Branches
+                            <br> owner
                         </h5>
                     </div>
                     <div class="we-are-main">
                         <h2 class="we-are-text-h2">
-                            12
+                        <span id="confirmed-count"  class="we-are-text-h2"></span>
                         </h2>
                         <h5 class="we-are-text-h5">
                             Project
@@ -61,11 +60,11 @@
                     </div>
                     <div class="we-are-main">
                         <h2 class="we-are-text-h2">
-                            50
+                        <span id="pending-count"  class="we-are-text-h2"></span>
                         </h2>
                         <h5 class="we-are-text-h5">
-                            Client
-                            <br> Satisfaction
+                            Project
+                            <br> Pending
                         </h5>
                     </div>
                 </div>
@@ -141,43 +140,21 @@
     <div>
         <h1 class="Product-01">Meet Our Team</h1>
     </div>
-    <div class="tema-card-all">
-        <div class="tema-card">
-            <img src="{{ asset('images')}}/image/Mary Walden.jpg" alt="" width="220px" height="260px">
-            <h5>Mary Walden</h5>
-            <h6>Technician</h6>
-            <p>On the other hand, we denounce <br> righteous indignation and dislike <br>
-                are so beguiled and. </p>
+    <section class="swiper-sec">
+
+        <div class="swiper mySwiper container">
+        <div class="swiper-button-next"></div>
+        <div class="swiper-wrapper" id="our-vendors">
+            </div>
+            <div class="swiper-button-prev"></div>
         </div>
-        <div class="tema-card">
-            <img src="{{ asset('images')}}/image/Brooklyn Simmons.jpg" alt="" width="220px" height="260px">
-            <h5>Brooklyn Simmons</h5>
-            <h6>Project Manager</h6>
-            <p>On the other hand, we denounce <br> righteous indignation and dislike <br>
-                are so beguiled and. </p>
+           
         </div>
-        <div class="tema-card">
-            <img src="{{ asset('images')}}/image/Yun Sanchez.jpg" alt="" width="220px" height="260px">
-            <h5>Yun Sanchez</h5>
-            <h6>Founder & CEO</h6>
-            <p>On the other hand, we denounce <br> righteous indignation and dislike <br>
-                are so beguiled and. </p>
-        </div>
-        <div class="tema-card">
-            <img src="{{ asset('images')}}/image/James Lopez.jpg" alt="" width="220px" height="260px">
-            <h5>James Lopez</h5>
-            <h6>Technician</h6>
-            <p>On the other hand, we denounce <br> righteous indignation and dislike <br>
-                are so beguiled and. </p>
-        </div>
-        <div class="tema-card">
-            <img src="{{ asset('images')}}/image/Mary Walden01.jpg" alt="" width="220px" height="260px">
-            <h5>Mary Walden</h5>
-            <h6>Technician</h6>
-            <p>On the other hand, we denounce <br> righteous indignation and dislike <br>
-                are so beguiled and. </p>
-        </div>
-    </div>
+
+        <!-- <div class="swiper-button-next"></div>
+        <div class="swiper-button-prev"></div> -->
+        <div class="swiper-pagination" style="bottom: -20px;"></div>
+    </section>
 
 
 
@@ -205,11 +182,10 @@
                    font-size: 20px;
                    color: #6759FF;"> Menu Links</li>
 
-                <li> <a href="./index.html">Home</a> </li>
-                <li><a href="./service.html">Service</a></li>
-                <li>About US </li>
-                <li>Tarot Cards</li>
-                <li>Blog</li>
+                 <li><a href="{{url('/')}}">Home</a></li>
+                <li><a href="{{url('/services')}}">Service</a></li>
+                <li><a href="{{url('/about-us')}}">About US</a></li>
+                <li><a href="{{url('/blog')}}">Blog</a></li>
             </ul>
         </div>
         <div class="footer-third-div">
@@ -220,12 +196,11 @@
                     font-size: 20px;
                     color: #6759FF;"> Services</li>
 
-                <li>Blog</li>
-                <li>Refrigerator</li>
-                <li>Mobile</li>
-                <li>Laptop</li>
-                <li>Blender</li>
-                <li>Air purifier</li>
+                 <li><a href="{{url('/services')}}">Refrigerator</a></li>
+                <li><a href="{{url('/services')}}">Mobile</a></li>
+                <li><a href="{{url('/services')}}">Laptop</a></li>
+                <li><a href="{{url('/services')}}">Blender</a></li>
+                <li><a href="{{url('/services')}}">Air purifier</a></li>
             </ul>
         </div>
         <div class="footer-four-div">
@@ -248,5 +223,121 @@
         </div>
     </section>
 </body>
+ <!-- Swiper JS -->
+ <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
 
+<!-- Initialize Swiper -->
+<script>
+    var swiper = new Swiper(".mySwiper", {
+        slidesPerView: 3,
+        spaceBetween: 30,
+        slidesPerGroup: 3,
+        loop: true,
+        loopFillGroupWithBlank: true,
+        pagination: {
+            el: ".swiper-pagination",
+            clickable: true,
+        },
+        navigation: {
+            nextEl: ".swiper-button-next",
+            prevEl: ".swiper-button-prev",
+        },
+    });
+</script>
+<script>
+    /*--------Vendor slider-------------*/
+    $(document).ready(function() {
+        $("#menu1").removeClass("active");
+        $("#menu2").removeClass("active");
+        $("#menu4").removeClass("active");
+      $("#menu3").addClass("active");
+        var appUrl ="{{env('APP_URL')}}";
+        let userId = $("#owner_id").val();
+const url =
+        appUrl+"/owner/all_vendors_list";
+
+// Defining async function
+async function getapivendor(url) {
+
+    // Storing response
+    const response = await fetch(url);
+
+    // Storing data in form of JSON
+    var data = await response.json();
+    console.log(data);
+    
+    show_vendor_list(data);
+}
+// Calling that async function
+getapivendor(url);
+
+function show_vendor_list(data) {
+    console.log(data.data)
+    let tab ='';
+    let count = 0;
+    // Loop to access all rows
+    for (let r of data.data) {
+        let img = r.image == null?"{{ asset('images')}}/image/Mary Walden.jpg":r.image;
+         tab += `     <div class="swiper-slide swipe-res proposal-hover" style="width: 260.333px !important; margin-right: 30px; !important">
+                    <div class="tema-card">
+                    <img src="${img}" alt="" width="220px" height="260px" style="height: 230px;">
+                        <h5>${r.first_name} ${r.last_name}</h5>
+                        <h6>${r.company}</h6>
+                        <p>${r.desc}. </p>
+                    </div>
+                </div>`;
+
+    }
+    // Setting innerHTML as tab variable
+ document.getElementById("our-vendors").innerHTML = tab;
+
+
+}
+
+/*-------Start-Count----------*/
+
+
+
+const counturl =
+  '{!! route("get.count")!!}';
+
+// Defining async function
+async function getcount(counturl) {
+
+  // Storing response
+  const response = await fetch(counturl);
+
+  // Storing data in form of JSON
+  var data = await response.json();
+  console.log(data);
+  
+  showcount(data);
+}
+// Calling that async function
+getcount(counturl);
+
+
+function showcount(data) {
+
+  let tab = '';
+  let count = 0;
+  // Loop to access all rows
+  if (data.status == 'true') {
+
+  
+    $("#vendor-count").text(data.data.vendor);
+    $("#user-count").text(data.data.owner);
+    $("#pending-count").text(data.data.pending);
+    $("#confirmed-count").text(data.data.confirmed);
+   
+  } else {
+    alert("failed")
+    $("#show-report").show();
+  }
+}
+
+/*----------End-Count---------*/
+    });
+/*-------End Vendor-----------*/
+    </script>
 </html>

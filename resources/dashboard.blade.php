@@ -23,7 +23,8 @@
 </head>
 
 <body id="dashboard-body">
-  <div id="dashboard-header">
+  <div id="dashboard-header" style="
+    position: fixed;">
     <nav class="navbar navbar-expand-lg">
       <a class="navbar-brand" href="{{url('/')}}"><a href="{{url('/')}}" title="Image from freeiconspng.com"><img src="https://www.freeiconspng.com/uploads/service-department-wrench-icon-15.png" width="80" alt="service department, wrench icon" /></a></a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
@@ -545,37 +546,6 @@
        </div>
 </div>
     </div>
-    <!-- <div class="col-md-2">
-
-       <div class="card-body">
-       <div class="main-Button-3" id="Workorder" style="cursor: pointer;">
-        <h5 style="color: #6759FF;">Work Order</h5>
-
-
-</div>
-    </div>
-  </div> -->
-    <!-- <div class="col-md-5" style="text-align: end;">
-    <div class="card-body">
-    <div class="btn-tab" id="confirm" style="cursor: pointer;">
-        <h5 class="card-title">Confirmed</h5>
-       </div>
-</div>
-    </div>
-    <div class="col-md-2">
-       <div class="card-body">
-       <div class="Pending btn btn-primary" id="pending" style="cursor: pointer;">
-        <h5 class="card-title" style="padding-left: 20px;padding-right: 20px;">Pending</h5>
-       </div>
-</div>
-    </div>
-    <div class="col-md-5">
-       <div class="card-body">
-       <div class="History btn btn-primary" style="cursor: pointer;" id="history">
-        <h5 class="card-title" style="padding-left: 20px;padding-right: 20px;">History</h5>
-       </div>
-</div>
-    </div> -->
     <!-- <div class="col-md-4">
        <div class="card-body">
        <div class="workorder" id="Workorder" style="cursor: pointer;">
@@ -900,6 +870,15 @@ text-align: center;><div class="images-div"></div>
        $("#Workorder h5").css("color", "#6759FF");
        $("#confirm h5").css("color", "#6759FF");
        $("#history h5").css("color", "white");
+      // $(".setting-color").css("color", "#000");
+      // $(".Proposal").css("background-color", "#e4e6ef");
+      // $(".Proposal-color").css("color", "#6759ff");
+      // $(".notification-color").css("color", "#000");
+      // $(".Notification").css("background-color", "#ffffff");
+      // $(".logout-color").css("color", "#000");
+      // $(".Logout").css("background-color", "#ffffff");
+      // $(".pending-color").css("color", "#000");
+      // $(".Pending").css("background-color", "#fff");
 
       let id = '<?php echo auth('owner')->user()->id; ?>';
       $("#main-tab").show();
@@ -983,12 +962,12 @@ text-align: center;><div class="images-div"></div>
     </div>
   </div>
   <div class="row g-0">
-    <div  style="margin-top: -20px; margin-left: 226px;" class="col-md-2 text-center">
-      <img src="${vendor}" class="rounded-circle mt-20" alt="..." id="${id}" style="height: 50px; width: 60px;">
+    <div class="col-md-2 text-center">
+      <img src="${vendor}" class="rounded-circle mt-20" alt="..." id="${id}" style="height:80px;">
     </div>
 
   <div class="col-md-10">
-  <div style="margin-left: 325px; margin-top: -60px;"class="card-body">
+  <div class="card-body">
    <h5 style="font-size: 20px;" class="card-title">${r.vendor_name}  <small class="text-muted">(${time} ${date} )</small></h5>
     <div style="margin-top: 24px;margin-left: 0px;" class="row">
         <div style="font-size: 20px;background-color: #F0EEFF;color: #6759FF;height: 40px;width: 40px; !important;display: flex;align-items: center;flex-wrap: wrap;justify-content: space-around;align-content: space-around;" class="col-sm-4 btn ">
@@ -1003,8 +982,8 @@ text-align: center;><div class="images-div"></div>
         </div>
   </div>
   <div style="margin-top: 24px;margin-left: 0px;" class="row">
-        <div style="margin-top: -20px;margin-left: 250px;" class="col-sm-12 ">
-        <div class="container mt-3" id="multi-img">
+        <div class="col-sm-12 btn ">
+        <div class="proposal-hover">
         ${img2}
         </div>
         </div>
@@ -1027,7 +1006,7 @@ text-align: center;><div class="images-div"></div>
           document.getElementById("Proposal-card").innerHTML = tab;
         }
       }
-
+    });
     var assetUrl = "{{env('ASSET_URL')}}";
 
     var appUrl = "{{env('APP_URL')}}";
@@ -1059,87 +1038,48 @@ text-align: center;><div class="images-div"></div>
     }
 
     function show(data) {
-     alert("fdsfs")
-      let tab = '';
 
+      let tab = '';
       let count = 0;
       // Loop to access all rows
       if (data.status == true) {
         console.log(data.status);
         for (let r of data.data) {
-          let img2 = '';
-          var x = new Array();
-             if(r.image != null){
-                x = r.image
-             }
-        for (let i of x) {
-          img2 += `<img src="${i}" height="100" width="100" alt="" class="img-thumbnail hover-zoom" style="height: 100px !important;">`;
+          let img = r.thumbnail_image == null ? assetUrl + "product-dummy.png" : r.thumbnail_image;
+          let productImg = r.image == null ? assetUrl + "default-profile.png" : r.image;
+          let vendor = r.vendor_image == null ? assetUrl + "default-profile.png" : r.vendor_image;
 
-        }
+          tab += ` <div class="Proposal-card-01 text-center">
+<div class="proposal-hover">
+<img src="${img}" class="rounded-start" alt="..." id="${id}" height="180" width="180"></div>
 
-              let img = r.thumbnail_image == null ? assetUrl + "product-dummy.png" : r.thumbnail_image;
-              // let img1 = r.image == null ? assetUrl + "product-dummy.png" : r.image;
-              let vendor = r.vendor_images == null ? assetUrl + "default-profile.png" : r.vendor_images;
-              let note = r.note == null ? "There is no any note!" : r.note;
-              if(r.date != null || r.time != null)
-              {
-                  date = r.date;
-                  time = r.time;
-              }
+                <h4>${r.product_name}</h4>
+                <p>Code:${r.order_id}</p>
+                <ul>
+                    <li style="color:#6F767E; display:inline-block;white-space: nowrap;overflow: hidden;text-overflow: ellipsis;max-width: 13ch; color:#6F767E">${r.product_description}</li>
+
+                </ul>
+                <div class="vendor-class">
+                    <div class="vendor-name">
+                    <div class="row g-0">
+    <div class="col-md-2">
+    <div class="Group-img ml-5"><img src="${vendor}" width="50"
+                           alt="" class="float-start rounded-circle"></div></div>
+    <div class="col-md-10">
+
+    <h4 class="card-title" style="width: 100%;">${r.vendor_name}</h4>
+                        <h4 class="card-text"><small class="text-muted">${r.date} ${r.time}</small></h4>
+                        <p>Code: #D-${r.vendor_id}</p>
 
 
-          tab += `<div class="card mb-3">
-<div class="row g-0">
-<div class="col-md-3">
-  <img src="${img}" class="img-thumbnail rounded-start ml-5 mt-3" alt="..." id="${id}" width="200" height="140" style="height: 140px;">
-</div>
-<div class="col-md-9">
-  <div class="card-body">
-    <h5 style="font-size: 22px;" class="card-title">${r.product_name}</h5>
-    <h6 style="font-size: 14px; font-weight: 400;" class="card-title">${r.order_id}</h6>
-    <p style="font-size: 16px; font-weight: 400;" class="card-text">${r.product_description}</p>
-    <hr></hr>
 
   </div>
-</div>
-</div>
-<div class="row g-0">
-<div style="margin-top: -20px; margin-left: 226px;" class="col-md-3">
-  <img src="${vendor}" class="rounded-circle ml-5 mt-4" alt="..." id="${id}" width="50">
-</div>
-<div class="col-md-9">
-  <div class="card-body">
-    <h5 style="margin-left: 320px; margin-top: -55px; font-size: 20px;" class="card-title">${r.first_name} ${r.last_name} <small class="text-muted">(${date}${time})</small></h5>
-    <div class="row g-0">
 
-        <div class="col-md-12" style="padding: 5px 15px 5px 270px;">
-        <div style="margin-top: 24px;margin-left: 0px;" class="row">
-            <div style="font-size: 20px;background-color: #F0EEFF;color: #6759FF;height: 40px;width: 40px; !important;display: flex;align-items: center;flex-wrap: wrap;justify-content: space-around;align-content: space-around;" class="col-sm-4 btn">
-            Price: ${r.order_amount}
-            </div>
-            <div class="col-sm-4">
-            <a href="#" style="height: 40px;background-color: #6759FF;font-size: 17px;" class="btn btn-primary">${r.order_status}</a>
-            </div>
-            <div class="col-sm-4">
-            <a href="#" style="height: 40px;background-color: #6759FF;font-size: 17px;width: 70px;border-radius: 14px;" class="btn btn-primary"><i class="fa fa-phone" aria-hidden="true"></i>Call</a>
-            </div>
-            </div>
-      </div>
-      <div class="row g-0">
-        <div class="col-md-12" style="padding: 5px 15px 5px 27px; ">
-        <h5 class="card-title" style="margin-top: 15px;margin-left: 260px; font-weight: 400;">${r.description}</h5>
-        </div>
-       </div>
-        <div class="row g-0">
-        <div class="col-md-12" style="padding: 5px 15px 5px 285px; ">
-        <h5 class="card-title">${img2}</h5>
-        </div>
-        </div>
-        </div>
-</div>
+  </div>
 
-</div>
-</div>`;
+                    </div>
+                </div>
+            </div>`;
           document.getElementById("Proposal-card").innerHTML = tab;
         }
 
@@ -1188,16 +1128,16 @@ text-align: center;><div class="images-div"></div>
       if (data.status == true) {
         console.log(data.status);
         for (let r of data.data) {
-          var x = new Array();
-             if(r.images != null){
-                x = r.images
-             }else{
-              img2 += `<img src="${assetUrl + 'product-dummy.png'}" height="100" width="100" alt="" class="img-thumbnail hover-zoom" style="height: 100px !important;">`;
-             }
-        for (let i of x) {
-          img2 += `<img src="${i}" height="100" width="100" alt="" class="img-thumbnail hover-zoom" style="height: 100px !important;">`;
+        //   var x = new Array();
+        //      if(r.images != null){
+        //         x = r.images
+        //      }else{
+        //       img2 += `<img src="${assetUrl + 'product-dummy.png'}" height="100" width="100" alt="" class="img-thumbnail hover-zoom" style="height: 100px !important;">`;
+        //      }
+        // for (let i of x) {
+        //   img2 += `<img src="${i}" height="100" width="100" alt="" class="img-thumbnail hover-zoom" style="height: 100px !important;">`;
 
-        }
+        // }
 
               let img = r.thumbnail_image == null ? assetUrl + "product-dummy.png" : r.thumbnail_image;
               // let img1 = r.image == null ? assetUrl + "product-dummy.png" : r.image;
@@ -1210,9 +1150,9 @@ text-align: center;><div class="images-div"></div>
               }
 
 
-          tab += ` <div class="Proposal-card-01">
-<div class="proposal-hover">
-<img src="${img}" class="rounded-start" alt="..." id="${id}" height="180" width="300"></div>
+          tab += ` <div class="proposal-hover"><div class="Proposal-card-01">
+
+<img src="${img}" class="rounded-start" alt="..." id="${id}" height="180" width="300">
 
                 <h4>${r.product_name}</h4>
                 <p>Code:${r.order_id}</p>
@@ -1238,7 +1178,7 @@ text-align: center;><div class="images-div"></div>
 
     <div class="col-md-12">
 
-   ${img2}
+
 
 
 
@@ -1249,6 +1189,7 @@ text-align: center;><div class="images-div"></div>
   </div>
 
                     </div>
+                </div>
                 </div>
             </div>`;
           document.getElementById("Proposal-card").innerHTML = tab;
@@ -1266,7 +1207,6 @@ text-align: center;><div class="images-div"></div>
       }
     }
  }
-});
 
 
 
@@ -1805,7 +1745,7 @@ text-align: center;><div class="images-div"></div>
                 count = `<a href="#" class="btn btn-primary">${r.order_status}</a>`;
               } else {
                 let oid = r.order_id;
-                count = `<div onclick="accept(this.id)" class="btn btn-primary" id="${oid}">Accept</div>`;
+                count = `<div onclick="accept(this.id)"class="btn btn-primary" id="${oid}">Accept</div>`;
               }
               let img = r.thumbnail_image == null ? assetUrl + "product-dummy.png" : r.thumbnail_image;
               let img1 = r.order_image == null ? assetUrl + "product-dummy.png" : r.order_image;
@@ -2016,18 +1956,21 @@ text-align: center;><div class="images-div"></div>
           let tab1 = '';
           let count = 0;
           let date = '';
-          let img2 = '';
+
           let time = '';
           // Loop to access all rows
           if (data.status == true) {
 
             for (let r of data.data) {
+              let img2 = '';
               var x = new Array();
              if(r.image != null){
                 x = r.image
+             }else{
+              img2 += `<img src="${assetUrl + 'product-dummy.png'}" height="100" width="100" alt="" class="img-thumbnail hover-zoom proposal-hover" style="height: 100px !important;">`;
              }
         for (let i of x) {
-          img2 += `<img src="${i}" height="100" width="100" alt="" class="img-thumbnail hover-zoom" style="height: 100px !important;">`;
+          img2 += `<img src="${i}" height="100" width="100" alt="" class="img-thumbnail hover-zoom proposal-hover" style="height: 100px !important;">`;
 
         }
 
@@ -2045,43 +1988,43 @@ text-align: center;><div class="images-div"></div>
 
               tab += ` <div class="card mb-3">
   <div class="row g-0">
-    <div style="margin-top: 5px; margin-left: 10px;" class="col-md-4">
-      <img src="${img}" class="img-thumbnail rounded-start ml-5 mt-3" alt="..." id="${r.id}" style=" width:200; height: 140px;">
+    <div class="col-md-4">
+      <img src="${img}" class="img-fluid rounded-start" alt="..." id="${r.id}" style="padding:5px;">
     </div>
-    <div class="col-md-7">
-      <div style="margin-left: -80px;" class="card-body">
-        <h5 style="font-size: 22px; class="card-title">${r.product_name}</h5>
-        <h6 style="font-size: 14px; font-weight: 400;" class="card-title">${r.order_id}</h6>
-        <p style="font-size: 16px; font-weight: 400;" class="card-text">${r.product_description}</p>
+    <div class="col-md-8">
+      <div class="card-body">
+        <h5 class="card-title">${r.product_name}</h5>
+        <h6 class="card-title">${r.order_id}</h6>
+        <p class="card-text">${r.product_description}</p>
         <hr></hr>
 
 
       </div>
     </div>
   </div>
-  <div  style="margin-top: -20px; margin-left: 270px;" class="row g-0">
-    <div class="col-md-2">
-      <img src="${vendor}" class="rounded-circle" alt="..." id="${id}" style="height:50px;">
+  <div class="row g-0">
+    <div class="col-md-2" style="padding: 5px 15px 5px 27px; text-align:end;">
+      <img src="${vendor}" class="rounded-circle" alt="..." id="${id}" style="height:80px;">
     </div>
     <div class="col-md-8">
-      <div style="margin-top: -7px;margin-left: -70px;" class="card-body">
+      <div class="card-body">
         <h5 class="card-title">${r.first_name} ${r.last_name}</h5>
+
+
+
+        <hr></hr>
     </div>
   </div>
   <div class="col-md-2 mt-20">
-           <a href="{{url('/')}}/product-details?id=${r.product_id}&order_id=${r.order_id}" style="margin-left: -380px;margin-top: -20px;background-color: #6759FF;" class="btn btn-primary">Add Quote</a>
+           <a href="{{url('/')}}/product-details?id=${r.product_id}&order_id=${r.order_id}" class="btn btn-primary">Add Quote</a>
             </div>
             <div class="row g-0">
-
-        <div class="col-md-12" style="padding: 5px 15px 5px 27px;">
-        <h5 style="margin-top: 0px;margin-left:0px;text-align: initial;font-weight: 400;">${r.description}</h5>
+        <div class="col-md-4" style="padding: 5px 15px 5px 27px; text-align:end;">
+        <h5 class="card-title">${img2}</h5>
         </div>
-  </div>
-  <div class="row g-0">
-        <div class="col-md-12" style="padding: 5px 15px 5px 27px;">
-        ${img2}
+        <div class="col-md-8" style="padding: 5px 15px 5px 27px; text-align:end;">
+        <h5 class="card-title" style="text-align: initial;">${r.description}</h5>
         </div>
-
   </div>
 </div>`;
 
@@ -2132,24 +2075,27 @@ text-align: center;><div class="images-div"></div>
 
           let tab = '';
           let tab1 = '';
-          let img2 = '';
+
           let tab3 = '';
           let date = '';
-          let reject = '';
+
           let time = '';
-          let count = 0;
+
           // Loop to access all rows
           if (data.status == true) {
 
             for (let r of data.data) {
+              let count = '';
+              let reject = '';
+              let img2 = '';
               var x = new Array();
              if(r.images != null){
                 x = r.images
              }else{
-              img2 += `<img src="${assetUrl + 'product-dummy.png'}" height="100" width="100" alt="" class="img-thumbnail hover-zoom" style="height: 100px !important;">`;
+              img2 += `<img src="${assetUrl + 'product-dummy.png'}" height="100" width="100" alt="" class="img-thumbnail hover-zoom proposal-hover" style="height: 100px !important;">`;
              }
         for (let i of x) {
-          img2 += `<img src="${i}" height="100" width="100" alt="" class="img-thumbnail hover-zoom" style="height: 100px !important;">`;
+          img2 += `<img src="${i}" height="100" width="100" alt="" class="img-thumbnail hover-zoom proposal-hover" style="height: 100px !important;">`;
 
         }
               if(r.date != null || r.time != null)
@@ -2158,11 +2104,11 @@ text-align: center;><div class="images-div"></div>
                   time = r.time
               }
               if (r.note == null) {
-                count = `<a href="#" style="margin-left: -170px;margin-top: -120px;background-color: #6759FF;" class="btn btn-primary">${r.order_status}</a>`;
+                count = `<a href="#" style="margin-left: 180px; margin-top: -130px; background-color: #6759FF;" class="btn btn-primary">${r.order_status}</a>`;
               } else {
                 let oid = r.order_id;
-                count = `<div onclick="accept(this.id)"class="btn btn-primary" style="margin-left: -170px;margin-top: -120px;background-color: #6759FF;" id="${oid}">Accept</div>`;
-                reject = `<div onclick="reject(this.id)"class="btn btn-primary" style="margin-left: 30px;margin-top: -120px;border: none;color: #6759FF;background-color: #F0EEFF;" id="${oid}">Reject</div>`;
+                count = `<div onclick="accept(this.id)"class="btn btn-primary" id="${oid}">Accept</div>`;
+                reject = `<div onclick="reject(this.id)"class="btn btn-primary" id="${oid}">Reject</div>`;
               }
               let img = r.thumbnail_image == null ? assetUrl + "product-dummy.png" : r.thumbnail_image;
               // let img1 = r.image == null ? assetUrl + "product-dummy.png" : r.image;
@@ -2435,6 +2381,7 @@ text-align: center;><div class="images-div"></div>
        $("#pending h5").css("color", "#6759FF");
        $("#confirm h5").css("color", "white");
        $("#history h5").css("color", "#6759FF");
+
       $("#main-tab").show();
       $("#show-notification").hide();
       $("#show-history").hide();
@@ -2476,18 +2423,20 @@ text-align: center;><div class="images-div"></div>
 
           let tab = '';
           let date = '';
-          let img2 = '';
           let time = '';
           let count = 0;
           // Loop to access all rows
           if (data.status == true) {
             console.log(data.status);
             for (let r of data.data) {
+              let img2 = '';
               var x = new Array();
 
 
              if(r.image != null){
                 x = r.image
+             }else{
+              img2 += `<img src="${assetUrl + 'product-dummy.png'}" height="100" width="100" alt="" class="img-thumbnail hover-zoom" style="height: 100px !important;">`;
              }
 
 
@@ -2509,44 +2458,45 @@ text-align: center;><div class="images-div"></div>
               tab += ` <div class="card mb-3">
 <div class="row g-0">
 <div class="col-md-3">
-  <img src="${img}" class="img-thumbnail rounded-start ml-5 mt-3" alt="..." id="${id}" width="200" height="140" style="height: 140px;">
+  <img src="${img}" class="img-thumbnail rounded-start ml-5 mt-3" alt="..." id="${id}" width="200" height="170">
 </div>
 <div class="col-md-9">
   <div class="card-body">
-    <h5 style="font-size: 22px;" class="card-title">${r.product_name}</h5>
-    <h6 style="font-size: 14px; font-weight: 400;" class="card-title">${r.order_id}</h6>
-    <p style="font-size: 16px; font-weight: 400;" class="card-text">${r.product_description}</p>
+    <h5 class="card-title">${r.product_name}</h5>
+    <h6 class="card-title">${r.order_id}</h6>
+    <p class="card-text">${r.product_description}</p>
     <hr></hr>
 
   </div>
 </div>
 </div>
 <div class="row g-0">
-<div style="margin-top: -20px; margin-left: 226px;" class="col-md-3">
-  <img src="${vendor}" class="rounded-circle ml-5 mt-4" alt="..." id="${id}" width="50">
+<div class="col-md-3">
+  <img src="${vendor}" class="rounded-circle ml-5 mt-4" alt="..." id="${id}" width="80">
 </div>
 <div class="col-md-9">
   <div class="card-body">
-    <h5 style="margin-left: 320px; margin-top: -55px; font-size: 20px;" class="card-title">${r.first_name} ${r.last_name} <small class="text-muted">(${date}${time})</small></h5>
+    <h5 class="card-title">${r.first_name} ${r.last_name}</h5>
     <div class="row g-0">
-    <div class="col-md-8" style="margin-left: 240px; padding: 5px 15px 5px 27px;">
-    <div style="width: 560px;margin-top: 24px;margin-left: 0px;" class="row">
-    <div style="font-size: 20px;background-color: #F0EEFF;color: #6759FF;height: 40px;width: 40px; !important;display: flex;align-items: center;flex-wrap: wrap;justify-content: space-around;align-content: space-around;" class="col-sm-4 btn">
-    Price: ${r.order_amount}
-    </div>
-    <div class="col-sm-4">
-    <a href="#" style="height: 40px;background-color: #6759FF;font-size: 17px;" class="btn btn-primary">${r.order_status}</a>
-    </div>
-    <div class="col-sm-4">
-    <a href="#" style="height: 40px;background-color: #6759FF;font-size: 17px;width: 70px;border-radius: 14px;" class="btn btn-primary"><i class="fa fa-phone" aria-hidden="true"></i>Call</a>
-    </div>
-    </div>
-    </div>
-    <h5 class="card-title" style="margin-top: 15px;margin-left: 270px; font-weight: 400;">${r.description}</h5>
-    </div>
-    <div class="col-12" style="margin-left: 230px;padding: 25px 15px 5px 27px;">
-    ${img2}
-    </div>
+        <div class="col-md-4" style="padding: 5px 15px 5px 27px; text-align:end;">
+        <h5 class="card-title"><img src="${img2}" height="100" width="80" alt="" class="img-thumbnail hover-zoom" style="height: 80px !important;"></h5>
+        </div>
+        <div class="col-md-8" style="padding: 5px 15px 5px 27px;">
+        <h5 class="card-title" style="text-align: initial;">${r.description}</h5>
+        </div>
+    <hr></hr>
+    <div class="row">
+        <div class="col-sm-4 btn btn-secondary text-white">
+        Price: ${r.order_amount}
+        </div>
+        <div class="col-sm-4">
+        <a href="#" class="btn btn-primary">${r.order_status}</a>
+        </div>
+        <div class="col-sm-4">
+        <a href="#" class="btn btn-primary"><i class="fa fa-phone" aria-hidden="true"></i>Call</a>
+        </div>
+        </div>
+  </div>
 </div>
 
 </div>
@@ -2596,7 +2546,7 @@ text-align: center;><div class="images-div"></div>
 
           let tab = '';
           let date = '';
-          let img2 = '';
+
           let time = '';
           let count = 0;
 
@@ -2604,9 +2554,12 @@ text-align: center;><div class="images-div"></div>
           if (data.status == true) {
             console.log(data.status);
             for (let r of data.data) {
+              let img2 = '';
               var x = new Array();
              if(r.images != null){
                 x = r.images
+             }else{
+              img2 += `<img src="${assetUrl + 'product-dummy.png'}" height="100" width="100" alt="" class="img-thumbnail hover-zoom" style="height: 100px !important;">`;
              }
         for (let i of x) {
           img2 += `<img src="${i}" height="100" width="100" alt="" class="img-thumbnail hover-zoom" style="height: 100px !important;">`;
@@ -2917,29 +2870,29 @@ function show(data) {
    const api_url =
      appUrl + "/owner/order_reject?order_id=" + orderId;
     toastr.success("<br /><br /><button type='button' id='confirmationRevertYes' class='btn clear'>Yes</button>",'Are you sure, you want to delete it?',
-		{
-			closeButton: false,
-			allowHtml: true,
-			onShown: function (toast) {
-				$("#confirmationRevertYes").click(function(){
-					$.ajax({
-						url: api_url,
-						type: "POST",
+    {
+      closeButton: false,
+      allowHtml: true,
+      onShown: function (toast) {
+        $("#confirmationRevertYes").click(function(){
+          $.ajax({
+            url: api_url,
+            type: "POST",
 
-						success: function(res){
-							console.log(res);
-							if(res.status==true){
-								toastr.success("Done! Record delete successful.", 'Success!', {timeOut: 5000});
+            success: function(res){
+              console.log(res);
+              if(res.status==true){
+                toastr.success("Done! Record delete successful.", 'Success!', {timeOut: 5000});
                 location.reload();
-							}else{
-								toastr.error("Opps! Something is wrong, Please try again.", 'Error!', {timeOut: 5000});
-							}
-						}
-					});
-				});
-			}
-		});
-	}
+              }else{
+                toastr.error("Opps! Something is wrong, Please try again.", 'Error!', {timeOut: 5000});
+              }
+            }
+          });
+        });
+      }
+    });
+  }
   //  var assetUrl = "{{env('ASSET_URL')}}";
 
   //  var appUrl = "{{env('APP_URL')}}";

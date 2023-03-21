@@ -2,8 +2,7 @@
     <div class="maindiv">
         <div class="btn-div">
             <h1>Services</h1>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit ut aliquam, purus sitsit amet ,<br> consectetur
-                adipiscing elit ut aliquam, purus sit</p>
+            <p>Public Building Service Maintenance Contracts: <br>Prevailing wages are also required on all public building service maintenance (janitorial) contracts.</p>
             <!-- <a class="box-btn">Our Services</a>
                 <a class="border-btn">Contact Us </a> -->
 
@@ -15,7 +14,7 @@
     </div>
     </div>
     <section class="services">
-        <h1>All Our Product</h1>
+        <h1 style="margin: 50px 0px 50px 0px;">All Our Product</h1>
 
         <div class="Product-card-al row justify-content-center mt-3l" id="service-list">
             <tr>
@@ -62,11 +61,10 @@
                    font-size: 20px;
                    color: #6759FF;"> Menu Links</li>
 
-                <li>Home </li>
-                <li>Service</li>
-                <li>About US </li>
-                <li>Tarot Cards</li>
-                <li>Blog</li>
+                <li><a href="{{url('/')}}">Home</a></li>
+                <li><a href="{{url('/services')}}">Service</a></li>
+                <li><a href="{{url('/about-us')}}">About US</a></li>
+                <li><a href="{{url('/blog')}}">Blog</a></li>
             </ul>
         </div>
         <div class="footer-third-div">
@@ -77,12 +75,11 @@
                     font-size: 20px;
                     color: #6759FF;"> Services</li>
 
-                <li>Blog</li>
-                <li>Refrigerator</li>
-                <li>Mobile</li>
-                <li>Laptop</li>
-                <li>Blender</li>
-                <li>Air purifier</li>
+                <li><a href="{{url('/services')}}">Refrigerator</a></li>
+                <li><a href="{{url('/services')}}">Mobile</a></li>
+                <li><a href="{{url('/services')}}">Laptop</a></li>
+                <li><a href="{{url('/services')}}">Blender</a></li>
+                <li><a href="{{url('/services')}}">Air purifier</a></li>
             </ul>
         </div>
         <div class="footer-four-div">
@@ -109,6 +106,12 @@
 
 
      $(document).ready(function() {
+
+        $("#menu1").removeClass("active");
+        $("#menu3").removeClass("active");
+        $("#menu4").removeClass("active");
+       $("#menu2").addClass("active");
+
         var appUrl ="{{env('APP_URL')}}";
         const api_url =
         appUrl+"/owner/get_all_product";
@@ -147,21 +150,22 @@ function show(data) {
        if(userId != null){
         
         link = `
-        <div class="Product-card-services proposal-hover">
-        <a href="./product-details?id=${r.id}" style="text-decoration: none;"><img src="${img}" alt="" width="150px" height="150px" id="${r.id}">
+        <div class="col-md-2 col-sm-3">
+        <div class="productCard">
+        <a href="./product-details?id=${r.id}" style="text-decoration: none;"><img src="${img}" alt="" width="100px" height="100px" id="${r.id}">
             <h2></h2>
-            <h3><span style="display:inline-block;white-space: nowrap;overflow: hidden;text-overflow: ellipsis;max-width: 13ch;color:#453d3d;font-size:20px;">${r.product_name}</span></h3>
-            <p><span style="display:inline-block;white-space: nowrap;overflow: hidden;text-overflow: ellipsis;max-width: 13ch;color:#808080; font-size:14px;">${r.product_description}</span></p>
-            </a></div>
+            <h3 style="margin:0"><span style="display:inline-block;white-space: nowrap;overflow: hidden;text-overflow: ellipsis;max-width: 100%;color:#453d3d;font-size:16px; font-weight:500">${r.product_name}</span></h3>
+            <p style="margin:0"><span style="display:inline-block;white-space: nowrap;overflow: hidden;text-overflow: ellipsis;max-width: 100%;color:#808080; font-size:14px;">${r.product_description}</span></p>
+            </a></div></div>
        `;
        }else{
         
-        link =`<div class="Product-card-services proposal-hover" style="cursor: pointer;" onclick="login_alert()">
-        <a style="text-decoration: none;"><img src="${img}" alt="" width="150px" height="150px" id="${r.id}" >
+        link =`<div class="col-md-2 col-sm-4" onclick="login_alert()"><div class="productCard">
+        <a style="text-decoration: none;"><img src="${img}" alt="" width="100px" height="100px" id="${r.id}" >
             <h2></h2>
-            <h3><span style="display:inline-block;white-space: nowrap;overflow: hidden;text-overflow: ellipsis;max-width: 13ch;color:#453d3d;font-size:20px;">${r.product_name}</span></h3>
-            <p><span style="display:inline-block;white-space: nowrap;overflow: hidden;text-overflow: ellipsis;max-width: 13ch;color:#808080; font-size:14px;">${r.product_description}</span></p>
-            </a></div>`;
+            <h3 style="margin:0"><span style="display:inline-block;white-space: nowrap;overflow: hidden;text-overflow: ellipsis;max-width: 100%;color:#453d3d;font-size:16px; font-weight:500">${r.product_name}</span></h3>
+            <p style="margin:0"><span style="display:inline-block;white-space: nowrap;overflow: hidden;text-overflow: ellipsis;max-width: 100%;color:#808080; font-size:14px;">${r.product_description}</span></p>
+            </a></div></div>`;
        }
        
 

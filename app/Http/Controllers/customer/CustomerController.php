@@ -162,7 +162,7 @@ class CustomerController extends Controller
             return redirect()->route('owner.dashboard');
             exit;
         }
-
+        
         return redirect()->back()->with('message', 'You have entered an invalid username or password!');
 
     }

@@ -1,8 +1,7 @@
 <?php
 
-use App\Http\Controllers\WebNotificationController;
-use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\api\ReportController;
+use Illuminate\Support\Facades\Route;
 
 /*
 |--------------------------------------------------------------------------
@@ -30,13 +29,12 @@ Route::get('/about-us', function () {
 Route::get('/blog', function () {
     return view('front-end.blog');
 });
-
+Route::get('/admin', function () {
+    return view('admin.login');
+});
 Route::get('/product-details', function () {
     return view('front-end.product-details');
 });
-
-// Auth::routes();
-
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::get('get-notification-list', [WebNotificationController::class, 'notificationList'])->name('notification.list');
 Route::get('read-notification/{id}', [WebNotificationController::class, 'readNotification'])->name('notification.read');
@@ -47,4 +45,10 @@ Route::post('/send-web-notification', [WebNotificationController::class, 'sendWe
 Route::get('report', [ReportController::class, 'index'])->name('report');
 Route::get('delete-report', [ReportController::class, 'destroy'])->name('delete.report');
 Route::get('view-report', [ReportController::class, 'show'])->name('view.report');
-
+Route::get('list', [ReportController::class, 'listNotification'])->name('list.notification');
+Route::get('view', [ReportController::class, 'viewNotification'])->name('view.notification');
+Route::get('getcount', [ReportController::class, 'getCount'])->name('get.count');
+Route::get('getchart', [ReportController::class, 'getChart'])->name('get.chart');
+Route::get('getpiechart', [ReportController::class, 'getLast'])->name('get.pie.chart');
+Route::post('invoice', [ReportController::class, 'generateInvoice'])->name('invoice.generate');
+Route::get('getsingleorder', [ReportController::class, 'getSingleOrder'])->name('get.single.order');
