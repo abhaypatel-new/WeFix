@@ -143,25 +143,56 @@ class CustomerController extends Controller
     }
     public function owner_login(Request $request)
     {
-
+  
+     $credentials = [];
         $request->validate([
 
             'email' => 'required|email|max:255',
             'password' => 'required|min:6|max:255',
         ]);
-
+       if($request['role'] == 'Dmanager')
+       {
+      
         $credentials = [
             'email' => $request['email'],
             'password' => $request['password'],
-        ];
-        // Hash::make($request['password']);
-        // Dump data
+            'roleid' => 3,
 
-        if (Auth::guard('owner')->attempt($credentials)) {
+        ];
+         if (Auth::guard('owner')->attempt($credentials)) {
+
+            return redirect()->route('district.dashboard');
+            exit;
+        }
+    }else{
+        $credentials = [
+            'email' => $request['email'],
+            'password' => $request['password'],
+            'roleid' => 1,
+        ];
+         if (Auth::guard('owner')->attempt($credentials)) {
+
+            return redirect()->route('owner.dashboard');
+            exit;
+        }else{
+            
+            $credentials = [
+            'email' => $request['email'],
+            'password' => $request['password'],
+            'roleid' => 4,
+        ];
+            if(Auth::guard('owner')->attempt($credentials)) {
 
             return redirect()->route('owner.dashboard');
             exit;
         }
+        }
+    }
+        
+        // Hash::make($request['password']);
+        // Dump data
+
+       
         
         return redirect()->back()->with('message', 'You have entered an invalid username or password!');
 

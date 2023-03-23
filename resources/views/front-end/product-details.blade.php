@@ -1,13 +1,5 @@
 @include('layouts.header.front-end')
-   <!--  <div class="top-head">
-       <div class="btn-div">
-            <h1 class="main-h1">Product Details</h1>
-            <p></p>
-
-
-        </div>
-
-    </div> -->
+  
     <section class="main-sec vendor-main">
         <div class="container">
             <div class="row">
@@ -32,7 +24,7 @@
                                <div class="file-upload-wrapper btn btn-success" style="opacity: 1 !important; background:transparent;">
                                <input type="file" class="file-upload" name="product-img" id="product-img" alt="product-img" multiple style="opacity: 0;"/>
                                <img id="frame" src="" width="100px" height="100px" style="display:none;" class="rounded-circle" style="border:2px solid;"/>
-                               <!-- <span style="display:none; color: #7FFFD4; text-align: start;" id="upload-alert"><i class="fa fa-check-circle" style="font-size:48px;color:green"></i></span> -->
+                             
                                <i class="fa fa-check-circle yes" style="font-size:48px;color:green; display:none;text-align: left;"></i>
                             </div>
                             </div>
@@ -115,6 +107,7 @@
             </div>
         </div>
             <div class="imgDetail">
+               
                 <div id="product-details-data">
                </div>
                 <div class="befor">
@@ -143,7 +136,9 @@
         </div>
     </div>
 </div>
-
+<div class="col-md-8">
+      {!! QrCode::size(300)->backgroundColor(255,90,0)->generate(url()->full()) !!}
+</div>
 
         </div>
     </section>
@@ -614,11 +609,6 @@ setTimeout(
 
 
    }
-
-
-
-
-// Calling that async function
 
 });
 /*----

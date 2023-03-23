@@ -44345,7 +44345,58 @@ color:#000;
   padding-right: 20px;
   margin-left: 20px;
 }
+.Equipment img {
+  height: 27px;
+  width: 50px;
+  padding-right: 20px;
+  margin-left: 20px;
+}
+.Maintenance img {
+  height: 27px;
+  width: 50px;
+  padding-right: 20px;
+  margin-left: 20px;
+}
+.Maintenance h3 {
+  font-family: 'Inter', sans-serif;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 20px;
+  line-height: 150%;
+  /* identical to box height, or 21px */
 
+  color: rgb(0, 0, 0);
+}
+.Maintenance {
+    margin-top: 10px;
+    height: 60px;
+    width: 250px;
+    background: none;
+    border: 2px solid #efefef;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    }
+    .Equipment {
+    margin-top: 10px;
+    height: 60px;
+    width: 250px;
+    background: none;
+    border: 2px solid #efefef;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    }
+.Equipment h3 {
+  font-family: 'Inter', sans-serif;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 20px;
+  line-height: 150%;
+  /* identical to box height, or 21px */
+
+  color: rgb(0, 0, 0);
+}
 .Welcome-text h1 {
   font-size: 28px;
   font-weight: 500;
@@ -44971,3 +45022,28 @@ z-index: 9999;
       @media screen, print {
          p.bodyText {font-size:10pt}
       }
+      .mb-3 label{
+       color: #808080 !important;
+      }
+      #equipment-table_info{
+   color:#000;
+}
+#equipment-table_wrapper select{
+  color:#000;
+}
+#equipment-table_length option{
+  color:#000;
+}
+#equipment-table_length label{
+  color:#000;
+}
+#equipment-table_filter label{
+color:#000;
+}
+#equipment-table_filter input{
+color:#000;
+}
+.dmetaInfo h4{
+    background: #f4f3fa;
+    font-weight: 600 !important;
+}

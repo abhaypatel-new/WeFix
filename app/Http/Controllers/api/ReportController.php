@@ -7,7 +7,9 @@ use App\Model\Category;
 use App\Model\Notification;
 use App\Model\Order;
 use App\Model\Product;
+use App\Model\Setting;
 use App\User;
+use Carbon\Carbon;
 use Auth;
 use DB;
 use Illuminate\Http\Request;
@@ -25,6 +27,10 @@ class ReportController extends Controller
         if(auth('owner')->user()->roleid === 4)
         {
             $report = Order::with('customer')->where(['payment_status' => 'Paid', 'owner_id' => auth('owner')->user()->id])->get();
+        }
+        elseif(auth('owner')->user()->roleid === 3)
+        {
+            $report = Order::with('customer')->where(['payment_status' => 'Paid'])->get();
         }else{
             $report = Order::with('customer')->where(['payment_status' => 'Paid', 'vendor_id' => auth('owner')->user()->id])->get();
         }
@@ -64,10 +70,7 @@ class ReportController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
-    {
-        //
-    }
+   
 
     /**
      * Display the specified resource.
@@ -118,6 +121,19 @@ class ReportController extends Controller
             $count['pending'] = Order::where('order_status', 'pending')->where('owner_id', auth('owner')->user()->id)->count();
             $r = Order::where('owner_id', auth('owner')->user()->id)->where('order_status','Rejected')->count();
             $p = Order::where('owner_id', auth('owner')->user()->id)->where('payment_status','Paid')->count();
+            $count['history'] = $p+$r; 
+            $count['vendor'] = User::where('roleid', '1')->count();
+            $count['owner'] = User::where('roleid', '4')->count();
+             $count['work_order'] = Product::count();
+        }
+        else if(auth('owner')->user()->roleid === 3)
+        {
+            $limit = Setting::find(1);
+        
+            $count['confirmed'] = Order::where(['order_status' =>'Confirmed', 'payment_status' =>'unpaid'])->where('owner_id', auth('owner')->user()->id)->count();
+            $count['pending'] = Order::where('order_status', 'Pending')->where('order_amount', '>=', $limit->value)->count();
+            $r = Order::where('order_status','Rejected')->count();
+            $p = Order::where('payment_status','Paid')->count();
             $count['history'] = $p+$r; 
             $count['vendor'] = User::where('roleid', '1')->count();
             $count['owner'] = User::where('roleid', '4')->count();
@@ -347,30 +363,46 @@ class ReportController extends Controller
      /*----------------Chart Module Start-------*/
       public function getChart()
     {
-        $users = Order::select(DB::raw("COUNT(*) as count"), DB::raw("MONTHNAME(createdAt) as month_name"))
+         $users = [];
+         if(auth('owner')->user()->roleid === 1)
+        {
+             
+            $users = Order::select(DB::raw("COUNT(*) as count"),  DB::raw('sum(order_amount) as totalAmount'), DB::raw("MONTHNAME(createdAt) as month_name"))
+
+                    ->whereYear('createdAt', date('Y'))
+                    ->where('owner_id', auth('owner')->user()->id)
+                    ->groupBy(DB::raw("Month(createdAt)"))
+                    ->pluck('totalAmount', 'month_name');
+           
+        }
+        else{
+            $users = Order::select(DB::raw("COUNT(*) as count"),  DB::raw('sum(order_amount) as totalAmount'), DB::raw("MONTHNAME(createdAt) as month_name"))
 
                     ->whereYear('createdAt', date('Y'))
                     ->groupBy(DB::raw("Month(createdAt)"))
-                    ->pluck('count', 'month_name');
+                    ->pluck('totalAmount', 'month_name');
+            }
+       
  
             $users['labels'] = $users->keys();
             $users['value'] = $users->values();
             $response['status'] = 'true';
-            $response['message'] = 'Invoice generated successfully.';
+            $response['message'] = 'Eearning data retrived successfully.';
             $response['data'] = $users;     
        return response()->json($response);
     }
      public function getLast()
     {
-        $users = Order::select(DB::raw("COUNT(*) as count"), DB::raw("MONTHNAME(createdAt) as month_name"))
-                    ->whereYear('createdAt', date('Y'))
+        
+        $users = Order::select(DB::raw("COUNT(*) as count"),  DB::raw('sum(order_amount) as totalAmount'),DB::raw("MONTHNAME(createdAt) as month_name"))
+                    ->whereMonth('createdAt', '=', Carbon::now()->subMonth()->month)
                     ->groupBy(DB::raw("Month(createdAt)"))
-                    ->pluck('count', 'month_name');
- 
+                    ->pluck('totalAmount', 'month_name');
+   
             $users['labels'] = $users->keys();
             $users['value'] = $users->values();
             $response['status'] = 'true';
-            $response['message'] = 'Invoice generated successfully.';
+            $response['message'] = 'Last month data retrived successfully.';
             $response['data'] = $users;     
        return response()->json($response);
     }

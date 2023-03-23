@@ -1,7 +1,6 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\customer\CustomerController;
 use App\Http\Controllers\districtManager\DistrictManagerController;
 
 /*
@@ -16,34 +15,22 @@ use App\Http\Controllers\districtManager\DistrictManagerController;
 */
 
 
-Route::middleware(['guest:owner'])->group(function () {
+// Route::middleware(['guest:district'])->group(function () {
 
-    Route::get('/', [CustomerController::class, 'showLoginForm'])->name('owner.login');
-    Route::post('/login', [CustomerController::class, 'owner_login'])->name('owner.signin');
+//     Route::get('/', [DistrictManagerController::class, 'showLoginForm'])->name('district.login');
+//     Route::post('/login', [DistrictManagerController::class, 'manager_login'])->name('district.signin');
     
- });
+//  });
 
 
  
- Route::middleware(['owner'])->group(function () {
-    Route::get('dashboard', [CustomerController::class, 'index'])->name('owner.dashboard'); 
-    Route::get('/logout', [CustomerController::class, 'signOut'])->name('owner.logout');  
+//  Route::middleware(['district'])->group(function () {
+//     Route::get('dashboard', [DistrictManagerController::class, 'index'])->name('district.dashboard'); 
+//     Route::get('/logout', [DistrictManagerController::class, 'signOut'])->name('district.logout');  
    
-    });
+//     });
 
 
-
-    
-    
-    
- 
-
-
- 
-
-    
-   
-    
 // Auth::routes();
 
 // Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

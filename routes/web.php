@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\api\ReportController;
+use App\Http\Controllers\districtManager\DistrictManagerController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -32,6 +33,12 @@ Route::get('/blog', function () {
 Route::get('/admin', function () {
     return view('admin.login');
 });
+Route::get('/Dmanager', function () {
+    return view('districtManager.login');
+});
+Route::get('/qrcode', function () {
+    return view('districtManager.qrcode');
+});
 Route::get('/product-details', function () {
     return view('front-end.product-details');
 });
@@ -52,3 +59,10 @@ Route::get('getchart', [ReportController::class, 'getChart'])->name('get.chart')
 Route::get('getpiechart', [ReportController::class, 'getLast'])->name('get.pie.chart');
 Route::post('invoice', [ReportController::class, 'generateInvoice'])->name('invoice.generate');
 Route::get('getsingleorder', [ReportController::class, 'getSingleOrder'])->name('get.single.order');
+Route::get('Dmanager/dashboard', [DistrictManagerController::class, 'index'])->name('district.dashboard');
+Route::post('add', [DistrictManagerController::class, 'add_equipment'])->name('add.equipment');
+Route::get('getEquipment', [DistrictManagerController::class, 'get_equipment'])->name('get.equipment');
+Route::get('getSingleEquipment', [DistrictManagerController::class, 'getSingleEquipment'])->name('get.single');
+Route::post('update/Equipment', [DistrictManagerController::class, 'update'])->name('update.equipment');
+Route::get('delete', [DistrictManagerController::class, 'delete_equipment'])->name('delete.equipment');
+Route::get('/logout', [DistrictManagerController::class, 'signOut'])->name('district.logout');

@@ -10,13 +10,13 @@
     
      <title>{{ config('app.name', 'Laravel') }} - Owners Login</title>
 
-    <!-- Vendors Style-->
-    <link rel="stylesheet" href="{{ asset('css/vendors_css.css') }}">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <!-- Style-->
-    <link rel="stylesheet" href="{{ asset('css/style.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/skin_color.css') }}">
-    <style>
+	<!-- Vendors Style-->
+	<link rel="stylesheet" href="{{ asset('css/vendors_css.css') }}">
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+	<!-- Style-->
+	<link rel="stylesheet" href="{{ asset('css/style.css') }}">
+	<link rel="stylesheet" href="{{ asset('css/skin_color.css') }}">
+	<style>
       .register-btn {
   border-radius: 10px;
   border: none;
@@ -95,7 +95,7 @@
 
                         @else
                         <a class="login-btn" href="{{url('owner')}}">Sing In</a>
-                    
+					
 @endif
 
     </form>
@@ -113,44 +113,44 @@
                     <h2>Sign In</h2>
                     <h5>Welcome back!</h5>
                     <div class="p-16">
-                                <form action="{{ route('owner.signin')}}" method="post">
+								<form action="{{ route('owner.signin')}}" method="post">
                                     @csrf
 
-                                    <div class="form-group">
-                                        <div class="input-group mb-3">
-                                            <span class="input-group-text bg-transparent"><i class="ti-user"></i></span>
-                                            <input type="text" class="form-control ps-15 bg-transparent" placeholder="Username" name="email">
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <div class="input-group mb-3">
-                                            <span class="input-group-text  bg-transparent"><i class="ti-lock"></i></span>
-                                            <input type="password" class="form-control ps-15 bg-transparent" placeholder="Password" name="password">
-                                        </div>
-                                    </div>
-                                      <div class="row">
-                                        <div class="col-6">
-                                          <div class="checkbox">
-                                            <input type="checkbox" id="basic_checkbox_1" >
-                                            <label for="basic_checkbox_1">Remember Me</label>
-                                          </div>
-                                        </div>
-                                        <!-- /.col -->
-                                        <!-- <div class="col-6">
-                                         <div class="fog-pwd text-end">
-                                            <a href="javascript:void(0)" class="hover-warning"><i class="ion ion-locked"></i> Forgot pwd?</a><br>
-                                          </div>
-                                        </div> -->
-                                        <!-- /.col -->
-                                        <div class="col-12 text-center">
-                                         <button type="submit"  class="btn btn-primary mt-10" >SIGN IN</button>
-                                        </div>
-                                        <!-- /.col -->
-                                      </div>
-                                </form>
+									<div class="form-group">
+										<div class="input-group mb-3">
+											<span class="input-group-text bg-transparent"><i class="ti-user"></i></span>
+											<input type="text" class="form-control ps-15 bg-transparent" placeholder="Username" name="email">
+										</div>
+									</div>
+									<div class="form-group">
+										<div class="input-group mb-3">
+											<span class="input-group-text  bg-transparent"><i class="ti-lock"></i></span>
+											<input type="password" class="form-control ps-15 bg-transparent" placeholder="Password" name="password">
+										</div>
+									</div>
+									  <div class="row">
+										<div class="col-6">
+										  <div class="checkbox">
+											<input type="checkbox" id="basic_checkbox_1" >
+											<label for="basic_checkbox_1">Remember Me</label>
+										  </div>
+										</div>
+										<!-- /.col -->
+										<!-- <div class="col-6">
+										 <div class="fog-pwd text-end">
+											<a href="javascript:void(0)" class="hover-warning"><i class="ion ion-locked"></i> Forgot pwd?</a><br>
+										  </div>
+										</div> -->
+										<!-- /.col -->
+										<div class="col-12 text-center">
+										 <button type="submit"  class="btn btn-danger mt-10" >SIGN IN</button>
+										</div>
+										<!-- /.col -->
+									  </div>
+								</form>
 
-                            </div>
-                        </div>
+							</div>
+						</div>
             </div>
 
          
@@ -195,44 +195,44 @@
                     <h2>Sign In</h2>
                     <h5>Welcome back!</h5>
                     <div class="p-16">
-                                <form action="{{ route('owner.signin')}}" method="post">
+								<form action="{{ route('owner.signin')}}" method="post">
                                     @csrf
 
-                                    <div class="form-group">
-                                        <div class="input-group mb-3">
-                                            <span class="input-group-text bg-transparent"><i class="ti-user"></i></span>
-                                            <input type="text" class="form-control ps-15 bg-transparent" placeholder="Username" name="email">
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <div class="input-group mb-3">
-                                            <span class="input-group-text  bg-transparent"><i class="ti-lock"></i></span>
-                                            <input type="password" class="form-control ps-15 bg-transparent" placeholder="Password" name="password">
-                                        </div>
-                                    </div>
-                                      <div class="row">
-                                        <div class="col-6">
-                                          <div class="checkbox">
-                                            <input type="checkbox" id="basic_checkbox_1" >
-                                            <label for="basic_checkbox_1">Remember Me</label>
-                                          </div>
-                                        </div>
-                                        <!-- /.col -->
-                                        <!-- <div class="col-6">
-                                         <div class="fog-pwd text-end">
-                                            <a href="javascript:void(0)" class="hover-warning"><i class="ion ion-locked"></i> Forgot pwd?</a><br>
-                                          </div>
-                                        </div> -->
-                                        <!-- /.col -->
-                                        <div class="col-12 text-center">
-                                         <button type="submit"  class="btn btn-danger mt-10" >SIGN IN</button>
-                                        </div>
-                                        <!-- /.col -->
-                                      </div>
-                                </form>
+									<div class="form-group">
+										<div class="input-group mb-3">
+											<span class="input-group-text bg-transparent"><i class="ti-user"></i></span>
+											<input type="text" class="form-control ps-15 bg-transparent" placeholder="Username" name="email">
+										</div>
+									</div>
+									<div class="form-group">
+										<div class="input-group mb-3">
+											<span class="input-group-text  bg-transparent"><i class="ti-lock"></i></span>
+											<input type="password" class="form-control ps-15 bg-transparent" placeholder="Password" name="password">
+										</div>
+									</div>
+									  <div class="row">
+										<div class="col-6">
+										  <div class="checkbox">
+											<input type="checkbox" id="basic_checkbox_1" >
+											<label for="basic_checkbox_1">Remember Me</label>
+										  </div>
+										</div>
+										<!-- /.col -->
+										<!-- <div class="col-6">
+										 <div class="fog-pwd text-end">
+											<a href="javascript:void(0)" class="hover-warning"><i class="ion ion-locked"></i> Forgot pwd?</a><br>
+										  </div>
+										</div> -->
+										<!-- /.col -->
+										<div class="col-12 text-center">
+										 <button type="submit"  class="btn btn-danger mt-10" style="background-color: #6759ff !important;" >SIGN IN</button>
+										</div>
+										<!-- /.col -->
+									  </div>
+								</form>
 
-                            </div>
-                        </div>
+							</div>
+						</div>
                     </div>
                     <!-- <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -244,9 +244,9 @@
     </div>
 </div>
 
-    <!-- Vendor JS -->
-    <script src="{{asset('js/vendors.min.js') }}"></script>
-    <script src="{{asset('js/pages/chat-popup.js') }}"></script>
+	<!-- Vendor JS -->
+	<script src="{{asset('js/vendors.min.js') }}"></script>
+	<script src="{{asset('js/pages/chat-popup.js') }}"></script>
     <script src="{{asset('assets/icons/feather-icons/feather.min.js') }}"></script>
 
 </body>

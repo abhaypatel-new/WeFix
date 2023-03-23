@@ -359,35 +359,38 @@ nav ul li {
 .tema-card {
   display: flex;
   flex-direction: column;
-  padding: 10px;
-  gap: 10px;
-  width: 240px;
-  height: 360px;
+ 
+  width: 100%;
+  height: auto;
   background: #ffffff;
   box-shadow: 0px 0px 30px rgb(103 89 255 / 10%);
   border-radius: 16px;
 }
-
+.swiper.mySwiper.container {
+    overflow: hidden;
+}
 .tema-card h5 {
   font-size: 24px;
-  margin-left: 5px;
-  color: #1d2b4f;
+  color: #1d2b4f; margin: 0;
 }
 
 .tema-card h6 {
-  font-size: 18px;
+  font-size: 18px; margin: 0;
   color: #6f767e;
-  margin-top: -10px;
-  margin-left: 5px;
 }
 
 .tema-card p {
   font-size: 14px;
-  color: #6f767e;
-  margin-left: 5px;
-  margin-top: -10px;
-}
+  color: #6f767e; margin: 0;
 
+}
+#our-vendors {
+     margin-left: 0 !important; 
+}
+#our-vendors .tema-card p {
+    height: 46px;
+    overflow: hidden;
+}
 .tema-card-all {
   display: flex;
   align-items: center;
@@ -399,8 +402,7 @@ nav ul li {
 }
 
 .blog-img {
-  height: 380px;
-  width: 370px;
+ 
   background: linear-gradient(
       180deg,
       rgba(255, 255, 255, 0) 0%,

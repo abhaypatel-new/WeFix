@@ -5,18 +5,13 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
   <title>WeFix</title>
  
-  <!-- <link rel="stylesheet" href="{{ asset('css/vendors_css.css') }}"> -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" >
   <!-- Style-->
-  <!-- <link rel="stylesheet" href="{{ asset('css/style.css') }}"> -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.css"  />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-toast-plugin/1.3.2/jquery.toast.css"  />
+    <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
   <link rel="stylesheet" href="{{ asset('css/skin_color.css') }}">
-  <!-- <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin> -->
-  <!-- <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600&display=swap" rel="stylesheet"> -->
   <link href="https://cdn.datatables.net/1.13.3/css/jquery.dataTables.min.css" rel="stylesheet">
    <link rel="stylesheet" href="{{ asset('css/style_index.css') }}">
   <script src="{{ asset('js/font.js') }}" crossorigin='anonymous'></script>
@@ -29,6 +24,58 @@
   padding-bottom: 10px;
 }
 
+.columns {
+  float: left;
+  width: 33.3%;
+  padding: 8px;
+}
+
+.prices {
+  list-style-type: none;
+  border: 1px solid #eee;
+  margin: 0;
+  padding: 0;
+  -webkit-transition: 0.3s;
+  transition: 0.3s;
+}
+
+.prices:hover {
+  box-shadow: 0 8px 12px 0 rgba(0,0,0,0.2)
+}
+
+.prices .header {
+  background-color: #6759ff;
+  color: white;
+  font-size: 25px;
+}
+
+.prices li {
+  border-bottom: 1px solid #eee;
+  padding: 20px;
+  text-align: center;
+  color: #000;
+}
+
+.prices .grey {
+  background-color: #eee;
+  font-size: 20px;
+}
+
+.button {
+  background-color: #6759ff;
+  border: none;
+  color: white;
+  padding: 10px 25px;
+  text-align: center;
+  text-decoration: none;
+  font-size: 18px;
+}
+
+@media only screen and (max-width: 600px) {
+  .columns {
+    width: 100%;
+  }
+}
 
 
     @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600&display=swap');
@@ -45,16 +92,12 @@
 
       <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
         <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
-        
-
-
-
         </ul>
         <form class="form-inline my-2 my-lg-0">
 
           @if(auth('owner')->check())
           @php
-          if(auth('owner')->user()->roleid === 4)
+          if(auth('owner')->user()->roleid === 3)
           {
           $count = App\Model\Notification::where(['owner_id' => auth('owner')->user()->id, 'is_read' => 0])->count();
           }else{
@@ -66,13 +109,13 @@
            <button class="btn btn-primary dropdown-toggle"   type="button" data-toggle="dropdown">Hello {{auth('owner')->user()->first_name}} </button>
             <ul class="dropdown-menu" id="expend-dn">
 
-              <li class="dropdown-item"><a href="{{ url('owner/dashboard') }}">Dashboard</a></li>
-              <li class="dropdown-item"><a href="{{ url('owner/logout') }}">Logout</a></li>
+              <li class="dropdown-item"><a href="{{ url('/dashboard') }}">Dashboard</a></li>
+              <li class="dropdown-item"><a href="{{ url('/logout') }}">Logout</a></li>
             </ul>
           </div>
 
           @else
-          <a class="btn btn-outline-success my-2 my-sm-0" href="{{url('owner')}}">Login</a><a class="btn btn-outline-success my-2 my-sm-0" href="#">Register</a>
+          <a class="btn btn-outline-success my-2 my-sm-0" href="{{url('Dmanager')}}">Login</a><a class="btn btn-outline-success my-2 my-sm-0" href="#">Register</a>
 
           @endif
 
@@ -83,368 +126,8 @@
 </header>
   @if(auth('owner')->check())
   <input type="hidden" value="{{auth('owner')->user()->roleid}}" id="ownerid">
-  @if(auth('owner')->user()->roleid === 4)
-<section id="dashboardContainer">
-  <div class="container-fluid">
-    <div class="row">
-      <div class="col-md-3">
-          <div class="side-bar">
-          <div class="side-bar-main" style="position: fixed;">
-          <div class="New-Work-Order" style="cursor: pointer;     background: unset;" id="NewWorkorder">
-              <img src="{{ asset('images') }}/image/new-work-order.png" alt="">
-              <h3 class="order-color">New Work Order</h3>
-              <!-- <img class="dropdown-img" src="./image/dropdown.png" alt=""> -->
-            </div>
-          <button class="sidebarBtn Proposal" id="proposal" style="cursor: pointer;">
-              <img src="{{ asset('images') }}/image/dashboard.png" alt="">
-              <h3 class="Proposal-color">Dashboard</h3>
-
-            </button>
-
-
-            <div class="sidebarBtn Setting" style="cursor: pointer;" id="profile">
-              <img src="{{ asset('images') }}/image/settings.png" alt="">
-              <h3 class="setting-color">Setting</h3>
-              <!-- <img class="dropdown-img" src="./image/dropdown.png" alt=""> -->
-            </div>
-             <div class="sidebarBtn Report" style="cursor: pointer;" id="report">
-              <img src="{{ asset('images') }}/image/report.png" alt="">
-              <h3 class="report-color">Report</h3>
-              <!-- <img class="dropdown-img" src="./image/dropdown.png" alt=""> -->
-            </div>
-
-            <div class="sidebarBtn Setting Logout" style="cursor: pointer;">
-              <img src="{{ asset('images') }}/image/SignOut.png" alt="">
-              <h3><a href="{{ url('owner/logout') }}" class="logout-color hide-effect">Log Out</a></h3>
-              <!-- <img class="dropdown-img" src="./image/dropdown.png" alt=""> -->
-            </div>
-          </div>
-          </div>
-      </div>
-      <div class="col-md-9">
-     
-            <div class="d-flex justify-content-center">
-              <div class="spinner-border" role="status" id="bodyloading">
-                <span class="sr-only text-dark">Loading...</span>
-              </div>
-            </div>
-      
-          <div class="card dn" id="show-notification" style="display:none;">
-            <h5 class="card-header">Notification</h5>
-            <div class="d-flex justify-content-center">
-              <div class="spinner-border" role="status" id="loading">
-                <span class="sr-only">Loading...</span>
-              </div>
-            </div>
-            <div class="search-bar m-0 mb-4">
-              <input placeholder="Search Notification" type="Search" id="search-notification" class="text-dark">
-              <button>
-                <img src="{{ asset('images') }}/image/Search-icon.png" alt="">
-              </button>
-            </div>
-            <div class="card pt-3" id="show-data">
-            </div>
-
-          </div>
-          <div class="card dn" id="show-proposal" style="display:none;">
-            <h5 class="card-header">Proposal</h5>
-            <div class="d-flex justify-content-center">
-              <div class="spinner-border" role="status" id="loading">
-                <span class="sr-only">Loading...</span>
-              </div>
-            </div>
-            <div class="card" id="get-proposal">
-            </div>
-          </div>
-          <div class="card dn" id="show-new-workorder">
-            <h5 class="card-header">New Work Order</h5>
-            <!-- <div class="d-flex justify-content-center">
-              <div class="spinner-border" role="status" id="loading">
-                <span class="sr-only">Loading...</span>
-              </div>
-            </div> -->
-            <div class="" id="get-new-work">
-            </div>
-          </div>
-           <div class="card dn" id="view-report" style="height:fit-content;" style="display:hidden;">
-            <h5 class="card-header">Report Details</h5>
-            <div class="col-xl-12 float-end">
-          <a class="btn btn-primary text-capitalize border-0" data-mdb-ripple-color="dark"  onclick="myfunction()"><i
-              class="fas fa-print "></i> Print</a>
-          <a class="btn btn-primary text-capitalize" data-mdb-ripple-color="dark"  onclick="getBackReport()"><i
-              class="fa fa-arrow-left"></i> Back</a>
-             </div>
-         
-          
-            <div class="card-body" id="getsingledetails">
-            </div>
-          </div>
-          <div class="card dn" id="view-notification" style="height:fit-content;" style="display:none;">
-            <h5 class="card-header">Notification Details</h5>
-            <div onclick="getBackNotification()" style="padding: 14px 20px 0px 20px;">
-              <button class="btn btn-primary" style="float: right;padding: 10px 35px 10px 35px;"><i
-              class="fa fa-arrow-left"></i> Back</button>
-            </div>
-          
-            <div class="card-body" id="getsingleNotification">
-            </div>
-          </div>
-           <div class="card dn" id="show-report" style="display:none;">
-            <h5 class="card-header">Report</h5>
-
-            <div class="card" id="get-report">
-              <table id="example">
-            <thead>
-                <tr>
-                    <th>No</th>
-                    <th>OrderId</th>
-                    <th>Product</th>
-                    <th>Date</th>
-                    <th>Submitted By</th>
-                    <th>Vendor</th>
-                    <th>Amount</th>
-                    <th>Status</th>
-                    <th>Action</th>
-
-                </tr>
-            </thead>
-            <tbody>
-
-            </tbody>
-          </table>
-            </div>
-          </div>
-          <div class="card" id="list-notification">
-            <h5 class="card-header">Notification</h5>
-
-            <div class="card" id="get-notification">
-              <table id="example1">
-            <thead>
-                <tr>
-                    <th>No</th>
-                    <th>Date</th>
-                    <th>Image</th>
-                    <th>Product</th>
-                    <th>Owner</th>
-                    <th>Vendor</th>
-                    <th>Message</th>
-                    <th>Status</th>
-                    <th>Action</th>
-
-                </tr>
-            </thead>
-            <tbody>
-
-            </tbody>
-          </table>
-            </div>
-          </div>
-          <div class="card cnf" id="show-confirm">
-            <h5 class="card-header">Confirmed Proposal</h5>
-
-            <div class="search-bar m-0 pb-4">
-              <input placeholder="Search Confirmed Proposal" type="Search" id="search-confirmed-proposal" class="text-dark">
-              <!-- <h5>Search Proposal</h5> -->
-              <button>
-                <img src="{{ asset('images') }}/image/Search-icon.png" alt="">
-              </button>
-            </div>
-            <div class="card" id="get-confirm">
-              <div class="d-flex justify-content-center">
-                <div class="spinner-border" role="status" id="loading-c" style="color:khaki;">
-                  <span class="sr-only">Loading...</span>
-                </div>
-              </div>
-            </div>
-
-          </div>
-          <div class="card" id="show-pending">
-            <h5 class="card-header">Pending Proposal</h5>
-
-            <div class="search-bar m-0 pb-4">
-              <input placeholder="Search Pending Proposal" type="Search" id="search-pending-proposal" class="text-dark">
-              <!-- <h5>Search Proposal</h5> -->
-              <button>
-                <img src="{{ asset('images') }}/image/Search-icon.png" alt="">
-              </button>
-            </div>
-            <div class="card" id="get-pending">
-              <div class="d-flex justify-content-center">
-                <div class="spinner-border" role="status" id="loading-p" style="color:khaki;">
-                  <span class="sr-only">Loading...</span>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="card" id="show-history">
-            <h5 class="card-header">History</h5>
-
-            <div class="card" id="get-history">
-              <div class="d-flex justify-content-center">
-                <div class="spinner-border" role="status" id="loading-h">
-                  <span class="sr-only">Loading...</span>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="card" id="show-profile">
-            <h5 class="card-header">Profile Details</h5>
-
-            <div class="card">
-              <div class="notifaction-div text-center">
-
-                <div class="title-div" style="
-            padding-bottom: 40px;
-        ">
-                  <div class="list-div-today">
-
-                <img src="" height="100" alt="">
-                    <div class="list-title" >
-                      <h6>@if(auth('owner')->user()){{auth('owner')->user()->first_name}}@else User @endif</h6>
-                      <p>@if(auth('owner')->user()){{auth('owner')->user()->email}}@else User@gmail.com @endif</p>
-                    </div>
-
-
-
-                  </div>
-
-                </div>
-
-                <div class="div-list" id="get-profile" style="margin-bottom: 15px;">
-                </div>
-                <div id="edit-profile" class="btn btn-success" style="padding: 5px 25px 5px 25px;">Edit</div>&nbsp;&nbsp;<div id="cancel-profile" class="btn btn-danger" style="padding: 5px 25px 5px 25px;">Cancel</div>
-              </div>
-            </div>
-          </div>
-          <div class="card" id="edit-profile-details">
-            <h5 class="card-header">Profile Update</h5>
-
-            <div class="card-body bg-white" id="profile-details">
-
-              <div class="d-flex justify-content-center">
-                <div class="spinner-border" role="status" id="loading5">
-                  <span class="sr-only">Loading...</span>
-                </div>
-              </div>
-              <!-- <div class="notifaction-div"> -->
-
-              <div class="title-div">
-                <div class="list-div-today">
-                  <div class="row">
-                    
-                    <!--   <img src="@if(auth('owner')->user()->image != null){{env('PROFILE_URL')}}/{{auth('owner')->user()->image}}@else  {{env('ASSET_URL')}}default-profile.png @endif" height="80" alt="" id="get-upload"> -->
-                        <!-- <img src="" height="80" alt="" id="profile-pic1">
-                      <input type="file" name="file" id="upload" style="width:90px; margin-left:25px;"> -->
-                   
-                    <div class="col-sm-12 mt-5">
-                      <div class="list-title">
-                        <h6>@if(auth('owner')->user()){{auth('owner')->user()->first_name}}@else User @endif</h6>
-                        <p>@if(auth('owner')->user()){{auth('owner')->user()->email}}@else User@gmail.com @endif</p>
-
-                      </div>
-                    </div>
-
-                  </div>
-
-                </div>
-              </div>
-
-              <div class="div-list" id="update-profile" style="margin-top: 35px;">
-
-              </div>
-              <button id="save-profile" class="btn btn-success" style="margin: 10px 40px;">Save</button>
-              <!-- </div> -->
-
-            </div>
-
-          </div>
-
-          <div  class="main-right card" id="main-tab">
-            <div style="display: flex; ">
-              <div class="Welcome-text">
-                <h1>Welcome, @if(auth('owner')->user()){{auth('owner')->user()->first_name}}@else User @endif</h1>
-                <h4>{{\Carbon\Carbon::now()->format('M, d Y');}}</h4>
-              </div>
-            </div>
-            <div class="Proposal-heding">
-              <img src="{{ asset('images') }}/image/tag.png" alt="">
-              <h1>Dashboard</h1>
-            </div>
-
-          
-    <div class="card">
-     <div class="row dashboardCard" id="BoxdivCount">
-    <div class="col-md-3" >
-    <div class="card-body text-center">
-    <div class="box bg-secondary-light pull-up boxActive"  id="confirm" style="cursor: pointer;pointer;padding: 20px 15px 20px 20px; width: 200px;"> <h5 class="">Confirmed &nbsp;&nbsp;&nbsp;&nbsp;<span id="confirmed-count"  class="count-color"></span>
-            </h5>
-</div>
-</div>
-    </div>
-    <div class="col-md-3">
-       <div class="card-body text-center">
-         <div class="box bg-secondary-light pull-up boxActive"    id="pending" style="cursor: pointer;pointer;padding: 20px 15px 20px 20px; width: 200px;"> <h5 class="pending-count">Pending &nbsp;&nbsp;&nbsp;&nbsp;<span id="pending-count"  class="count-color"></span>
-            </h5>
-</div>
-    
-</div>
-    </div>
-    <div class="col-md-3">
-       <div class="card-body text-center">
-        <div class="box bg-secondary-light pull-up boxActive"   id="history" style="cursor: pointer;pointer;padding: 20px 15px 20px 20px; width: 200px;"> <h5 class="">History &nbsp;&nbsp;&nbsp;&nbsp;<span id="history-count"  class="count-color"></span>
-            </h5>
-</div>
-    </div>
-    </div>
-  
-   
-    <div class="col-md-3">
-<div class="card-body text-center">
-        <div class="box bg-secondary-light pull-up boxActive"    id="Workorder" style="cursor: pointer;pointer;padding: 20px 15px 20px 20px; width: 200px;"> <h5 class="">Work Order &nbsp;&nbsp;&nbsp;&nbsp;<span id="work-count"  class="count-color"></span>
-            </h5>
-</div>
-    </div>
-       
-  </div>
-  </div>
-  <hr class="mt-0">
- <div class="" id="Proposal-card">
-  
-<div class="row">
-  <div class="col-sm-6">
-    <div class="card">
-      <div class="card-body">
-        <h5 class="card-title">Spending Chart</h5>
-       
-         <canvas id="myChart" height="100px"></canvas>
-      </div>
-    </div>
-  </div>
-  <div class="col-sm-6">
-    <div class="card">
-      <div class="card-body">
-        <h5 class="card-title">Last Month Spending</h5>
-        
-         <canvas id="myPieChart" height="100px"></canvas>
-      </div>
-    </div>
-  </div>
-</div>
-
-  </div>
-
-
-
-  </div>
-
-  </div>
-
-
-        </div>
-      </div>
-    </div>
-  </section>
-  @else
+   <input type="hidden" value="{{auth('owner')->user()->id}}" id="owner_id">
+ 
   <section id="dashboardContainer">
   <div class="container-fluid">
     <div class="row">
@@ -452,18 +135,22 @@
         <div class="side-bar">
           <div class="side-bar-main" style="position: fixed;">
 
-          <!-- <div class="New-Work-Order" style="cursor: pointer;" id="newWorkOrder">
-            <img src="{{ asset('images') }}/image/new-work-order.png" alt="">
-            <h3 class="order-color">New Work Order</h3>
-             <img class="dropdown-img" src="./image/dropdown.png" alt=""> -->
-          <!-- </div>  -->
         <button class="sidebarBtn Proposal" id="proposal" style="cursor: pointer;">
             <img src="{{ asset('images') }}/image/dashboard.png" alt="">
             <h3 class="Proposal-color">Dashboard</h3>
 
           </button>
 
-
+         <div class="Equipment" style="cursor: pointer;     background: unset;" id="Equipments">
+              <img src="{{ asset('images') }}/image/equipments.png" alt="">
+              <h3 class="equipments-color">Equipments</h3>
+              <!-- <img class="dropdown-img" src="./image/dropdown.png" alt=""> -->
+            </div>
+            <div class="Maintenance" style="cursor: pointer;     background: unset;" id="Maintenance">
+              <img src="{{ asset('images') }}/image/maintenance.png" alt="">
+              <h3 class="maintenance-color">Maintenance</h3>
+              <!-- <img class="dropdown-img" src="./image/dropdown.png" alt=""> -->
+            </div>
           <div class="sidebarBtn Setting" style="cursor: pointer;" id="profile">
             <img src="{{ asset('images') }}/image/settings.png" alt="">
             <h3 class="setting-color">Setting</h3>
@@ -515,6 +202,89 @@
               </div>
             </div>
             <div class="card" id="get-proposal">
+            </div>
+          </div>
+          <div class="card" id="single-detail">
+            <h5 class="card-header">View Equipment Details</h5>
+            <div class="d-flex justify-content-center">
+              <div class="spinner-border" role="status" id="loading">
+                <span class="sr-only">Loading...</span>
+              </div>
+            </div>
+            <div class="card" id="get-single-equipment">
+            </div>
+          </div>
+           <div class="card" id="show-equipment">
+            <h5 class="card-header">Equipment</h5>
+           <div class="col-xl-12 float-end">
+         
+          <a class="btn btn-primary text-capitalize" data-mdb-ripple-color="dark"  onclick="showEqModal()"><i
+              class="fa fa-arrow-left"></i> Add Equipment</a>
+             </div>
+            <div class="card" id="get-equipment">
+               <table id="equipment-table">
+            <thead>
+                <tr>
+                    <th>No</th>
+                    <th>Name</th>
+                     
+                    <th>Image</th>
+                    <th>Model</th>
+                    <th>Stock</th>
+                    <th>Quantity</th>
+                    <th>Price</th>
+                    <th>Action</th>
+
+                </tr>
+            </thead>
+            <tbody>
+
+            </tbody>
+          </table>
+            </div>
+          </div>
+           <div class="card" id="show-maintenance" style="display:inline-table !important;">
+            <h5 class="card-header">Maintenace</h5>
+            
+            <h2 style="text-align:center">Maintenance Plans</h2>
+<p style="text-align:center">Resize the browser window to see the effect.</p>
+
+<div class="columns">
+  <ul class="prices">
+    <li class="header">Basic</li>
+    <li class="grey">$ 9.99 / year</li>
+    <li>10GB Storage</li>
+    <li>10 Emails</li>
+    <li>10 Domains</li>
+    <li>1GB Bandwidth</li>
+    <li class="grey"><a href="#" class="button">Sign Up</a></li>
+  </ul>
+</div>
+
+<div class="columns">
+  <ul class="prices">
+    <li class="header" style="background-color:#04AA6D">Pro</li>
+    <li class="grey">$ 24.99 / year</li>
+    <li>25GB Storage</li>
+    <li>25 Emails</li>
+    <li>25 Domains</li>
+    <li>2GB Bandwidth</li>
+    <li class="grey"><a href="#" class="button">Sign Up</a></li>
+  </ul>
+</div>
+
+<div class="columns">
+  <ul class="prices">
+    <li class="header">Premium</li>
+    <li class="grey">$ 49.99 / year</li>
+    <li>50GB Storage</li>
+    <li>50 Emails</li>
+    <li>50 Domains</li>
+    <li>5GB Bandwidth</li>
+    <li class="grey"><a href="#" class="button">Sign Up</a></li>
+  </ul>
+</div>
+            <div class="card" id="get-maintenance">
             </div>
           </div>
            <div class="card " id="view-report">
@@ -676,9 +446,6 @@
                 <div class="list-div-today">
                   <div class="row">
                     <div class="col-sm-2 text-white">
-                     <!--  <img src="@if(auth('owner')->user()->image != null){{env('PROFILE_URL')}}/{{auth('owner')->user()->image}}@else  {{env('ASSET_URL')}}default-profile.png @endif" height="80" alt="" id="get-upload"> -->
-                        <!-- <img src="" height="80" alt="" id="profile-pic1">
-                      <input type="file" name="file" id="upload" style="width:90px; margin-left:25px;"> -->
                     </div>
                     <div class="col-sm-10 mt-5">
                       <div class="list-title">
@@ -689,11 +456,6 @@
                     </div>
 
                   </div>
-
-
-
-
-
 
                 </div>
               </div>
@@ -714,15 +476,6 @@
                 <h1>Welcome, @if(auth('owner')->user()){{auth('owner')->user()->first_name}}@else User @endif</h1>
                 <h4>{{\Carbon\Carbon::now()->format('M, d Y');}}</h4>
               </div>
-              <!-- <div class="search-bar pb-4">
-                <input placeholder="Search Proposal" type="Search Proposa" id="search-proposal" class="text-dark">
-                <button>
-                  <img src="{{ asset('images') }}/image/Search-icon.png" alt="">
-                </button>
-              </div> -->
-              <!-- <div class="profile">
-                <img src="@if(auth('owner')->user()->image != null){{env('PROFILE_URL')}}/{{auth('owner')->user()->image}}@else  {{env('ASSET_URL')}}default-profile.png @endif" height="100" alt="" id="get-upload2" class="rounded-circle bg-white">
-              </div> -->
             </div>
             <div class="Proposal-heding">
               <img src="{{ asset('images') }}/image/tag.png" alt="">
@@ -918,7 +671,7 @@
 </div>
 
 <!----------------invoice- details----------->
- <div class="modal fade" id="exampleModalInvoice" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="exampleModalInvoice" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog w-800" role="document">
     <div class="modal-content ">
       <div class="modal-header">
@@ -928,14 +681,97 @@
         </button>
       </div>
       <div class="modal-body">
-       <div class="card-body" id="getinvoicedetails">
+      
     </div>
         
     </div>
   </div>
 </div>
+
+ <div class="modal fade" id="equipmentModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog w-800" role="document">
+    <div class="modal-content ">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Add Equipment</h5>
+        <button type="button" class="close btn btn-secondary" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <!-- <form method="post" id="eq_id"> -->
+          <div class="mb-3">
+             <input type="hidden" class="form-control" id="equipmentId" name="ID">
+            <label for="equipment-name" class="col-form-label">Name:</label>
+            <input type="text" class="form-control" id="equipment-name" name="name">
+          </div>
+             @csrf
+           <div class="mb-3">
+            <label for="equipment-name" class="col-form-label">Image:</label>
+            <input type="file" class="form-control" id="equipment-image" alt="equipment-image" name="images">
+            <img id="frame" src="" width="100px" height="100px" style="display:none;" class="rounded-circle" style="border:2px solid;"/><i class="fa fa-check-circle yes" style="font-size:48px;color:green; display:none;text-align: left;"></i>
+          </div>
+           <div class="mb-3">
+            <label for="equipment-name" class="col-form-label">Model No.:</label>
+            <input type="text" class="form-control" id="equipment-model" name="model">
+          </div>
+           <div class="mb-3">
+            <label for="equipment-name" class="col-form-label">Price:</label>
+            <input type="number" class="form-control" id="equipment-price" maxlength="10" name="price">
+          </div>
+           <div class="mb-3">
+            <label for="equipment-name" class="col-form-label">Qty:</label>
+            <input type="number" class="form-control" id="equipment-qty" maxlength="5" name="qty">
+          </div>
+           <div class="mb-3">
+            <label for="equipment-name" class="col-form-label">Stock:</label>
+            <input type="number" class="form-control" id="equipment-stock" maxlength="5" name="stock">
+          </div>
+          <div class="mb-3">
+            <label for="message-text" class="col-form-label">Description:</label>
+            <textarea class="form-control" id="equipment-description" name="description"></textarea>
+          </div>
+          <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+        <button type="button"class="btn btn-primary" id="add-equipment">Save</button>
+      </div>
+        <!-- </form> -->
+      </div>
+      
+        
+    </div>
+  </div>
+</div>
 <!---------------modal-close--------->
-  @endif
+<!-------------------Equipment Modal -------------->
+ 
+<!-- <div class="modal fade" id="equipmentModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel1" aria-hidden="true">
+  <div class="modal-dialog w-800" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel1">New message</h5>
+        <button type="button" class="close btn btn-secondary" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      <div class="modal-body">
+        <form>
+          <div class="mb-3">
+            <label for="recipient-name" class="col-form-label">Recipient:</label>
+            <input type="text" class="form-control" id="recipient-name">
+          </div>
+          <div class="mb-3">
+            <label for="message-text" class="col-form-label">Message:</label>
+            <textarea class="form-control" id="message-text"></textarea>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Send message</button>
+      </div>
+    </div>
+  </div>
+</div> -->
+ 
   @endif
 </body>
 <!-- <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script> -->
@@ -945,12 +781,13 @@
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.5.3/jspdf.min.js"></script>
 <script type="text/javascript" src="https://html2canvas.hertzen.com/dist/html2canvas.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/printThis/1.15.0/printThis.min.js" integrity="sha512-d5Jr3NflEZmFDdFHZtxeJtBzk0eB+kkRXWFQqEc1EKmolXjHm2IKCA7kTvXBNjIYzjXfD5XzIjaaErpkZHCkBg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js" integrity="sha512-VEd+nq25CkR676O+pLBnDW09R7VQX9Mdiij052gVCp5yVH3jGtH70Ho/UUv4mJDsEdTvqRCFZg0NKGiojGnUCw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
   </script>
   <script src="{{ asset('assets/vendor_components/datatable/datatables.min.js')}}"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-toast-plugin/1.3.2/jquery.toast.min.js" integrity="sha512-zlWWyZq71UMApAjih4WkaRpikgY9Bz1oXIW5G0fED4vk14JjGlQ1UmkGM392jEULP8jbNMiwLWdM8Z87Hu88Fw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
   
   <script type="text/javascript">
@@ -958,12 +795,17 @@
     $("#dashboard-body").css('backgrount', 'transparent');
     $(".dn").css('display', 'none');
     $("#show-history").hide();
+    $("#single-detail").hide();
     $("#view-notification").hide();
     $("#show-notification").hide();
     $("#list-notification").hide();
      $("#show-new-work").hide();
     $("#show-proposal").hide();
     $("#show-confirm").hide();
+     $("#show-report").hide();
+     $("#show-equipment").hide();
+     $("#show-maintenance").hide();
+    $("#view-report").hide();
     $("#show-pending").hide();
      $("#show-new-work").hide();
     $("#show-profile").hide();
@@ -979,6 +821,29 @@
    $('#bodyloading').fadeOut(500);
 });
   $(document).ready(function() {
+     getcountdata()
+     getpiechart()
+    $("#frame").css('display', 'none');
+        $(".yes").css('display', 'none');
+        $("#equipment-image").change(function() {
+        $("#frame").css('display', 'block');
+        $(".yes").css('display', 'block');
+        $("#upload-alert").text('Image Uploaded');
+        $("#upload-alert").css('display', 'block');
+        frame.src=URL.createObjectURL(event.target.files[0]);
+        Swal.fire({
+    title: 'Upload',
+    heading: 'success',
+    text: 'Image uploaded',
+    icon: 'success',
+    position:"top-center",
+    fadeDelay: 10000,
+    offset: 40,
+    loader: true,        // Change it to false to disable loader
+    loaderBg: '#9EC600'
+    });
+    });
+
     $("#show-new-workorder").hide();
     $("#main-tab").show();
    
@@ -1018,6 +883,8 @@ getchart(charturl);
         labels: data.data.labels,
         datasets: [{
           label: 'Earning',
+           fill: false,
+           lineTension: 0,
           backgroundColor: '#6759FF',
           borderColor: '#dee2e6ed',
           data: data.data.value,
@@ -1035,12 +902,13 @@ getchart(charturl);
         config
       );
  }
+ async function getpiechart() {
   const piecharturl =
   '{!! route("get.pie.chart")!!}';
- async function getpiechart(counturl) {
+ 
 
   // Storing response
-  const response = await fetch(counturl);
+  const response = await fetch(piecharturl);
 
   // Storing data in form of JSON
   var data = await response.json();
@@ -1048,8 +916,7 @@ getchart(charturl);
   
   showpiechart(data);
 }
-// Calling that async function
-getpiechart(charturl);
+
  function showpiechart(data)
  {
   
@@ -1117,7 +984,7 @@ getpiechart(charturl);
  
   });
   function getNotification() {
-    let id = '<?php echo auth('owner')->user()->id; ?>';
+    let id = $("#owner_id").val();
     $("#main-tab").hide();
     $("#show-notification").show();
     $("#show-history").hide();
@@ -1198,59 +1065,40 @@ getpiechart(charturl);
   }
   /*--------Delete-Report-Start---------*/
 
-  function deleteReport(id)
+  function DelEquipment(id)
   {
-      var assetUrl = "{{env('ASSET_URL')}}";
+    
+   const api_url =
+      '{!! route("delete.equipment")!!}?id=' + id;
+      Swal.fire({
+                title: 'Are you sure?',
+                text: "It will be delete permanently!",
+                type: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, delete it!',
+                showLoaderOnConfirm: true,
+                preConfirm: function() {
+                    return new Promise(function(resolve) {
+                        $.ajax({
+                                url: api_url,
+                                type: 'GET',
+                                dataType: 'json'
+                            })
+                            .done(function(response) {
+                                Swal.fire('Deleted!', 'Record has been deleted', 'success');
+                                  getequipment()
+                            })
 
-    var appUrl = "{{env('APP_URL')}}";
-
-    const api_url =
-      '{!! route("delete.report")!!}?id=' + id;
-
-    // Defining async function
-    async function getapi(url, options) {
-
-      // Storing response
-      const response = await fetch(url);
-
-      // Storing data in form of JSON
-      var data = await response.json();
-      console.log(data);
-      if (response) {
-        hideloader();
-      }
-      show(data);
-    }
-    // Calling that async function
-    getapi(api_url);
-
-    function hideloader() {
-      document.getElementById('loading').style.display = 'none';
-    }
-
-    function show(data) {
-
-      let tab = '';
-      let count = 0;
-      // Loop to access all rows
-      if (data.status == 'true') {
+                            .fail(function() {
+                                Swal.fire('Oops...', 'Something went wrong with ajax !', 'error')
+                            });
+                    });
+                },
+            });
 
 
-        $.toast({
-          heading: 'Alert',
-          text: 'Record has been deleted',
-          icon: 'info',
-          loader: true, // Change it to false to disable loader
-          loaderBg: '#9EC600' // To change the background
-        })
-       $('#example').DataTable().ajax.reload();
-        $("#show-report").load();
-        $("#show-report").show();
-      } else {
-        alert("failed")
-        $("#show-report").show();
-      }
-    }
   }
   /*--------Delete-Report-End---------*/
 
@@ -1258,6 +1106,8 @@ getpiechart(charturl);
 
   function viewReport(id)
   {
+     $("#show-maintenance").hide();
+      $("#show-equipment").hide();
      $("#show-report").hide();
      $("#view-report").show();
       var assetUrl = "{{env('ASSET_URL')}}";
@@ -1917,7 +1767,8 @@ if(koopId == 'show')
   notificationShow();
 }
 
-$("#show-new-workorder").hide();
+     $("#show-new-workorder").hide();
+     $("#show-equipment").hide();
       $("#edit-profile-details").hide();
       $("#show-notification").hide();
       $("#list-notification").hide();
@@ -1971,6 +1822,10 @@ $("#show-new-workorder").hide();
 
       $(".Proposal").css("background-color", "#e4e6ef");
       $(".Proposal-color").css("color", "#6759ff");
+       $(".maintenance-color").css("color", "#000");
+      $(".Maintenance").css("background-color", "#ffffff");
+       $(".equipment-color").css("color", "#000");
+      $(".Equipment").css("background-color", "#ffffff");
       $(".New-Work-Order").css("background-color", "#ffffff");
       $(".order-color").css("color", "#000");
       $(".notification-color").css("color", "#000");
@@ -1992,80 +1847,7 @@ $("#show-new-workorder").hide();
       $("#show-profile").hide();
       $("#show-report").hide();
       $("#view-report").hide();
-      var assetUrl = "{{env('ASSET_URL')}}";
-
-      var appUrl = "{{env('APP_URL')}}";
-
-      const api_url =
-        appUrl + "/owner/proposal_history?owner_id=" + id + "&search=";
-
-      // Defining async function
-      async function getapi(url) {
-
-        // Storing response
-        const response = await fetch(url);
-
-        // Storing data in form of JSON
-        var data = await response.json();
-        console.log(data);
-        if (response) {
-          hideloader();
-        }
-        show(data);
-      }
-      // Calling that async function
-      getapi(api_url);
-
-      function hideloader() {
-        document.getElementById('loading-mh').style.display = 'none';
-      }
-
-      function show(data) {
-
-        let tab = '';
-        let count = 0;
-        // Loop to access all rows
-        if (data.status == true) {
-          console.log(data.status);
-          for (let r of data.data) {
-            let img = r.thumbnail_image == null ? assetUrl + "product-dummy.png" : r.thumbnail_image;
-            let vendor = r.mage == null ? assetUrl + "default-profile.png" : r.image;
-
-            tab += `
-            <div class="Proposal-card-01 text-center">
-                <img  src="${img}" class="img-thumbnail rounded-start" alt="..." id="${id}" height="180" width="180">
-
-                <h4>${r.product_name}</h4>
-                <p>Code:${r.order_id}</p>
-                <ul>
-                    <li style="color:#453d3d;display:inline-block;white-space: nowrap;overflow: hidden;text-overflow: ellipsis;max-width: 13ch; color:#008080">${r.product_description}</li>
-
-                </ul>
-                <div class="vendor-class">
-                    <div class="vendor-name">
-                        <div class="Group-img"><img src="${vendor}" width="50"
-                           alt="" class="float-start rounded-circle"></div>
-
-                        <h4 class="card-title ml-5">${r.vendor_name}</h4>
-                        <h4 class="card-text"><small class="text-muted">${r.schedule}</small></h4>
-                        <p>Code: #D-${r.vendor_id}</p>
-                    </div>
-                </div>
-            </div>`;
-            document.getElementById("Proposal-card").innerHTML = tab;
-          }
-
-        } else {
-          console.log(data.message);
-          tab += ` <div class="vendor-name-history" style="
-text-align: center;><div class="images-div"></div>
-
-<p><img src="${assetUrl}nodata.png" alt="" width="200" class="float-start rounded-circle" id="">${data.message}
-</p>
-</div>`;
-          document.getElementById("Proposal-card").innerHTML = tab;
-        }
-      }
+     
     });
     $("#history").click(function() {
 
@@ -2101,6 +1883,8 @@ text-align: center;><div class="images-div"></div>
       let id = '<?php echo auth('owner')->user()->id; ?>';
       $("#main-tab").show();
       $("#show-history").hide();
+       $("#show-maintenance").hide();
+      $("#show-equipment").hide();
       $("#list-notification").hide();
       $("#view-notification").hide();
       $("#edit-profile-details").hide();
@@ -2113,98 +1897,8 @@ text-align: center;><div class="images-div"></div>
       var assetUrl = "{{env('ASSET_URL')}}";
       let role_id = $("#ownerid").val();
       var appUrl = "{{env('APP_URL')}}";
-     if(role_id == 4)
-     {
       const api_url =
-        appUrl + "/owner/owner_history?owner_id=" + id;
-
-      // Defining async function
-      async function getapi(url) {
-
-        // Storing response
-        const response = await fetch(url);
-
-        // Storing data in form of JSON
-        var data = await response.json();
-        console.log(data);
-        if (response) {
-          hideloader();
-        }
-        show(data);
-      }
-      // Calling that async function
-      getapi(api_url);
-
-      function hideloader() {
-        document.getElementById('loading-h').style.display = 'none';
-      }
-
-      function show(data) {
-
-        let tab = '';
-        let status = '';
-        let date = '00:00:00';
-        let time = '00:00';
-
-        let count = 0;
-        // Loop to access all rows
-        if (data.status == true) {
-          console.log(data.status);
-          for (let r of data.data) {
-            let img2 = '';
-            var x = new Array();
-             if(r.images != null){
-                x = r.images
-             }else{
-              img2 += `<img src="${assetUrl + 'product-dummy.png'}" height="100" width="100" alt="" class="img-thumbnail hover-zoom" style="height: 100px !important;">`;
-             }
-        for (let i of x) {
-          img2 += `<img src="${i}" height="100" width="100" alt="" class="img-thumbnail hover-zoom" style="height: 100px !important;">`;
-
-        }
-
-            let img = r.thumbnail_image == null ? assetUrl + "product-dummy.png" : r.thumbnail_image;
-            let vendor = r.vendor_image == null ? assetUrl + "default-profile.png" : r.vendor_image;
-            status = r.order_status=='Rejected'?`cancelled <i class="fa fa-times-circle text-danger" aria-hidden="true"></i>&nbsp; (${r.cancelled_description})`:`Confirmed <i class="fa fa-check-circle text-success" aria-hidden="true"></i>`;
-            data = r.date==null?date:r.date;
-            time = r.time==null?time:r.time;
-
-            tab += `
-             <div class="proOuterBox">
-  <div class="row g-0">
-    <div class="col-md-3">
-      <img src="${img}" class="productImg" alt="..." id="${id}">
-    </div>
-    <div class="col-md-9">
-      <div class="card-body">
-        <h5 class="card-title">${r.product_name}</h5>
-        <h6  font-weight: 400;" class="card-title">${r.order_id}</h6>
-        <div class="metaInfo">
-          <h5 style="font-size: 20px;" class="card-title">${r.vendor_name}  <small class="text-muted">(${time} ${data} )</small> <a href="#" class="badge badge-primary float-right" style="font-size:12px"><i class="fa fa-phone-alt" aria-hidden="true"></i> Call</a></h5>
-          <span class="badge badge-secondary priceBdge">        Price: ${r.order_amount}        </span>
-            <a href="#"  class="badge">${status}</a>
-      </div>
-       ${img2}
-    </div>
-  </div></div>
- </div>`;
-            document.getElementById("Proposal-card").innerHTML = tab;
-          }
-
-        } else {
-          console.log(data.message);
-          tab += ` <div class="vendor-name-history"><div class="images-div"></div>
-
-<p><img src="${assetUrl}nodata.png" alt="" width="200" class="rounded-circle" id="">${data.message}
-</p>
-</div>`;
-          document.getElementById("Proposal-card").innerHTML = tab;
-        }
-      }
-     }else{
-    
-      const api_url =
-      appUrl + "/owner/vendor_history?vendor_id=" + id;
+      appUrl + "/owner/get_history_proposal";
 
       // Defining async function
       async function getapi(url) {
@@ -2283,9 +1977,10 @@ text-align: center;><div class="images-div"></div>
  
 </div>`;
             document.getElementById("Proposal-card").innerHTML = tab;
-          }
+          
 
-        } else {
+        } 
+      }else {
           console.log(data.message);
           tab += ` <div class="vendor-name-history"><div class="images-div"></div>
 
@@ -2295,7 +1990,7 @@ text-align: center;><div class="images-div"></div>
           document.getElementById("Proposal-card").innerHTML = tab;
         }
       }
-     }
+     
    
     });
     $("#all-orders").click(function() {
@@ -2310,12 +2005,6 @@ text-align: center;><div class="images-div"></div>
       $("#confirm").addClass("main-Button");
       $("#Workorder").removeClass("main-Button-1");
       $("#Workorder").addClass("main-Button-3");
-
-      // $("#all-orders h5").css("color", "white");
-      // $("#Workorder h5").css("color", "#6759FF");
-      //  $("#pending h5").css("color", "#6759FF");
-      //  $("#confirm h5").css("color", "#6759FF");
-      //  $("#history h5").css("color", "#6759FF");
       $("#main-tab").show();
       $("#show-notification").hide();
       $("#list-notification").hide();
@@ -2440,16 +2129,6 @@ function show(data) {
   if (data.status == true) {
     console.log(data.status);
     for (let r of data.data) {
-    //   var x = new Array();
-    //      if(r.images != null){
-    //         x = r.images
-    //      }else{
-    //       img2 += `<img src="${assetUrl + 'product-dummy.png'}" height="100" width="100" alt="" class="img-thumbnail hover-zoom" style="height: 100px !important;">`;
-    //      }
-    // for (let i of x) {
-    //   img2 += `<img src="${i}" height="100" width="100" alt="" class="img-thumbnail hover-zoom" style="height: 100px !important;">`;
-
-    // }
 
           let img = r.thumbnail_image == null ? assetUrl + "product-dummy.png" : r.thumbnail_image;
           // let img1 = r.image == null ? assetUrl + "product-dummy.png" : r.image;
@@ -2462,43 +2141,8 @@ function show(data) {
           }
 
 
-      tab += ` <div class="proposal-hover"><div class="Proposal-card-01">
-
-<img src="${img}" class="rounded-start" alt="..." id="${id}" height="180" width="300">
-
-            <h4>${r.product_name}</h4>
-            <p>Code:${r.order_id}</p>
-            <ul>
-               
-
-            </ul>
-            <div class="vendor-class">
-                <div class="vendor-name">
-                <div class="row g-0">
-<div class="col-md-2">
-</div>
-<div class="col-md-10">
-
-<h4 class="card-title" style="width: 100%;">${r.vendor_name}</h4>
-
-                    <p>Code: #D-${r.vendor_id}</p>
-</div>
-</div>
-<div class="row g-0">
-
-<div class="col-md-12">
-
-
-
-
-
-
-
-</div>
-
-</div>
-
-                </div>
+      tab += ` <div class="proposal-hover"><div class="Proposal-card-01"><img src="${img}" class="rounded-start" alt="..." id="${id}" height="180" width="300"><h4>${r.product_name}</h4>
+            <p>Code:${r.order_id}</p><ul></ul><div class="vendor-class"><div class="vendor-name"><div class="row g-0"><div class="col-md-2"></div><div class="col-md-10"><h4 class="card-title" style="width: 100%;">${r.vendor_name}</h4><p>Code: #D-${r.vendor_id}</p></div></div><div class="row g-0"><div class="col-md-12"></div></div></div>
             </div>
             </div>
         </div>`;
@@ -2507,10 +2151,7 @@ function show(data) {
 
   } else {
     console.log(data.message);
-    tab += ` <div class="vendor-name-history" style="
-text-align: center;><div class="images-div"></div>
-
-<p><img src="${assetUrl}nodata.png" alt="" width="200" class="float-start rounded-circle" id="">${data.message}
+    tab += ` <div class="vendor-name-history" style="text-align: center;><div class="images-div"></div><p><img src="${assetUrl}nodata.png" alt="" width="200" class="float-start rounded-circle" id="">${data.message}
 </p>
 </div>`;
     document.getElementById("Proposal-card").innerHTML = tab;
@@ -2518,209 +2159,6 @@ text-align: center;><div class="images-div"></div>
 }
 }
     });
-    var assetUrl = "{{env('ASSET_URL')}}";
-
-    var appUrl = "{{env('APP_URL')}}";
-  let role_id = $("#ownerid").val();
- if(role_id == 1)
- {
-  const api_url =
-      appUrl + "/owner/vendor_history?vendor_id=" + id;
-
-    // Defining async function
-    async function getapi(url) {
-
-      // Storing response
-      const response = await fetch(url);
-
-      // Storing data in form of JSON
-      var data = await response.json();
-      console.log(data);
-      if (response) {
-        hideloader();
-      }
-      show(data);
-    }
-    // Calling that async function
-    getapi(api_url);
-
-    function hideloader() {
-      document.getElementById('loading').style.display = 'none';
-    }
-
-    function show(data) {
-
-      let tab = '';
-      let count = 0;
-      // Loop to access all rows
-      if (data.status == true) {
-        console.log(data.status);
-        for (let r of data.data) {
-          let img = r.thumbnail_image == null ? assetUrl + "product-dummy.png" : r.thumbnail_image;
-          let productImg = r.image == null ? assetUrl + "default-profile.png" : r.image;
-          let vendor = r.vendor_image == null ? assetUrl + "default-profile.png" : r.vendor_image;
-
-          tab += ` <div class="proposal-hover ">
-<div class="Proposal-card-01">
-<div class="Proposal-cardImgBox"><img src="${img}" class="rounded-start" alt="..." id="${id}" height="180" width="180"></div>
-
-                <h4>${r.product_name}</h4>
-                <p>Code:${r.order_id}</p>
-                <ul>
-                    <li style="color:#6F767E; display:inline-block;white-space: nowrap;overflow: hidden;text-overflow: ellipsis;max-width: 13ch; color:#6F767E">${r.product_description}</li>
-
-                </ul>
-                <div class="vendor-class">
-                    <div class="vendor-name">
-                    <div class="row g-0">
-    <div class="col-md-2">
-    <div class="Group-img ml-5"><img src="${vendor}" width="50"
-                           alt="" class="float-start rounded-circle"></div></div>
-    <div class="col-md-10">
-
-    <h4 class="card-title" style="width: 100%;">${r.vendor_name}</h4>
-                       
-                        <p>Code: #D-${r.vendor_id}</p>
-
-
-
-  </div></div>
-
-  </div>
-
-                    </div>
-                </div>
-            </div>`;
-          document.getElementById("Proposal-card-old").innerHTML = tab;
-        }
-
-      } else {
-        console.log(data.message);
-        tab += ` <div class="vendor-name-history" ><div class="images-div"></div>
-
-<p><img src="${assetUrl}nodata.png" alt="" width="200" class="rounded-circle" id="">${data.message}
-</p>
-</div>`;
-        document.getElementById("Proposal-card-old").innerHTML = tab;
-      }
-    }
- }else{
-
-  const api_url =
-      appUrl + "/owner/owner_history?owner_id=" + id + "&search=";
-
-    // Defining async function
-    async function getapi(url) {
-
-      // Storing response
-      const response = await fetch(url);
-
-      // Storing data in form of JSON
-      var data = await response.json();
-      console.log(data);
-      if (response) {
-        hideloader();
-      }
-      show(data);
-    }
-    // Calling that async function
-    getapi(api_url);
-
-    function hideloader() {
-      document.getElementById('loading').style.display = 'none';
-    }
-
-    function show(data) {
-
-      let tab = '';
-      let img2 = '';
-      let count = 0;
-      // Loop to access all rows
-      if (data.status == true) {
-        console.log(data.status);
-        for (let r of data.data) {
-        //   var x = new Array();
-        //      if(r.images != null){
-        //         x = r.images
-        //      }else{
-        //       img2 += `<img src="${assetUrl + 'product-dummy.png'}" height="100" width="100" alt="" class="img-thumbnail hover-zoom" style="height: 100px !important;">`;
-        //      }
-        // for (let i of x) {
-        //   img2 += `<img src="${i}" height="100" width="100" alt="" class="img-thumbnail hover-zoom" style="height: 100px !important;">`;
-
-        // }
-
-              let img = r.thumbnail_image == null ? assetUrl + "product-dummy.png" : r.thumbnail_image;
-              // let img1 = r.image == null ? assetUrl + "product-dummy.png" : r.image;
-              let vendor = r.vendor_images == null ? assetUrl + "default-profile.png" : r.vendor_images;
-              let note = r.note == null ? "There is no any note!" : r.note;
-              if(r.date != null || r.time != null)
-              {
-                  date = r.date;
-                  time = r.time;
-              }
-
-
-          tab += ` <div class="proposal-hover "><div class="Proposal-card-01">
-
-<img src="${img}" class="rounded-start" alt="..." id="${id}" height="180" width="300">
-
-                <h4>${r.product_name}</h4>
-                <p>Code:${r.order_id}</p>
-                <ul>
-                    <li style="color:#6F767E; display:-webkit-box; overflow: hidden;text-overflow: ellipsis;max-width: 28ch; -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;">${r.product_description}</li>
-
-                </ul>
-                <div class="vendor-class">
-                    <div class="vendor-name">
-                    <div class="row g-0">
-    <div class="col-md-2">
-    <div class="Group-img"><img src="${vendor}" width="50"
-                           alt="" class="float-start rounded-circle"></div></div>
-    <div class="col-md-10">
-
-    <h4 class="card-title" style="width: 100%;">${r.vendor_name}</h4>
-
-                        <p>Code: #D-${r.vendor_id}</p>
-  </div>
-   </div>
-   <div class="row g-0">
-
-    <div class="col-md-12">
-
-
-
-
-
-
-
-  </div>
-
-  </div>
-
-                    </div>
-                </div>
-                </div>
-            </div>`;
-          document.getElementById("Proposal-card-old").innerHTML = tab;
-        }
-
-      } else {
-        console.log(data.message);
-        tab += ` <div class="vendor-name-history" style="
-text-align: center;><div class="images-div"></div>
-
-<p><img src="${assetUrl}nodata.png" alt="" width="200" class="float-start rounded-circle" id="">${data.message}
-</p>
-</div>`;
-        document.getElementById("Proposal-card-old").innerHTML = tab;
-      }
-    }
- }
-
-
-
     /*get end default proposal*/
     /*------Get Proposal---------*/
 
@@ -2746,6 +2184,7 @@ text-align: center;><div class="images-div"></div>
       $(".History").css("background-color", "#ffffff");
       $("#main-tab").hide();
       $("#show-new-workorder").hide();
+        $("#show-maintenance").hide();
       $("#show-notification").show();
       $("#show-history").hide();
       $("#show-confirm").hide();
@@ -3451,15 +2890,12 @@ text-align: center;><div class="images-div"></div>
       $(".report-color").css("color", "#000");
       $(".Setting").css("background-color", "#ffffff");
       $(".setting-color").css("color", "#000");
-      // $("#Workorder h5").css("color", "#6759FF");
-      // $("#all-orders h5").css("color", "#6759FF");
-      //  $("#pending h5").css("color", "white");
-      //  $("#confirm h5").css("color", "#6759FF");
-      //  $("#history h5").css("color", "#6759FF");
       $("#main-tab").show();
       $("#show-notification").hide();
       $("#list-notification").hide();
       $("#view-notification").hide();
+      $("#show-maintenance").hide();
+      $("#show-equipment").hide();
       $("#show-history").hide();
       $("#show-proposal").hide();
       $("#show-confirm").hide();
@@ -3470,113 +2906,9 @@ text-align: center;><div class="images-div"></div>
       var assetUrl = "{{env('ASSET_URL')}}";
 
       var appUrl = "{{env('APP_URL')}}";
-      if (vid == 1) {
+     
         const api_url =
-          appUrl + "/owner/get_vendor_Proposal?order_status=pending &vendor_id=" + id;
-
-        // Defining async function
-        async function getapi(url) {
-
-          // Storing response
-          const response = await fetch(url);
-
-          // Storing data in form of JSON
-          var data = await response.json();
-          console.log(data);
-          if (response) {
-            hideloader();
-          }
-          show(data);
-        }
-        // Calling that async function
-        getapi(api_url);
-
-        function hideloader() {
-          document.getElementById('loading-p').style.display = 'none';
-        }
-
-        function show(data) {
-
-          let tab = '';
-          let tab1 = '';
-          let count = 0;
-          let date = '';
-
-          let time = '';
-          // Loop to access all rows
-          if (data.status == true) {
-
-            for (let r of data.data) {
-              let img2 = '';
-              var x = new Array();
-             if(r.image != null){
-                x = r.image
-             }else{
-              img2 += `<img src="${assetUrl + 'product-dummy.png'}" height="100" width="100" alt=""  style="height: 100px !important;">`;
-             }
-        for (let i of x) {
-          img2 += `<img src="${i}" height="100" width="100" alt="" style="height: 100px !important;">`;
-
-        }
-
-              let img = r.thumbnail_image == null ? assetUrl + "product-dummy.png" : r.thumbnail_image;
-              // let img1 = r.image == null ? assetUrl + "product-dummy.png" : r.image;
-              let vendor = r.vendor_image== null ? assetUrl + "default-profile.png" : r.vendor_image;
-              let note = r.note == null ? "There is no any note!" : r.note;
-              if(r.date != null || r.time != null)
-              {
-                  date = r.date;
-                  time = r.time
-              }
-
-
-
-              tab += ` <div class="proOuterBox">
-  <div class="row g-0">
-    <div class="col-md-3">
-      <img src="${img}" class="productImg" alt="..." id="${r.id}" >
-    </div>
-    <div class="col-md-9">
-      <div class="card-body">
-        <h5 class="card-title">${r.product_name}</h5>
-        <h6 class="card-title">${r.order_id}</h6>
-        <hr>
-       
-           
-             <a href="{{url('/')}}/product-details?id=${r.product_id}&order_id=${r.order_id}" class="btn btn-primary">Add Quote</a>
-             <div onclick="reject(this.id)"class="btn btn-primary" id="${r.order_id}">Cancel Order</div>
-             <div class="commentOuter">
-
-               <h4 class="card-title">${r.first_name} ${r.last_name}</h4>
-                <div class="d-flex">${img2}
-                <p style="margin-left:15px">${r.description}</p>
-                </div></div>
-      </div>
-    </div>
-  </div>
-  
-</div>`;
-
-              document.getElementById("Proposal-card").innerHTML = tab;
-
-
-            }
-
-          } else {
-            console.log(data.message);
-            tab += ` <div class="vendor-name-history"><div class="images-div"></div>
-
-<p><img src="${assetUrl}nodata.png" alt="" width="200" class="rounded-circle" id="">${data.message}!
-</p>
-</div>`;
-            document.getElementById("Proposal-card").innerHTML = tab;
-          }
-
-
-        }
-      } else {
-        const api_url =
-          appUrl + "/owner/get_Proposal?order_status=pending &owner_id=" + id;
+          appUrl + "/owner/get_pending_Proposal?order_status=pending";
 
         // Defining async function
         async function getapi(url) {
@@ -3656,31 +2988,11 @@ text-align: center;><div class="images-div"></div>
 
         <div class="metaInfo">
          <h5 style="font-size: 20px;" class="card-title">${r.vendor_name} </h5>
-            <span>   ${reject} </span>
-            <span >    ${count}</span>
-         
-            
-        </div>
-         
-         
-
-  <h5 class="card-title" >${note}</h5>
-  <div class="container mt-3" id="multi-img">      ${img2}               </div>
-      </div>
-    </div>
-
-  
-    
- 
-  
- 
-        </div>
+            <span>   ${reject} </span><span > ${count}</span></div><h5 class="card-title" >${note}</h5>
+  <div class="container mt-3" id="multi-img">  ${img2}</div> </div> </div></div>
   </div>  </div>
 </div>`;
-
-              document.getElementById("Proposal-card").innerHTML = tab;
-
-
+ document.getElementById("Proposal-card").innerHTML = tab;
             }
 
           } else {
@@ -3692,7 +3004,7 @@ text-align: center;><div class="images-div"></div>
 </div>`;
             document.getElementById("Proposal-card").innerHTML = tab;
           }
-        }
+        
       }
 
 
@@ -3709,6 +3021,10 @@ text-align: center;><div class="images-div"></div>
 
       $(".Report").css("background-color", "#e4e6ef");
       $(".report-color").css("color", "#6759ff");
+       $(".maintenance-color").css("color", "#000");
+      $(".Maintenance").css("background-color", "#ffffff");
+       $(".equipment-color").css("color", "#000");
+      $(".Equipment").css("background-color", "#ffffff");
       $(".New-Work-Order").css("background-color", "#ffffff");
       $(".order-color").css("color", "#000");
       $(".Setting").css("background-color", "#ffffff");
@@ -3721,6 +3037,8 @@ text-align: center;><div class="images-div"></div>
       $(".Logout").css("background-color", "#ffffff");
 
       $("#main-tab").hide();
+      $("#show-maintenance").hide();
+      $("#show-equipment").hide();
       $("#show-notification").hide();
       $("#show-new-workorder").hide();
       $("#show-history").hide();
@@ -3758,7 +3076,12 @@ text-align: center;><div class="images-div"></div>
                 { data: 'vendor_name', name: 'vendor_name' },
                 { data: 'order_amount', name: 'order_amount' },
                 { data: 'order_status', name: 'order_status' },
-                { data: 'action', name: 'action' },
+                { data: 'action', name: 'action',
+        rowCallback: function( row, data, index ) {
+         $('td:eq(9)', row).html( '<a href="'+data.filepath+'/'+data.fileName + '" download>Download</a>' );
+
+  }
+                 },
 
 
                  ],
@@ -3836,12 +3159,18 @@ text-align: center;><div class="images-div"></div>
       $(".notification-color").css("color", "#000");
       $(".report-color").css("color", "#000");
       $(".Report").css("background-color", "#ffffff");
+       $(".maintenance-color").css("color", "#000");
+      $(".Maintenance").css("background-color", "#ffffff");
+       $(".equipment-color").css("color", "#000");
+      $(".Equipment").css("background-color", "#ffffff");
       $(".logout-color").css("color", "#000");
       $(".Logout").css("background-color", "#ffffff");
 
       $("#main-tab").hide();
       $("#show-notification").hide();
+      $("#show-maintenance").hide();
       $("#show-new-workorder").hide();
+      $("#show-equipment").hide();
       $("#show-history").hide();
       $("#show-proposal").hide();
       $("#show-confirm").hide();
@@ -3856,7 +3185,7 @@ text-align: center;><div class="images-div"></div>
        var profileUrl = "{{env('PROFILE_URL')}}";
 
       var appUrl = "{{env('APP_URL')}}";
-
+  
       const api_url =
         appUrl + "/owner/Get_owner_details?id=" + id;
 
@@ -4059,123 +3388,16 @@ text-align: center;><div class="images-div"></div>
       $("#show-confirm").hide();
       $("#show-pending").hide();
       $("#show-profile").hide();
+       $("#show-maintenance").hide();
+      $("#show-equipment").hide();
       $("#edit-profile-details").hide();
       let vid = $("#ownerid").val();
       var assetUrl = "{{env('ASSET_URL')}}";
 
       var appUrl = "{{env('APP_URL')}}";
-      if (vid == 1) {
-        const api_url =
-          appUrl + "/owner/get_vendor_Proposal?order_status=confirmed &vendor_id=" + id;
-
-        // Defining async function
-        async function getapi(url) {
-
-          // Storing response
-          const response = await fetch(url);
-
-          // Storing data in form of JSON
-          var data = await response.json();
-          console.log(data);
-          if (response) {
-            hideloader();
-          }
-          show(data);
-        }
-        // Calling that async function
-        getapi(api_url);
-
-        function hideloader() {
-          document.getElementById('loading-c').style.display = 'none';
-        }
-
-        function show(data) {
-
-          let tab = '';
-          let date = '';
-
-          let time = '';
-          let count = 0;
-          // Loop to access all rows
-          if (data.status == true) {
-            console.log(data.status);
-            for (let r of data.data) {
-              let img2 = '';
-              var x = new Array();
-
-
-             if(r.image != null){
-                x = r.image
-             }else{
-              img2 += `<img src="${assetUrl + 'product-dummy.png'}" height="100" width="100" alt="" class="img-thumbnail hover-zoom" style="height: 100px !important;">`;
-             }
-
-
-
-        for (let i of x) {
-          img2 += `<img src="${i}" height="100" width="100" alt="" class="img-thumbnail hover-zoom" style="height: 100px !important;">`;
-
-        }
-              if(r.date != null || r.time != null)
-              {
-                  date = r.date;
-                  time = r.time
-              }
-              let img = r.thumbnail_image == null ? assetUrl + "product-dummy.png" : r.thumbnail_image;
-              let img1 = r.image == null ? assetUrl + "product-dummy.png" : r.image;
-              let vendor = r.vendor_image == null ? assetUrl + "default-profile.png" : r.vendor_image;
-              // let img2 = r.images == null ? assetUrl + "product-dummy.png" : r.images;
-
-              tab += ` <div class="proOuterBox">
-                      <div class="row g-0">
-                          <div class="col-md-3">
-                            <img src="${img}" class="productImg" alt="..." id="${id}" width="200" height="170">
-                          </div>
-<div class="col-md-9">
-  <div class="card-body">
-    <h5 class="card-title">${r.product_name}</h5>
-    <h6 class="card-title">${r.order_id}</h6>
-    <hr>
-    <div class="metaInfo">
-         <h5 style="font-size: 20px;" class="card-title">${r.first_name} ${r.last_name}  <a href="#"  class="badge badge-primary float-right" style="font-size:12px"><i class="fa fa-phone-alt" aria-hidden="true"></i>Call</a></h5>
-         <div class="d-flex">
-           ${img2}
-           <div class="ml-4">
-            <div class="btnPanel"><span class="badge badge-secondary priceBdge">  Price: ${r.order_amount}</span>
-             <span class="badge badge-primary" id="WFID9701S">${r.order_status}</span>  
-              <a href="#" class="badge badge-primary text-center" onclick="invoice(this.id)" id="${r.order_id}">Generate Invoice</a></div>
-             <p>  ${r.description} </p> </div>
-         </div>
-         
-          
-            
-         
-            
-        </div>
-  </div>
-</div>
-</div>
-
-</div>
-</div>`;
-
-              document.getElementById("Proposal-card").innerHTML = tab;
-            }
-
-          } else {
-            console.log(data.message);
-            tab += ` <div class="vendor-name-history"><div class="images-div"></div>
-
-<p><img src="${assetUrl}nodata.png" alt="" width="200" class="rounded-circle" id="">${data.message}
-</p>
-</div>`;
-            document.getElementById("Proposal-card").innerHTML = tab;
-          }
-        }
-      } else {
 
         const api_url =
-          appUrl + "/owner/get_Proposal?order_status=confirmed &owner_id=" + id;
+          appUrl + "/owner/get_pending_Proposal?order_status=confirmed";
 
         // Defining async function
         async function getapi(url) {
@@ -4258,14 +3480,8 @@ text-align: center;><div class="images-div"></div>
       </div>
     </div>
     </div>
-
-  </div>
-
-
-            
-    `;
-
-              document.getElementById("Proposal-card").innerHTML = tab;
+</div>`;
+           document.getElementById("Proposal-card").innerHTML = tab;
             }
 
           } else {
@@ -4277,7 +3493,7 @@ text-align: center;><div class="images-div"></div>
 </div>`;
             document.getElementById("Proposal-card").innerHTML = tab;
           }
-        }
+        
       }
 
 
@@ -4349,30 +3565,73 @@ text-align: center;><div class="images-div"></div>
 
     });
     /* ------------Update Profile End---------------------*/
-    /*----------Work Order----------*/
-    $("#Workorder").click(function(){
-      $("#Workorder").removeClass("bg-secondary-light");
-      $("#Workorder").addClass("bg-secondary-light-change");
-      $("#Workorder h5").css("color", "#ffffff");
-      $("#Workorder span").removeClass("count-color");
-      $("#Workorder span").addClass("count-color-change");
-      $("#pending").removeClass("bg-secondary-light-change");
-      $("#pending").addClass("bg-secondary-light");
-      $("#pending h5").css("color", "#000");
-      $("#pending span").removeClass("count-color-change");
-      $("#pending span").addClass("count-color");
-      $("#confirm").removeClass("bg-secondary-light-change");
-      $("#confirm").addClass("bg-secondary-light");
-      $("#confirm h5").css("color", "#000");
-      $("#confirm span").removeClass("count-color-change");
-      $("#confirm span").addClass("count-color");
-      $("#history").removeClass("bg-secondary-light-change");
-      $("#history").addClass("bg-secondary-light");
-      $("#history h5").css("color", "#000");
-      $("#history span").removeClass("count-color-change");
-      $("#history span").addClass("count-color");
 
-      $("#main-tab").show();
+    /*----------Equipment Start--------------*/
+
+ $("#Equipments").click(function(){
+  getequipment()
+
+      $(".proposal-card-div").css("display", "none");
+      $(".equipments-color").css("color", "#6759ff");
+      $(".Equipment").css("background-color", "#e4e6ef");
+      $(".Report").css("background-color", "#fff");
+      $(".report-color").css("color", "#000");
+      $(".maintenance-color").css("color", "#000");
+      $(".Maintenance").css("background-color", "#ffffff");
+      $(".New-Work-Order").css("background-color", "#ffffff");
+      $(".order-color").css("color", "#000");
+      $(".Setting").css("background-color", "#ffffff");
+      $(".Proposal").css("background-color", "#ffffff");
+      $(".Notification").css("background-color", "#ffffff");
+      $(".Proposal-color").css("color", "#000");
+      $(".setting-color").css("color", "#000");
+      $(".notification-color").css("color", "#000");
+      $(".logout-color").css("color", "#000");
+      $(".Logout").css("background-color", "#ffffff");
+
+      $("#main-tab").hide();
+       $("#single-detail").hide();
+      $("#show-maintenance").hide();
+      $("#show-equipment").show();
+      $("#show-notification").hide();
+      $("#list-notification").hide();
+      $("#view-notification").hide();
+      $("#show-history").hide();
+      $("#show-proposal").hide();
+      $("#show-confirm").hide();
+      $("#show-pending").hide();
+       $("#show-report").hide();
+      $("#show-profile").hide();
+      var appUrl ="{{env('APP_URL')}}";
+        const api_url =
+        appUrl+"/owner/get_all_product";
+
+      });
+
+    /*----------Maintenance Start----------*/
+    $("#Maintenance").click(function(){
+      $(".proposal-card-div").css("display", "none");
+      $(".maintenance-color").css("color", "#6759ff");
+      $(".Maintenance").css("background-color", "#e4e6ef");
+      $(".Report").css("background-color", "#fff");
+      $(".report-color").css("color", "#000");
+      $(".equipments-color").css("color", "#000");
+      $(".Equipment").css("background-color", "#ffffff");
+      $(".New-Work-Order").css("background-color", "#ffffff");
+      $(".order-color").css("color", "#000");
+      $(".Setting").css("background-color", "#ffffff");
+      $(".Proposal").css("background-color", "#ffffff");
+      $(".Notification").css("background-color", "#ffffff");
+      $(".Proposal-color").css("color", "#000");
+      $(".setting-color").css("color", "#000");
+      $(".notification-color").css("color", "#000");
+      $(".logout-color").css("color", "#000");
+      $(".Logout").css("background-color", "#ffffff");
+
+      $("#main-tab").hide();
+      $("#show-maintenance").show();
+      $("#show-report").hide();
+      $("#show-equipment").hide();
       $("#show-notification").hide();
       $("#list-notification").hide();
       $("#view-notification").hide();
@@ -4384,77 +3643,43 @@ text-align: center;><div class="images-div"></div>
       var appUrl ="{{env('APP_URL')}}";
         const api_url =
         appUrl+"/owner/get_all_product";
-        let userId = $("#owner_id").val();
-// Defining async function
-async function getapi(url) {
+//         let userId = $("#owner_id").val();
+//    async function getapi(url) {
+//     const response = await fetch(url);
+//     var data = await response.json();
+//     console.log(data);
+//     if (response) {
+//         hideloader();
+//     }
+//     show(data);
+// }
+// // Calling that async function
+// getapi(api_url);
+// function hideloader() {
+//     document.getElementById('loading').style.display = 'none';
+// }
+// function show(data) {
+//     console.log(data.data)
+//     let tab ='';
+//     let sum = 0;
+//     let link = '';
+//     // Loop to access all rows
+//     let count = 0;
+//     for (let r of data.data) {
+//         sum = count/3;
 
-    // Storing response
-    const response = await fetch(url);
+//     let img = r.thumbnail_image == null?"https://miro.medium.com/max/600/0*jGmQzOLaEobiNklD":r.thumbnail_image;
 
-    // Storing data in form of JSON
-    var data = await response.json();
-    console.log(data);
-    if (response) {
-        hideloader();
-    }
-    show(data);
-}
-// Calling that async function
-getapi(api_url);
-function hideloader() {
-    document.getElementById('loading').style.display = 'none';
-}
-function show(data) {
-    console.log(data.data)
-    let tab ='';
-    let sum = 0;
-    let link = '';
-    // Loop to access all rows
-    let count = 0;
-    for (let r of data.data) {
-        sum = count/3;
-
-    let img = r.thumbnail_image == null?"https://miro.medium.com/max/600/0*jGmQzOLaEobiNklD":r.thumbnail_image;
-
-      //  if(userId != null){
-
-      //   link = `<a href="./product-details?id=${r.id}" style="text-decoration: none;"><img src="${img}" alt="" width="150px" height="150px" id="${r.id}">`;
-      //  }else{
-
-      //   link =`<a href="#" style="text-decoration: none;"><img src="${img}" alt="" width="150px" height="150px" id="${r.id}">`;
-      //  }
-       
-
-            tab += `<div class="proposal-hover workorder"> <a href="../product-details?id=${r.id}" style="text-decoration: none;"><div class="Proposal-card-01">
-
-<img src="${img}" class="rounded-start" alt="..." id="${id}" height="180" width="300">
-
-            <h4>${r.product_name}</h4>
-            <p>Code:${r.brand}</p>
-            <ul>
-                <li style="color:#6F767E; display:-webkit-box; overflow: hidden;text-overflow: ellipsis;max-width: 28ch; -webkit-line-clamp: 2;
--webkit-box-orient: vertical;">${r.product_description}</li>
-
-            </ul>
-           
-            </div>
-            </a>
-            </div>
-       
-            
-          `;
-
-
-
-    count = count+1;
-
-    // console.log((Math.floor(sum) != '0')? $("service-list").after("<br />"):0);
-
-    }
-    console.log(count);
-    // Setting innerHTML as tab variable
-    document.getElementById("Proposal-card").innerHTML = tab;
-}
+//             tab += `<div class="proposal-hover workorder"> <a href="../product-details?id=${r.id}"style="text-decoration: none;"><div class="Proposal-card-01"><img src="${img}" class="rounded-start" alt="..." id="${id}" height="180" width="300"><h4>${r.product_name}</h4><p>Code:${r.brand}</p><ul>
+//                 <li style="color:#6F767E; display:-webkit-box; overflow: hidden;text-overflow: ellipsis;max-width: 28ch; -webkit-line-clamp: 2;-webkit-box-orient: vertical;">${r.product_description}</li></ul></div>
+//             </a>
+//             </div>`;
+//              count = count+1;
+//            }
+//     console.log(count);
+//     // Setting innerHTML as tab variable
+//     document.getElementById("Proposal-card").innerHTML = tab;
+// }
     });
 
     /*----------Work Order----------*/
@@ -4525,15 +3750,6 @@ function show(data) {
 
     let img = r.thumbnail_image == null?"https://miro.medium.com/max/600/0*jGmQzOLaEobiNklD":r.thumbnail_image;
 
-      //  if(userId != null){
-
-      //   link = `<a href="./product-details?id=${r.id}" style="text-decoration: none;"><img src="${img}" alt="" width="150px" height="150px" id="${r.id}">`;
-      //  }else{
-
-      //   link =`<a href="#" style="text-decoration: none;"><img src="${img}" alt="" width="150px" height="150px" id="${r.id}">`;
-      //  }
-       
-
             tab += `<div class="proposal-hover workorder"> <a href="../product-details?id=${r.id}" style="text-decoration: none;"><div class="Proposal-card-01">
 
 <img src="${img}" class="rounded-start" alt="..." id="${id}" height="180" width="300">
@@ -4541,25 +3757,9 @@ function show(data) {
             <h4>${r.product_name}</h4>
             <p>Code:${r.brand}</p>
             <ul>
-                <li style="color:#6F767E; display:-webkit-box; overflow: hidden;text-overflow: ellipsis;max-width: 28ch; -webkit-line-clamp: 2;
--webkit-box-orient: vertical;">${r.product_description}</li>
-
-            </ul>
-           
-            </div>
-            </a>
-            </div>
-       
-            
-          `;
-
-
-
-    count = count+1;
-
-    // console.log((Math.floor(sum) != '0')? $("service-list").after("<br />"):0);
-
-    }
+                <li style="color:#6F767E; display:-webkit-box; overflow: hidden;text-overflow: ellipsis;max-width: 28ch; -webkit-line-clamp: 2;-webkit-box-orient: vertical;">${r.product_description}</li></ul></div></a></div>`;
+             count = count+1;
+  }
     console.log(count);
     // Setting innerHTML as tab variable
     document.getElementById("get-new-work").innerHTML = tab;
@@ -4600,10 +3800,11 @@ function show(data) {
       var data1 = await response.json();
       if (data1.status == true) {
 
-        $.toast({
-          heading: 'Alert',
+     Swal.fire({
+         title: 'Accepted',
+          heading: 'success',
           text: 'Order has been accepted',
-          icon: 'info',
+          icon: 'success',
           loader: true, // Change it to false to disable loader
           loaderBg: '#9EC600' // To change the background
         });
@@ -4611,7 +3812,7 @@ function show(data) {
 
       } else {
 
-        $.toast({
+       Swal.fire({
           heading: 'Alert',
           text: 'You are not authorized',
           icon: 'info',
@@ -4623,41 +3824,7 @@ function show(data) {
     getapiaccept(api_url, options)
 
   }
-/*--------Reject Order Api Integration Start-----------*/
-  // function reject(orderId) {
-  //   let id = '<?php echo auth('owner')->user()->id; ?>';
-  //   var assetUrl = "{{env('ASSET_URL')}}";
 
-  //  var appUrl = "{{env('APP_URL')}}";
-  //  let options = {
-  //    method: 'POST',
-  //  }
-  //  const api_url =
-  //    appUrl + "/owner/order_reject?order_id=" + orderId +"&cancelled_by="+id;
-  //   toastr.success("<br /><br /><button type='button' id='confirmationRevertYes' class='btn clear'>Yes</button>",'Are you sure, you want to delete it?',
-  //   {
-  //     closeButton: false,
-  //     allowHtml: true,
-  //     onShown: function (toast) {
-  //       $("#confirmationRevertYes").click(function(){
-  //         $.ajax({
-  //           url: api_url,
-  //           type: "POST",
-
-  //           success: function(res){
-  //             console.log(res);
-  //             if(res.status==true){
-  //               toastr.success("Done! Record delete successful.", 'Success!', {timeOut: 5000});
-  //               location.reload();
-  //             }else{
-  //               toastr.error("Opps! Something is wrong, Please try again.", 'Error!', {timeOut: 5000});
-  //             }
-  //           }
-  //         });
-  //       });
-  //     }
-  //   });
-  // }
   /*--------Reject Order Api Integration Start-----------*/
  function reject(orderId) {
     let id = '<?php echo auth('owner')->user()->id; ?>';
@@ -4742,45 +3909,7 @@ if (data.status == 'true') {
 }
 }
 }  
-/*---End Count Data----*/
- let counturl =
-  '{!! route("get.count")!!}';
 
-// Defining async function
-async function getcount(counturl) {
-
-  // Storing response
-  const response = await fetch(counturl);
-
-  // Storing data in form of JSON
-  var data = await response.json();
-  console.log(data);
-  
-  showcount(data);
-}
-// Calling that async function
-getcount(counturl); 
-function showcount(data) {
-
-let tab = '';
-let count = 0;
-// Loop to access all rows
-if (data.status == 'true') {
-
-
-  $("#vendor-count").text(data.data.vendor);
-  $("#user-count").text(data.data.owner);
-  $("#pending-count").text(data.data.pending);
-  $("#confirmed-count").text(data.data.confirmed);
-  $("#history-count").text(data.data.history);
-  $("#work-count").text(data.data.work_order);
- 
-} else {
-  alert("failed")
-  $("#show-report").show();
-  
-}
-}
  /*--------Reject Order Api Integration End-----------*/
  function getPending()
   {
@@ -4848,10 +3977,8 @@ if (data.status == 'true') {
                   time = r.time
               }
 
-
-
               tab += ` <div class="card mb-3">
-  <div class="row g-0">
+    <div class="row g-0">
     <div class="col-md-4 text-right">
       <img src="${img}" class="product-pending rounded-start" alt="..." id="${r.id}" style="padding:5px;">
     </div>
@@ -5072,18 +4199,13 @@ if (data.status == 'true') {
                            $('#sub_total').val(data.data.price);
                             $('#total_amount').val(data.data.order_amount);
                     $('#exampleModal').modal('show');
-      //                 let tab = '';
-      // let count = 0;
-      // Loop to access all rows
-//       if (data.status == 'true') {
-// alert("sdfs")
- 
-//                 }
+      //        
     }
   });
 }
  
  $(function () {
+  
   
        $('#submit').click(function() {
    var uid = $("#ownerid").val();
@@ -5267,82 +4389,7 @@ if (data.status == 'true') {
   $("#getinvoicedetails").printThis();
 
  }
-  // function del() {
-
-  //   $("#main-tab").hide();
-  //   $("#show-notification").show();
-  //   $("#show-history").hide();
-  //   $("#show-proposal").hide();
-  //   $("#show-confirm").hide();
-  //   $("#show-pending").hide();
-  //   $("#show-profile").hide();
-  //   let del = $("#not-id").val();
-  //   var assetUrl = "{{env('ASSET_URL')}}";
-
-  //   var appUrl = "{{env('APP_URL')}}";
-  //   let options = {
-  //     method: 'DELETE',
-  //   }
-  //   const api_url =
-  //     appUrl + "/owner/removed_notification_History/" + del;
-
-  //   // Defining async function
-  //   async function getapi(url, options) {
-
-  //     // Storing response
-  //     const response = await fetch(url, options);
-
-  //     // Storing data in form of JSON
-  //     var data = await response.json();
-  //     console.log(data);
-  //     if (response) {
-  //       hideloader();
-  //     }
-  //     show(data);
-  //   }
-  //   // Calling that async function
-  //   getapi(api_url, options);
-
-  //   function hideloader() {
-  //     document.getElementById('loading').style.display = 'none';
-  //   }
-
-  //   function show(data) {
-
-  //     let tab = '';
-  //     let count = 0;
-  //     // Loop to access all rows
-  //     if (data.status == true) {
-
-
-  //       $.toast({
-  //         heading: 'Alert',
-  //         text: 'Data has been deleted',
-  //         icon: 'info',
-  //         loader: true, // Change it to false to disable loader
-  //         loaderBg: '#9EC600' // To change the background
-  //       })
-  //       getNotification();
-  //       $("#show-notification").load();
-  //       $("#show-notification").show();
-  //     } else {
-  //       alert("failed")
-  //       $("#show-notification").show();
-  //     }
-  //   }
-  // }
-
-  // let card = document.querySelector(".proposal-card-div"); //declearing profile card element
-  // let displayPicture = document.querySelector(".Proposal"); //
-  // displayPicture.addEventListener("click", function() {
-  //   //on click on profile picture toggle hidden class from css
-  //   card.classList.toggle("hidden");
-  //   // card2.classList.add("hidden");
-  // });
  
-
-
-
 function calc()
 {
   $('#tab_logic tbody tr').each(function(i, element) {
@@ -5376,26 +4423,330 @@ function calc_total()
   $('#total_amount').val((tax_sum+total+track+extra+labour).toFixed(2));
 }
 
-// const header = document.querySelector(".BoxdivCount");
+function showEqModal()
+{
+  $("#equipmentModal").modal('show')
+}
+/*-----------Add Notes----------*/
+function  getequipment()
+{
+  $("#show-equipment").show();
+   var table = $('#equipment-table').DataTable({
+            retrieve:true,
+            destroy:true,
+            
+            ajax: '{!! route('get.equipment') !!}',
+            columns: [
+                { data: 'id', name: 'id',
+                  render: function (data, type, row, meta) {
+        return meta.row + meta.settings._iDisplayStart + 1;
+    } },
+                
+                { data: 'name', name: 'name' },
+              
+                { data: 'images', name: 'images',
+                 render: function( data, type, full, meta ) {
+                        return "<img src=\"" + data + "\" height=\"50\" class=\"rounded-circle\"/>";
+                    } },
+                { data: 'model_no', name: 'model_no' },
+                { data: 'stock', name: 'stock' },
+                { data: 'qty', name: 'qty' },
+                { data: 'price', name: 'price' },
+                { data: 'action', name: 'action' },
+                ],
+                aaSorting: [[0, 'desc']], }); 
+                table.ajax.reload();
 
-// header.addEventListener('click', event => {
+}
+$('#add-equipment').click(function(){
+         $("#single-detail").hide();
+        let ownerid = $('#owner_id').val();
+        var files = $('#equipment-image').prop('files');
+        var ID = $('#equipmentId').val();
+        let formData = new FormData();
+      if(ID != '')
+      {
+       if(files.length>0)
+        {
+         for(i=0; i<files.length; i++) {
+         formData.append('images', files[i]);
+         }
+        }else{
+          formData.append('images', $('#equipment-image').text());
+          
+        }
+        
+         console.log(formData);
+        let name = $('#equipment-name').val();
+        let user_id = ownerid;
+        let stock = $('#equipment-stock').val();
+        let qty = $('#equipment-qty').val();
+        let price = $('#equipment-price').val();
+        let model = $('#equipment-model').val();
+        let description = $('#equipment-description').val();
+        formData.append('name', name);
+        formData.append('id', ID);
+        formData.append('user_id', user_id);
+        formData.append('price', price);
+        formData.append('description', description);
+        formData.append('model_no', model);
+        formData.append('stock', stock);
+        formData.append('qty', qty);
+        console.log(formData);
+        var appUrl ="{{env('APP_URL')}}";
+       $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+      $.ajax({
+                type: "POST",
+                url: '{!! route("update.equipment")!!}',
+                data: formData,
+                processData: false,
+                contentType: false,
+                success: function(data) {
+                    console.log(data);
+                 
+                 if(data.status== 'true')
+                 {
+                 $('#equipment-name').val('');
+                 $('#equipment-image').text('')
+                 $('#frame').attr('src', '')
+                 $('#equipmentId').val('');
+                 $('#equipment-stock').val('');
+                 $('#equipment-qty').val('');
+                 $('#equipment-price').val('');
+                 $('#equipment-model').val('');
+                 $('#equipment-description').val('');
+                 $("#equipmentModal").modal('hide');
 
-//   if (event.target.tagName === 'BUTTON') {
-//     let activeButton = header.querySelector('.boxActive [data-active="active"]');
-//     const currentState = event.target.dataset.active;
-    
-//     if (activeButton && activeButton !== event.target ) {
-//       activeButton.dataset.active = null;
-//     }
-    
-//     event.target.dataset.active = currentState === 'active' ? null : 'active';
-//   }
-// });
+                   getequipment()
+                  Swal.fire({
+                      title: 'Updation',
+                      heading: 'success',
+                      text: 'Record has been Updated',
+                      icon: 'success',
+                      position:"top-center",
+                      timer: 3000,  
+                      offset: 40,
+                      loader: true,        // Change it to false to disable loader
+                      loaderBg: '#9EC600'
+                 
+              });
+              
+             
+                }else{
+                  Swal.fire({
+                     title: 'Failed!',
+                      heading: 'Alert',
+                  text: data.message,
+                  icon: 'warning',
+                  offset: 50,
+                  loader: true, 
+                  timer: 5000,       // Change it to false to disable loader
+                  loaderBg: '#9EC600'
+                  });
+                }
 
 
+   }
+});  
+      }else{
+         for(i=0; i<files.length; i++) {
+         formData.append('images', files[i]);
+         }
+        
+        
+         console.log(formData);
+        let name = $('#equipment-name').val();
+        let user_id = ownerid;
+        let stock = $('#equipment-stock').val();
+        let qty = $('#equipment-qty').val();
+        let price = $('#equipment-price').val();
+        let model = $('#equipment-model').val();
+        let description = $('#equipment-description').val();
+        formData.append('name', name);
+        formData.append('user_id', user_id);
+        formData.append('price', price);
+        formData.append('description', description);
+        formData.append('model_no', model);
+        formData.append('stock', stock);
+        formData.append('qty', qty);
+        console.log(formData);
+        var appUrl ="{{env('APP_URL')}}";
+       $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+      $.ajax({
+                type: "POST",
+                url: '{!! route("add.equipment")!!}',
+                data: formData,
+                processData: false,
+                contentType: false,
+                success: function(data) {
+                    console.log(data);
+                 
+                 if(data.status== 'true')
+                 {
+                 $('#equipment-name').val('');
+                 $('#equipment-image').text('')
+                 $('#frame').attr('src', '')
+                 $('#equipmentId').val('');
+                 $('#equipment-stock').val('');
+                 $('#equipment-qty').val('');
+                 $('#equipment-price').val('');
+                 $('#equipment-model').val('');
+                 $('#equipment-description').val('');
+                 $("#equipmentModal").modal('hide');
+                  
+                   getequipment()
+                  Swal.fire({
+                      title: 'Added',
+                      heading: 'success',
+                      text: 'Equipment has been added',
+                      icon: 'success',
+                      position:"top-center",
+                      timer: 3000,  
+                      offset: 40,
+                      loader: true,        // Change it to false to disable loader
+                      loaderBg: '#9EC600'
+                 
+              });
+              
+             
+                }else{
+                  Swal.fire({
+                     title: 'Failed!',
+                      heading: 'Alert',
+                  text: data.message,
+                  icon: 'warning',
+                  offset: 50,
+                  loader: true, 
+                  timer: 5000,       // Change it to false to disable loader
+                  loaderBg: '#9EC600'
+                  });
+                }
 
-   
 
+   }
+});
+      }
+       
+        
+ });
+function getSingleEquipment(id)
+{
+  $("#single-detail").show();
+  $("#show-equipment").hide();
+    var assetUrl = "{{env('ASSET_URL')}}/images/products/";
+
+      var appUrl = "{{env('APP_URL')}}";
+     
+        const api_url =
+          '{!! route("get.single")!!}?id=' + id;
+
+        // Defining async function
+        async function getapi(url) {
+
+          // Storing response
+          const response = await fetch(url);
+
+          // Storing data in form of JSON
+          var data = await response.json();
+          console.log(data);
+         
+          show(data);
+        }
+        // Calling that async function
+        getapi(api_url);
+        function show(data) {
+          let tab = '';
+          let tab1 = '';
+
+          let tab3 = '';
+          let date = '';
+          let reject = '';
+          let time = '';
+          let count = 0;
+          // Loop to access all rows
+          if (data.status == 'true') {
+
+          
+              let img2 = '';
+              var x = new Array();
+             if(data.data.images != null){
+                 img2 = `<img src="${data.data.images}" height="100" width="100" alt="">`;
+             }else{
+              img2 = `<img src="${assetUrl + 'product-dummy.png'}" height="100" width="100" alt="" >`;
+             }
+              tab += ` <div class="proOuterBox">
+  <div class="row g-0">
+    <div class="col-md-3">
+      <img src="${assetUrl + data.data.images}" class="productImg" alt="..." id="${id}"  >
+    </div>
+    <div class="col-md-9">
+      <div class="card-body">
+        <h2 class="card-title">${data.data.name}</h2>
+        <h5  class="card-title">${data.data.model_no}</h5>
+        <p>${data.data.description}</p>
+        <div class="metaInfo dmetaInfo">
+         <h4 style="font-size: 20px;" class="card-title">Price: ${data.data.price} </h5>
+            <h4 style="font-size: 20px; color: #453d3d;" class="card-title"> Quantity: ${data.data.qty} &nbsp; &nbsp;Stock:${data.data.stock}</div></h4>
+  <div class="container mt-3" id="multi-img"> </div> </div> </div></div>
+  </div>  </div>
+</div>`;
+ document.getElementById("get-single-equipment").innerHTML = tab;
+            }
+
+          }
+}
+function editEquipment(id)
+{
+  alert("dsfds")
+  $("#single-detail").hide();
+  $("#show-equipment").hide();
+    var assetUrl = "{{env('ASSET_URL')}}/images/products/";
+
+      var appUrl = "{{env('APP_URL')}}";
+     
+        const api_url =
+          '{!! route("get.single")!!}?id=' + id;
+
+        // Defining async function
+        async function getapi(url) {
+
+          // Storing response
+          const response = await fetch(url);
+
+          // Storing data in form of JSON
+          var data = await response.json();
+          console.log(data);
+         
+          show(data);
+        }
+        // Calling that async function
+        getapi(api_url);
+        function show(data) {
+          
+           // frame.src=URL.createObjectURL(event.target.data.data.images);
+        $("#equipment-image").text(data.data.images)
+           // $('input:file').val(data.data.images);
+        $("#frame").css('display','block')
+        $("#frame").attr('src',assetUrl+''+data.data.images)
+        $('#equipment-name').val(data.data.name);
+        $('#equipmentId').val(data.data.id);
+        $('#equipment-stock').val(data.data.stock);
+        $('#equipment-qty').val(data.data.qty);
+        $('#equipment-price').val(data.data.price);
+        $('#equipment-model').val(data.data.model_no);
+        $('#equipment-description').val(data.data.description);
+           $("#equipmentModal").modal('show');
+// $("#equipmentModal").modal('show');
+          }
+}
 </script>
 
 </html>
