@@ -7,7 +7,7 @@
 		<a href="{{url('admin/dashboard')}}" class="logo">
 		  <!-- logo-->
 		  <div class="logo-lg">
-			  <span class="light-logo"><img src="{{ asset('images/services-icon-png-2296.png')}}" alt="logo" height="60"></span>
+			  <span class="light-logo"><img src="{{ asset('images/services-icon-png-2296.png')}}" alt="logo"style="width: 65px;position: unset;"></span>
 			  <span class="dark-logo"><img src="{{ asset('images/logo-dark-text.png')}}" alt="logo"></span>
 		  </div>
 		</a>	
