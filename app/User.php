@@ -21,7 +21,7 @@ class User extends Authenticatable
     protected $guard = 'owner';
 
     protected $fillable = [
-        'f_name', 'l_name', 'name', 'email', 'password', 'phone', 'image', 'login_medium', 'is_active', 'social_id', 'is_phone_verified', 'temporary_token', 'remember_token', 'device_token',
+        'first_name', 'last_name', 'name', 'email', 'password', 'phone', 'image', 'login_medium', 'is_active', 'social_id', 'is_phone_verified', 'temporary_token', 'remember_token', 'device_token','roleid','desc','company_id','d_manager_id',
     ];
 
     /**

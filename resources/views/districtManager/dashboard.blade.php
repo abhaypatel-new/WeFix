@@ -140,7 +140,11 @@
             <h3 class="Proposal-color">Dashboard</h3>
 
           </button>
-
+          <div class="Employee" style="cursor: pointer;background: unset;" id="Employees">
+              <img src="{{ asset('images') }}/image/Employee.png" alt="">
+              <h3 class="employees-color">Employee</h3>
+              <!-- <img class="dropdown-img" src="./image/dropdown.png" alt=""> -->
+            </div>
          <div class="Equipment" style="cursor: pointer;     background: unset;" id="Equipments">
               <img src="{{ asset('images') }}/image/equipments.png" alt="">
               <h3 class="equipments-color">Equipments</h3>
@@ -216,13 +220,13 @@
           </div>
            <div class="card" id="show-equipment">
             <h5 class="card-header">Equipment</h5>
+             <div onclick="showEqModal()" style="padding: 14px 20px 0px 20px;">
+            <button class="btn btn-primary" style="float: right;padding: 10px 35px 10px 35px;"><i
+              class="fa fa-plus"></i> Add Equipment</button></div>
            <div class="col-xl-12 float-end">
-         
-          <a class="btn btn-primary text-capitalize" data-mdb-ripple-color="dark"  onclick="showEqModal()"><i
-              class="fa fa-arrow-left"></i> Add Equipment</a>
              </div>
             <div class="card" id="get-equipment">
-               <table id="equipment-table">
+            <table id="equipment-table">
             <thead>
                 <tr>
                     <th>No</th>
@@ -245,46 +249,60 @@
           </div>
            <div class="card" id="show-maintenance" style="display:inline-table !important;">
             <h5 class="card-header">Maintenace</h5>
+            <div onclick="addPlan()" style="padding: 14px 20px 0px 20px;">
+            <button class="btn btn-primary" style="float: right;padding: 10px 35px 10px 35px;"><i
+              class="fa fa-plus"></i> Add Plan</button>
+            </div>
             
             <h2 style="text-align:center">Maintenance Plans</h2>
-<p style="text-align:center">Resize the browser window to see the effect.</p>
-
-<div class="columns">
-  <ul class="prices">
-    <li class="header">Basic</li>
-    <li class="grey">$ 9.99 / year</li>
-    <li>10GB Storage</li>
-    <li>10 Emails</li>
-    <li>10 Domains</li>
-    <li>1GB Bandwidth</li>
-    <li class="grey"><a href="#" class="button">Sign Up</a></li>
-  </ul>
-</div>
-
-<div class="columns">
-  <ul class="prices">
-    <li class="header" style="background-color:#04AA6D">Pro</li>
-    <li class="grey">$ 24.99 / year</li>
-    <li>25GB Storage</li>
-    <li>25 Emails</li>
-    <li>25 Domains</li>
-    <li>2GB Bandwidth</li>
-    <li class="grey"><a href="#" class="button">Sign Up</a></li>
-  </ul>
-</div>
-
-<div class="columns">
-  <ul class="prices">
-    <li class="header">Premium</li>
-    <li class="grey">$ 49.99 / year</li>
-    <li>50GB Storage</li>
-    <li>50 Emails</li>
-    <li>50 Domains</li>
-    <li>5GB Bandwidth</li>
-    <li class="grey"><a href="#" class="button">Sign Up</a></li>
-  </ul>
-</div>
+              <div class="card" id="get-plan-card" style="flex-direction: initial !important;">
+              
+              </div>
+             <hr>
             <div class="card" id="get-maintenance">
+               <table id="maintenance-table">
+            <thead>
+                <tr>
+                    <th>No</th>
+                    <th>Name</th>
+                    <th>Start Date</th>
+                    <th>End Date</th>
+                    <th>Price</th>
+                    <th>Features</th>
+                    <th>Action</th>
+
+                </tr>
+            </thead>
+            <tbody>
+
+            </tbody>
+          </table>
+            </div>
+          </div>
+          <div class="card" id="show-employee" style="display:inline-table !important;">
+            <h5 class="card-header">Employee</h5>
+            <div onclick="addEmployee()">
+            <button class="btn btn-primary"><i
+              class="fa fa-plus"></i> Add Employee</button>
+            </div>
+            <div class="card" id="get-employee">
+               <table id="employee-table">
+            <thead>
+                <tr>
+                    <th>No</th>
+                    <th>Name</th>
+                    <th>Company</th>
+                    <th>Email</th>
+                    <th>Phone</th>
+                    <th>Role</th>
+                    <th>Action</th>
+
+                </tr>
+            </thead>
+            <tbody>
+
+            </tbody>
+          </table>
             </div>
           </div>
            <div class="card " id="view-report">
@@ -687,6 +705,89 @@
     </div>
   </div>
 </div>
+<!---------- Add Plan Modal----------------->
+
+
+
+<div class="modal fade" id="addPlanModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog w-800" role="document">
+    <div class="modal-content ">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Add Plan</h5>
+        <button type="button" class="close btn btn-secondary" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form method="post" id="form_plan" name="form_plan">
+          <div class="mb-3">
+             <input type="hidden" class="form-control" id="plan-id" name="id">
+            <label for="plan-name" class="col-form-label">Name:</label>
+            <input type="text" class="form-control" id="plan-name" name="name"><span id="pname" style="display:none;"></span>
+          </div>
+             @csrf
+         
+           <div class="mb-3">
+             <div class="row">
+    <div class="col">
+      <label for="plan-name" class="col-form-label">Duration</label>
+            <input type="date" class="form-control" id="plan-start" name="start_date"><span id="pstart" style="display:none;"></span>
+    </div>
+    <div class="col">
+     <label for="plan-name" class="col-form-label">Duration</label>
+            <input type="date" class="form-control" id="plan-end" name="end_date"><span id="pend" style="display:none;"></span>
+    </div>
+    
+  </div>
+           
+          </div>
+           <div class="mb-3">
+            <label for="plan-price" class="col-form-label">Price:</label>
+            <input type="number" class="form-control" id="plan-price" maxlength="10" name="price"><span id="pprice" style="display:none;"></span>
+          </div>
+        
+           <div class="mb-3">
+              <table class="table table-bordered table-hover" id="tab_logics">
+        <thead>
+          
+        </thead>
+        <tbody>
+          <tr id='addrr0'>
+            <td >1</td>
+            <td> 
+           Features: <input type="text" class="form-control" id="plan-freaturs"name="features[]"></td>
+          </tr>
+          <tr id='addrr1'></tr>
+        </tbody>
+      </table>
+       <div class="row clearfix">
+    <div class="col-md-12">
+      <a id="add_rows" class="btn btn-secondary  pull-left">Add Row</a>
+      <a id='delete_rows' class="pull-right btn btn-secondary ">Delete Row</a>
+    </div>
+  </div>
+         <!-- <a id="add_rows" class="btn btn-secondary  pull-left">Add Row</a>
+      <a id='delete_rows' class="pull-right btn btn-secondary ">Delete Row</a> -->
+          </div>
+          <div class="mb-3">
+            <label for="message-text" class="col-form-label">Description:</label>
+            <textarea class="form-control" id="plan-description" name="description"></textarea>
+          </div>
+          <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+        <button type="button"class="btn btn-primary" onclick="CreatePlan()">Save</button>
+      </div>
+       </form>
+      </div>
+      
+        
+    </div>
+  </div>
+</div>
+
+<!-----------End Plan Modal---------------->
+
+
 
  <div class="modal fade" id="equipmentModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog w-800" role="document">
@@ -742,36 +843,224 @@
   </div>
 </div>
 <!---------------modal-close--------->
-<!-------------------Equipment Modal -------------->
+
+
+<!-------------------Employee Modal -------------->
  
-<!-- <div class="modal fade" id="equipmentModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel1" aria-hidden="true">
+<div class="modal fade" id="employeeModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog w-800" role="document">
-    <div class="modal-content">
+    <div class="modal-content ">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel1">New message</h5>
+        <h5 class="modal-title" id="exampleModalLabel">Add Employee</h5>
         <button type="button" class="close btn btn-secondary" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
+      </div>
       <div class="modal-body">
-        <form>
-          <div class="mb-3">
-            <label for="recipient-name" class="col-form-label">Recipient:</label>
-            <input type="text" class="form-control" id="recipient-name">
+        <form method="post" id="emp_form">
+              
+                                    @csrf
+                                     <input type="hidden" id="emp-id" name="id">
+                                     <input type="hidden" id="createrid" value="{{auth('owner')->user()->id}}" name="d_manager_id">
+                                    <div class="box-body">
+                                        <h4 class="box-title text-info mb-0"><i class="ti-user me-15"></i> Personal Info
+                                        </h4>
+                                        <hr class="my-15">
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="form-group mb-3">
+                                                    <label class="form-label">First Name</label> <span
+                                                        class="text-danger">*</span>
+                                                    <div class="controls">
+                                                        <input type="text" name="first_name" class="form-control"
+                                                            required
+                                                            data-validation-required-message="First Name field is required" id="efirst">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group mb-3">
+                                                    <label class="form-label">Last Name</label> <span
+                                                        class="text-danger">*</span>
+                                                    <div class="controls">
+                                                        <input type="text" name="last_name" class="form-control"
+                                                            required
+                                                            data-validation-required-message="Last Name field is required" id="elast">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="form-group mb-3">
+                                                    <label class="form-label">E-mail</label><span
+                                                        class="text-danger">*</span>
+                                                    <div class="controls">
+                                                        <input type="email" name="email" class="form-control" required
+                                                            data-validation-required-message="Email field is required" id="e-email">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group mb-3">
+                                                    <label class="form-label">Contact Number</label>
+                                                    <input type="text" name="phone" class="form-control"
+                                                        placeholder="Phone" id="ecnt">
+                                                </div>
+                                            </div>
+                                            <div class="col-md-12">
+
+                                            <div class="form-group mb-3">
+                                                <label class="form-label">Password</label><span
+                                                    class="text-danger">*</span>
+                                                <div class="input-group mb-3 controls">
+                                                    <span class="input-group-text"><i class="fa fa-lock" style="color: #000;"></i></span>
+                                                    <input type="password" class="form-control" name="password"
+                                                        placeholder="Password" required
+                                                        data-validation-required-message="Password field is required" id="epass">
+                                                </div>
+                                            </div>
+                                            </div>
+                                            <div class="col-md-12">
+
+                                            <div class="form-group mb-3">
+                                                <label class="form-label">Confirm Password</label><span
+                                                    class="text-danger">*</span>
+                                                <div class="input-group mb-3 controls">
+                                                    <span class="input-group-text"><i class="fa fa-lock" style="color: #000;"></i></span>
+                                                    <input type="password" placeholder="Confirm Password" name="con_password" data-validation-required-message="Confirm Password field is required" data-validation-match-match="password" class="form-control" required> 
+
+                                                </div>
+                                            </div>
+                                            </div>
+                                            
+                                        </div>
+                                        <h4 class="box-title text-info mb-0 mt-20"><i class="ti-save me-15"></i>
+                                            Requirements</h4>
+                                        <hr class="my-15">
+                                     
+                                        <div class="row">
+
+                                            <div class="col-md-6">
+                                                <div class="form-group mb-3">
+                                                    <label class="fw-700 fs-16 form-label">Company</label><span
+                                                        class="text-danger">*</span>
+                                                    <select class="form-select" data-placeholder="Choose a Company"
+                                                        name="company_id" tabindex="1" required
+                                                        data-validation-required-message="Company field is required" style="color:#808080;" id="ecmp">
+                                                        <option value="">Select Company</option>
+                                                        @php $companies = App\Model\Company::all();
+                                                        @endphp
+                                                        @foreach($companies as $company)
+                                                        <option value="{{ $company->id }}" style="color:#808080;">{{ $company->company_name }}
+                                                        </option>
+                                                        @endforeach
+                                                    </select>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-6">
+                                                <div class="form-group mb-3">
+                                                    <label class="fw-700 fs-16 form-label">Job Position</label><span
+                                                        class="text-danger">*</span>
+                                                    <select class="form-select" data-placeholder="Choose a Job Position"
+                                                        name="roleid" tabindex="1" required
+                                                        data-validation-required-message="Job Position field is required" style="color:#808080;" id="ejob">
+                                                        <option value="" style="color:#808080;">Select Job Position</option>
+                                                        <option value="4" style="color:#808080;">Owner</option>
+                                                        <option value="3" style="color:#808080;">District Manager</option>
+                                                        <option value="2" style="color:#808080;">Manager</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                          
+                                        </div>
+
+                                       
+                                        <div class="form-group mb-3">
+                                            <label class="form-label">About Employee</label>
+                                            <textarea rows="5" class="form-control" name="desc"
+                                                placeholder="About Employee" id="eabout"></textarea>
+                                        </div>
+                                    </div>
+
+                                    <div class="row mt-3">
+
+                                        <!--/span-->
+                                        <div class="col-md-6">
+                                            <div class="form-group mb-3">
+                                                <label class="fw-700 fs-16 form-label">Status</label>
+                                                <div class="radio-list">
+                                                    <label class="radio-inline p-0 me-10">
+                                                        <div class="radio radio-info">
+                                                            <input type="radio" name="status" value="publish" checked>
+                                                            <label for="radio1">Published</label>
+                                                        </div>
+                                                    </label>
+                                                    <label class="radio-inline">
+                                                        <div class="radio radio-info">
+                                                            <input type="radio" name="status" value="draft">
+                                                            <label for="radio2">Draft</label>
+                                                        </div>
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!--/span-->
+                                    </div>
+                                    <!-- /.box-body -->
+                                    <div class="box-footer">
+                                        <button type="button" class="btn btn-warning me-1">
+                                            <i class="ti-trash"></i> Cancel
+                                        </button>
+                                        <button type="button" class="btn btn-primary" onclick="CreateEmp()">
+                                            <i class="ti-save-alt"></i> Save
+                                        </button>
+                                    </div>
+                                </form>
+        <!--   <div class="mb-3">
+             <input type="hidden" class="form-control" id="equipmentId" name="ID">
+            <label for="equipment-name" class="col-form-label">Name:</label>
+            <input type="text" class="form-control" id="equipment-name" name="name">
+          </div>
+             @csrf
+           <div class="mb-3">
+            <label for="equipment-name" class="col-form-label">Image:</label>
+            <input type="file" class="form-control" id="equipment-image" alt="equipment-image" name="images">
+            <img id="frame" src="" width="100px" height="100px" style="display:none;" class="rounded-circle" style="border:2px solid;"/><i class="fa fa-check-circle yes" style="font-size:48px;color:green; display:none;text-align: left;"></i>
+          </div>
+           <div class="mb-3">
+            <label for="equipment-name" class="col-form-label">Model No.:</label>
+            <input type="text" class="form-control" id="equipment-model" name="model">
+          </div>
+           <div class="mb-3">
+            <label for="equipment-name" class="col-form-label">Price:</label>
+            <input type="number" class="form-control" id="equipment-price" maxlength="10" name="price">
+          </div>
+           <div class="mb-3">
+            <label for="equipment-name" class="col-form-label">Qty:</label>
+            <input type="number" class="form-control" id="equipment-qty" maxlength="5" name="qty">
+          </div>
+           <div class="mb-3">
+            <label for="equipment-name" class="col-form-label">Stock:</label>
+            <input type="number" class="form-control" id="equipment-stock" maxlength="5" name="stock">
           </div>
           <div class="mb-3">
-            <label for="message-text" class="col-form-label">Message:</label>
-            <textarea class="form-control" id="message-text"></textarea>
+            <label for="message-text" class="col-form-label">Description:</label>
+            <textarea class="form-control" id="equipment-description" name="description"></textarea>
           </div>
-        </form>
+          <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+        <button type="button"class="btn btn-primary" id="add-equipment">Save</button>
+      </div> -->
+        <!-- </form> -->
       </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Send message</button>
-      </div>
+      
+        
     </div>
   </div>
-</div> -->
- 
+</div>
+ <!-------------------Employee Modal End-------------->
   @endif
 </body>
 <!-- <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script> -->
@@ -787,7 +1076,6 @@
 <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
   
   <script type="text/javascript">
@@ -804,6 +1092,7 @@
     $("#show-confirm").hide();
      $("#show-report").hide();
      $("#show-equipment").hide();
+      $("#show-employee").hide();
      $("#show-maintenance").hide();
     $("#view-report").hide();
     $("#show-pending").hide();
@@ -821,7 +1110,10 @@
    $('#bodyloading').fadeOut(500);
 });
   $(document).ready(function() {
+    getEmployee()
      getcountdata()
+     getCardPlan()
+     getPlan()
      getpiechart()
     $("#frame").css('display', 'none');
         $(".yes").css('display', 'none');
@@ -858,7 +1150,8 @@
      $("#show-new-work").hide();
     $("#show-profile").hide();
     $("#edit-profile-details").hide();
-    const charturl =
+
+const charturl =
   '{!! route("get.chart")!!}';
 
 // Defining async function
@@ -972,6 +1265,20 @@ getchart(charturl);
     i--;
     }
     calc();
+  });
+
+     var i=1;
+    $("#add_rows").click(function(){b=i-1;
+        $('#addrr'+i).html($('#addrr'+b).html()).find('td:first-child').html(i+1);
+        $('#tab_logics').append('<tr id="addrr'+(i+1)+'"></tr>');
+        i++; 
+    });
+    $("#delete_rows").click(function(){
+      if(i>1){
+    $("#addrr"+(i-1)).html('');
+    i--;
+    }
+    
   });
   
   $('#tab_logic tbody').on('keyup change',function(){
@@ -1834,6 +2141,8 @@ if(koopId == 'show')
       $(".Setting").css("background-color", "#ffffff");
       $(".logout-color").css("color", "#000");
       $(".Logout").css("background-color", "#ffffff");
+       $(".employees-color").css("color", "#000");
+      $(".Employee").css("background-color", "#fff");
       $("#main-tab").show();
       $("#show-new-workorder").hide();
       $("#edit-profile-details").hide();
@@ -1841,6 +2150,7 @@ if(koopId == 'show')
       $("#list-notification").hide();
       $("#view-notification").hide();
       $("#show-history").hide();
+      $("#show-employee").hide();
       $("#show-proposal").hide();
       $("#show-confirm").hide();
       $("#show-pending").hide();
@@ -3035,10 +3345,13 @@ text-align: center;><div class="images-div"></div>
       $(".notification-color").css("color", "#000");
       $(".logout-color").css("color", "#000");
       $(".Logout").css("background-color", "#ffffff");
+      $(".employees-color").css("color", "#000");
+      $(".Employee").css("background-color", "#fff");
 
       $("#main-tab").hide();
       $("#show-maintenance").hide();
       $("#show-equipment").hide();
+      $("#show-employee").hide();
       $("#show-notification").hide();
       $("#show-new-workorder").hide();
       $("#show-history").hide();
@@ -3165,12 +3478,15 @@ text-align: center;><div class="images-div"></div>
       $(".Equipment").css("background-color", "#ffffff");
       $(".logout-color").css("color", "#000");
       $(".Logout").css("background-color", "#ffffff");
+      $(".employees-color").css("color", "#000");
+      $(".Employee").css("background-color", "#fff");
 
       $("#main-tab").hide();
       $("#show-notification").hide();
       $("#show-maintenance").hide();
       $("#show-new-workorder").hide();
       $("#show-equipment").hide();
+      $("#show-employee").hide();
       $("#show-history").hide();
       $("#show-proposal").hide();
       $("#show-confirm").hide();
@@ -3588,10 +3904,13 @@ text-align: center;><div class="images-div"></div>
       $(".notification-color").css("color", "#000");
       $(".logout-color").css("color", "#000");
       $(".Logout").css("background-color", "#ffffff");
+      $(".employees-color").css("color", "#000");
+      $(".Employee").css("background-color", "#fff");
 
       $("#main-tab").hide();
-       $("#single-detail").hide();
+      $("#single-detail").hide();
       $("#show-maintenance").hide();
+       $("#show-employee").hide();
       $("#show-equipment").show();
       $("#show-notification").hide();
       $("#list-notification").hide();
@@ -3627,9 +3946,12 @@ text-align: center;><div class="images-div"></div>
       $(".notification-color").css("color", "#000");
       $(".logout-color").css("color", "#000");
       $(".Logout").css("background-color", "#ffffff");
+      $(".employees-color").css("color", "#000");
+      $(".Employee").css("background-color", "#fff");
 
       $("#main-tab").hide();
       $("#show-maintenance").show();
+       $("#show-employee").hide();
       $("#show-report").hide();
       $("#show-equipment").hide();
       $("#show-notification").hide();
@@ -3640,47 +3962,49 @@ text-align: center;><div class="images-div"></div>
       $("#show-confirm").hide();
       $("#show-pending").hide();
       $("#show-profile").hide();
-      var appUrl ="{{env('APP_URL')}}";
-        const api_url =
-        appUrl+"/owner/get_all_product";
-//         let userId = $("#owner_id").val();
-//    async function getapi(url) {
-//     const response = await fetch(url);
-//     var data = await response.json();
-//     console.log(data);
-//     if (response) {
-//         hideloader();
-//     }
-//     show(data);
-// }
-// // Calling that async function
-// getapi(api_url);
-// function hideloader() {
-//     document.getElementById('loading').style.display = 'none';
-// }
-// function show(data) {
-//     console.log(data.data)
-//     let tab ='';
-//     let sum = 0;
-//     let link = '';
-//     // Loop to access all rows
-//     let count = 0;
-//     for (let r of data.data) {
-//         sum = count/3;
-
-//     let img = r.thumbnail_image == null?"https://miro.medium.com/max/600/0*jGmQzOLaEobiNklD":r.thumbnail_image;
-
-//             tab += `<div class="proposal-hover workorder"> <a href="../product-details?id=${r.id}"style="text-decoration: none;"><div class="Proposal-card-01"><img src="${img}" class="rounded-start" alt="..." id="${id}" height="180" width="300"><h4>${r.product_name}</h4><p>Code:${r.brand}</p><ul>
-//                 <li style="color:#6F767E; display:-webkit-box; overflow: hidden;text-overflow: ellipsis;max-width: 28ch; -webkit-line-clamp: 2;-webkit-box-orient: vertical;">${r.product_description}</li></ul></div>
-//             </a>
-//             </div>`;
-//              count = count+1;
-//            }
-//     console.log(count);
-//     // Setting innerHTML as tab variable
-//     document.getElementById("Proposal-card").innerHTML = tab;
-// }
+    
     });
+    /*----------Maintenance End----------*/
+
+    /*----------Employee Start----------*/
+    $("#Employees").click(function(){
+      $(".proposal-card-div").css("display", "none");
+      $(".employees-color").css("color", "#6759ff");
+      $(".Employee").css("background-color", "#e4e6ef");
+      $(".maintenance-color").css("color", "#000");
+      $(".Maintenance").css("background-color", "#ffffff");
+      $(".Report").css("background-color", "#fff");
+      $(".report-color").css("color", "#000");
+      $(".equipments-color").css("color", "#000");
+      $(".Equipment").css("background-color", "#ffffff");
+      $(".New-Work-Order").css("background-color", "#ffffff");
+      $(".order-color").css("color", "#000");
+      $(".Setting").css("background-color", "#ffffff");
+      $(".Proposal").css("background-color", "#ffffff");
+      $(".Notification").css("background-color", "#ffffff");
+      $(".Proposal-color").css("color", "#000");
+      $(".setting-color").css("color", "#000");
+      $(".notification-color").css("color", "#000");
+      $(".logout-color").css("color", "#000");
+      $(".Logout").css("background-color", "#ffffff");
+
+      $("#main-tab").hide();
+      $("#show-maintenance").hide();
+      $("#show-employee").show();
+      $("#show-report").hide();
+      $("#show-equipment").hide();
+      $("#show-notification").hide();
+      $("#list-notification").hide();
+      $("#view-notification").hide();
+      $("#show-history").hide();
+      $("#show-proposal").hide();
+      $("#show-confirm").hide();
+      $("#show-pending").hide();
+      $("#show-profile").hide();
+      getEmployee();
+    
+    });
+    /*----------Employee End----------*/
 
     /*----------Work Order----------*/
     $("#NewWorkorder").click(function(){
@@ -4705,7 +5029,7 @@ function getSingleEquipment(id)
 }
 function editEquipment(id)
 {
-  alert("dsfds")
+ 
   $("#single-detail").hide();
   $("#show-equipment").hide();
     var assetUrl = "{{env('ASSET_URL')}}/images/products/";
@@ -4747,6 +5071,456 @@ function editEquipment(id)
 // $("#equipmentModal").modal('show');
           }
 }
+function addPlan()
+{
+  $("#addPlanModal").modal('show')
+}
+function CreatePlan()
+{ 
+ let id = $("#plan-id").val();
+ 
+ if(id != '')
+ {
+  $.ajax({
+                type: "POST",
+                url: '{!! route("update.plan")!!}',
+                data: $('#form_plan').serialize(),
+                success: function(data) {
+                if(data.status = 'true')
+                {
+                 $('#plan-name').val('');
+                 $('#plan-start').val('');
+                 $('#plan-end').val('');
+                 $('#plan-price').val('');
+                 $('#plan-features').val('');
+                 $('#plan-description').val('');
+                    $('#addPlanModal').modal('hide');
+                    getPlan()
+                  
+                  
+                    Swal.fire({
+                      title: 'Added',
+                      heading: 'success',
+                      text: 'Plan has been updated successfully',
+                      icon: 'success',
+                      position:"top-center",
+                      timer: 3000,  
+                      offset: 40,
+                      loader: true,        // Change it to false to disable loader
+                      loaderBg: '#9EC600'
+                 
+              });
+                    getCardPlan()
+                    getPlan()
+                }else{
+                   Swal.fire({
+                     title: 'Failed!',
+                      heading: 'Alert',
+                  text: data.message,
+                  icon: 'warning',
+                  offset: 50,
+                  loader: true, 
+                  timer: 5000,       // Change it to false to disable loader
+                  loaderBg: '#9EC600'
+                  });
+                }
+              }
+              });
+                 
+ }else{
+   $("#pname").css('display', 'none')
+   $("#pstart").css('display', 'none')
+   $("#pend").css('display', 'none')
+    $("#pprice").css('display', 'none')
+   $.ajax({
+                type: "POST",
+                url: '{!! route("add.plan")!!}',
+                data: $('#form_plan').serialize(),
+                success: function(data) {
+                  console.log(data)
+                   if(data.status === true)
+                {
+                 $('#plan-name').val('');
+                 $('#plan-start').val('');
+                 $('#plan-end').val('');
+                 $('#plan-price').val('');
+                 $('#plan-features').val('');
+                 $('#plan-description').val('');
+                    $('#addPlanModal').modal('hide');
+                    getPlan()
+                    getCardPlan()
+                  
+                    Swal.fire({
+                      title: 'Added',
+                      heading: 'success',
+                      text: 'Plan has been added successfully',
+                      icon: 'success',
+                      position:"top-center",
+                      timer: 3000,  
+                      offset: 40,
+                      loader: true,        // Change it to false to disable loader
+                      loaderBg: '#9EC600'
+                 
+              });
+                    getPlan()
+                }else{
+              $.each(data.data, function (i) {
+    $.each(data.data[i], function (key, val) {
+      if(i == 'name')
+{ 
+   $("#pname").css('display', 'block')
+    $("#pname").css('color', 'red')
+    $("#pname").text(val)
+}else if(i == 'start_date'){
+   $("#pstart").css('display', 'block')
+    $("#pstart").css('color', 'red')
+    $("#pstart").text(val)
+}else if(i == 'price'){
+   $("#pprice").css('display', 'block')
+    $("#pprice").css('color', 'red')
+    $("#pprice").text(val)
+}else{
+  $("#pend").css('display', 'block')
+    $("#pend").css('color', 'red')
+    $("#pend").text(val)
+}
+      
+   
+                 
+    });
+});
+                }
+                  }
+                  });
+ }
+  
+     
+           
+            
+}
+function getPlan()
+{
+    var table = $('#maintenance-table').DataTable({
+            retrieve:true,
+            destroy:true,
+            
+            ajax: '{!! route('get.plan') !!}',
+            columns: [
+                { data: 'id', name: 'id' },
+                
+                { data: 'name', name: 'name' },
+              
+                { data: 'start_date', name: 'start_date' },
+                { data: 'end_date', name: 'end_date' },
+                { data: 'price', name: 'price' },
+                { data: 'description', name: 'description' },
+                { data: 'action', name: 'action' },
+                ],
+                
+               
+             });  
+              table.ajax.reload();    
+}
+
+function editPlan(id)
+{
+ $("#plan-id").val(id);
+ const api_url =
+          '{!! url("single-plan")!!}/' + id;
+
+        // Defining async function
+        async function getapi(url) {
+
+          // Storing response
+          const response = await fetch(url);
+
+          // Storing data in form of JSON
+          var data = await response.json();
+          console.log(data);
+         
+          show(data);
+        }
+        // Calling that async function
+        getapi(api_url);
+        function show(data) {
+          let count = 0;
+          let tab = '';
+           for (let r of data.data.features) {
+            count = count+1;
+             tab += `<tr><td>${count}</td><td> Features: <input type="text" class="form-control" id="plan-freaturs"name="features[]" value="${r}"><td></tr>`;
+          
+        }
+         document.getElementById("tab_logics").innerHTML = tab;
+       
+                 $('#plan-name').val(data.data.name);
+                 $('#plan-start').val(data.data.start_date);
+                 $('#plan-end').val(data.data.end_date);
+                 $('#plan-price').val(data.data.price);
+                
+                 $('#plan-description').val(data.data.description);
+           $('#addPlanModal').modal('show');
+          
+          }
+}
+function getCardPlan()
+{
+    const api_url =
+     '{!! route("get.card.plan")!!}';
+
+      // Defining async function
+      async function getapi(url) {
+
+        // Storing response
+        const response = await fetch(url);
+
+        // Storing data in form of JSON
+        var data = await response.json();
+         show(data);
+      }
+      // Calling that async function
+      getapi(api_url);
+      function show(data) {
+console.log(data)
+        let tab = '';
+       
+        let count = 0;
+        // Loop to access all rows
+        if (data.status == 'true') {
+          console.log(data.status);
+          for (let r of data.data) {
+            let feature = '';
+            var x = new Array();
+             if(r.features.length>0){
+                for (let i of r.features) {
+          feature += `<li>${i}</li>`;
+
+        }
+             }else{
+              feature = `<li>25GB Storage</li> <li>25 Emails</li><li>25 Domains</li><li>2GB Bandwidth</li>`;
+             }
+       
+
+           
+
+            tab += ` <div class="columns">
+                <ul class="prices">
+                  <li class="header" style="background-color:#6759ff">${r.name}</li>
+                  <li class="grey">$ ${r.price} / year</li>
+                  ${feature}
+                  <li class="grey"><a href="#" class="button">Sign Up</a></li>
+                </ul>
+              </div>`;
+            document.getElementById("get-plan-card").innerHTML = tab;
+          
+
+        } 
+      }else {
+          console.log(data.message);
+          tab += `  <div class="columns">
+                <ul class="prices">
+                  <li class="header" style="background-color:#6759ff">Pro</li>
+                  <li class="grey">$ 24.99 / year</li>
+                  <li>25GB Storage</li>
+                  <li>25 Emails</li>
+                  <li>25 Domains</li>
+                  <li>2GB Bandwidth</li>
+                  <li class="grey"><a href="#" class="button">Sign Up</a></li>
+                </ul>
+              </div>`;
+          document.getElementById("get-plan-card").innerHTML = tab;
+        }
+      }
+}
+function addEmployee()
+{
+  $("#employeeModal").modal('show')
+}
+function CreateEmp()
+{ 
+ let id = $("#emp-id").val();
+ alert(id)
+ if(id != '')
+ {
+  $.ajax({
+                type: "POST",
+                url: '{!! route("update.employee")!!}',
+                data: $('#emp_form').serialize(),
+                success: function(data) {
+                if(data.status = 'true')
+                {
+                 $('#plan-name').val('');
+                 $('#plan-start').val('');
+                 $('#plan-end').val('');
+                 $('#plan-price').val('');
+                 $('#plan-features').val('');
+                 $('#plan-description').val('');
+                    $('#addPlanModal').modal('hide');
+                    getPlan()
+                  
+                  
+                    Swal.fire({
+                      title: 'Added',
+                      heading: 'success',
+                      text: 'Employee has been updated successfully',
+                      icon: 'success',
+                      position:"top-center",
+                      timer: 3000,  
+                      offset: 40,
+                      loader: true,        // Change it to false to disable loader
+                      loaderBg: '#9EC600'
+                 
+              });
+                    getCardPlan()
+                    getPlan()
+                    getEmployee()
+                }else{
+                   Swal.fire({
+                     title: 'Failed!',
+                      heading: 'Alert',
+                  text: data.message,
+                  icon: 'warning',
+                  offset: 50,
+                  loader: true, 
+                  timer: 5000,       // Change it to false to disable loader
+                  loaderBg: '#9EC600'
+                  });
+                }
+              }
+              });
+                 
+ }else{
+   $("#pname").css('display', 'none')
+   $("#pstart").css('display', 'none')
+   $("#pend").css('display', 'none')
+    $("#pprice").css('display', 'none')
+   $.ajax({
+                type: "POST",
+                url: '{!! route("add.employee")!!}',
+                data: $('#emp_form').serialize(),
+                success: function(data) {
+                  console.log(data)
+                   if(data.status === true)
+                {
+                 $('#efirst').val('');
+                 $('#elast').val('');
+                 $('#e-email').val('');
+                 $('#epass').val('');
+                 $('#ecnt').val('');
+                 $('#eabout').val('');
+                    $('#addPlanModal').modal('hide');
+                    getPlan()
+                    getCardPlan()
+                  
+                    Swal.fire({
+                      title: 'Added',
+                      heading: 'success',
+                      text: 'Employee has been created successfully',
+                      icon: 'success',
+                      position:"top-center",
+                      timer: 3000,  
+                      offset: 40,
+                      loader: true,        // Change it to false to disable loader
+                      loaderBg: '#9EC600'
+                 
+              });
+                    getPlan()
+                }else{
+              $.each(data.data, function (i) {
+    $.each(data.data[i], function (key, val) {
+      alert(val);
+      // if(i == 'name')
+      //     { 
+      //        $("#pname").css('display', 'block')
+      //         $("#pname").css('color', 'red')
+      //         $("#pname").text(val)
+      //     }else if(i == 'start_date'){
+      //        $("#pstart").css('display', 'block')
+      //         $("#pstart").css('color', 'red')
+      //         $("#pstart").text(val)
+      //     }else if(i == 'price'){
+      //        $("#pprice").css('display', 'block')
+      //         $("#pprice").css('color', 'red')
+      //         $("#pprice").text(val)
+      //     }else{
+      //       $("#pend").css('display', 'block')
+      //         $("#pend").css('color', 'red')
+      //         $("#pend").text(val)
+      //     }
+      
+   
+                 
+    });
+});
+ }
+   }
+      });
+ }          
+}
+function getEmployee()
+{
+var table = $('#employee-table').DataTable({
+            retrieve:true,
+            destroy:true,
+            
+            ajax: '{!! route('get.employee') !!}',
+            columns: [
+                { data: 'id', name: 'id', 
+               render: function (data, type, row, meta) {
+        return meta.row + meta.settings._iDisplayStart + 1;
+    } },
+                { data: 'name', name: 'name' },
+                 { data: 'company', name: 'company' },
+                   { data: 'email', name: 'email' },
+                { data: 'phone', name: 'phone' },
+              
+                   { data: 'role', name: 'role' },
+               
+                { data: 'action', name: 'action' },
+                ],
+                
+               
+             });  
+              table.ajax.reload();      
+}
+function editEmp(id)
+{
+$("#emp-id").val(id);
+
+ const api_url =
+          '{!! url("single-emp")!!}/' + id;
+
+        // Defining async function
+        async function getapi(url) {
+
+          // Storing response
+          const response = await fetch(url);
+
+          // Storing data in form of JSON
+          var data = await response.json();
+          console.log(data);
+         
+          show(data);
+        }
+        // Calling that async function
+        getapi(api_url);
+        function show(data) {
+          let count = 0;
+          let tab = '';
+          
+        
+              $("#ecmp").append(`<option value"${data.data.company_id}" selected>${data.data.company_id}<option>`);
+                $('#efirst').val(data.data.first_name);
+                 $('#elast').val(data.data.last_name);
+                 $('#e-email').val(data.data.email);
+                 $('#epost').val(data.data.roleid);
+                 $('#ecnt').val(data.data.phone);
+                 $('#eabout').val(data.data.desc);
+           $('#employeeModal').modal('show');
+          
+          }
+
+}
+
 </script>
 
 </html>

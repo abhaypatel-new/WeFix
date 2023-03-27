@@ -2,6 +2,8 @@
 
 use App\Http\Controllers\api\ReportController;
 use App\Http\Controllers\districtManager\DistrictManagerController;
+use App\Http\Controllers\districtManager\PlanController;
+use App\Http\Controllers\districtManager\EmployeeController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -61,8 +63,22 @@ Route::post('invoice', [ReportController::class, 'generateInvoice'])->name('invo
 Route::get('getsingleorder', [ReportController::class, 'getSingleOrder'])->name('get.single.order');
 Route::get('Dmanager/dashboard', [DistrictManagerController::class, 'index'])->name('district.dashboard');
 Route::post('add', [DistrictManagerController::class, 'add_equipment'])->name('add.equipment');
+Route::post('add/plan', [PlanController::class, 'store'])->name('add.plan');
+Route::post('update/plan', [PlanController::class, 'update'])->name('update.plan');
+Route::get('get/plan', [PlanController::class, 'index'])->name('get.plan');
+Route::get('get/card/plan', [PlanController::class, 'getCards'])->name('get.card.plan');
+Route::get('single-plan/{id}', [PlanController::class, 'show'])->name('get.single.plan');
 Route::get('getEquipment', [DistrictManagerController::class, 'get_equipment'])->name('get.equipment');
 Route::get('getSingleEquipment', [DistrictManagerController::class, 'getSingleEquipment'])->name('get.single');
 Route::post('update/Equipment', [DistrictManagerController::class, 'update'])->name('update.equipment');
 Route::get('delete', [DistrictManagerController::class, 'delete_equipment'])->name('delete.equipment');
+
+/*--------------Employee Routes Start-------------*/
+
+Route::post('add/employee', [EmployeeController::class, 'store'])->name('add.employee');
+Route::get('get/employee', [EmployeeController::class, 'index'])->name('get.employee');
+Route::get('single-emp/{id}', [EmployeeController::class, 'show'])->name('single.employee');
+Route::post('update/employee', [EmployeeController::class, 'update'])->name('update.employee');
+/*--------------Employee Routes Start-------------*/
+
 Route::get('/logout', [DistrictManagerController::class, 'signOut'])->name('district.logout');

@@ -44345,12 +44345,6 @@ color:#000;
   padding-right: 20px;
   margin-left: 20px;
 }
-.Equipment img {
-  height: 27px;
-  width: 50px;
-  padding-right: 20px;
-  margin-left: 20px;
-}
 .Maintenance img {
   height: 27px;
   width: 50px;
@@ -44377,6 +44371,12 @@ color:#000;
     display: flex;
     align-items: center;
     }
+  .Equipment img {
+  height: 27px;
+  width: 50px;
+  padding-right: 20px;
+  margin-left: 20px;
+    }
     .Equipment {
     margin-top: 10px;
     height: 60px;
@@ -44388,6 +44388,32 @@ color:#000;
     align-items: center;
     }
 .Equipment h3 {
+  font-family: 'Inter', sans-serif;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 20px;
+  line-height: 150%;
+  /* identical to box height, or 21px */
+
+  color: rgb(0, 0, 0);
+}
+.Employee img {
+  height: 27px;
+  width: 50px;
+  padding-right: 20px;
+  margin-left: 20px;
+    }
+    .Employee {
+    margin-top: 10px;
+    height: 60px;
+    width: 250px;
+    background: none;
+    border: 2px solid #efefef;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    }
+.Employee h3 {
   font-family: 'Inter', sans-serif;
   font-style: normal;
   font-weight: 600;
@@ -45025,7 +45051,7 @@ z-index: 9999;
       .mb-3 label{
        color: #808080 !important;
       }
-      #equipment-table_info{
+#equipment-table_info{
    color:#000;
 }
 #equipment-table_wrapper select{
@@ -45043,7 +45069,47 @@ color:#000;
 #equipment-table_filter input{
 color:#000;
 }
+#maintenance-table_info{
+   color:#000;
+}
+#maintenance-table_wrapper select{
+  color:#000;
+}
+#maintenance-table_length option{
+  color:#000;
+}
+#maintenance-table_length label{
+  color:#000;
+}
+#maintenance-table_filter label{
+color:#000;
+}
+#maintenance-table_filter input{
+color:#000;
+}
 .dmetaInfo h4{
     background: #f4f3fa;
     font-weight: 600 !important;
+}
+.form-select option
+{
+  color: :#808080 !important;
+}
+#employee-table_info{
+   color:#000;
+}
+#employee-table_wrapper select{
+  color:#000;
+}
+#employee-table_length option{
+  color:#000;
+}
+#employee-table_length label{
+  color:#000;
+}
+#employee-table_filter label{
+color:#000;
+}
+#employee-table_filter input{
+color:#000;
 }

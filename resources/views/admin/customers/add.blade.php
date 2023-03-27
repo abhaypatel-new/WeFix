@@ -172,21 +172,7 @@
                                                     </select>
                                                 </div>
                                             </div>
-                                            <!-- <div class="col-md-6">
-                                                <div class="form-group">
-                                                    <label class="form-label">City</label><span
-                                                        class="text-danger">*</span>
-                                                    <select class="form-select select2" multiple="multiple"
-                                                        name="city[]" required
-                                                        data-validation-required-message="City field is required">
-                                                        <option value="">Select Your City</option>
-                                                        <option>Toronto</option>
-                                                        <option>Montréal</option>
-                                                        <option>Vancouver</option>
-                                                        <option>Ottawa</option>
-                                                    </select>
-                                                </div>
-                                            </div> -->
+                                          
                                         </div>
 
                                         <div class="row">
@@ -234,21 +220,7 @@
                                                     </select>
                                                 </div>
                                             </div>
-                                            <!-- <div class="col-md-6">
-    <div class="form-group">
-        <label class="form-label">City</label><span
-            class="text-danger">*</span>
-        <select class="form-select select2" multiple="multiple"
-            name="city[]" required
-            data-validation-required-message="City field is required">
-            <option value="">Select Your City</option>
-            <option>Toronto</option>
-            <option>Montréal</option>
-            <option>Vancouver</option>
-            <option>Ottawa</option>
-        </select>
-    </div>
-</div> -->
+                                         
                                         </div>
                                         <div class="form-group">
                                             <label class="form-label">About Employee</label>
