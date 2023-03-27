@@ -787,7 +787,7 @@
 
 <!-----------End Plan Modal---------------->
 
-
+<!-----------Start Equipment Modal---------------->
 
  <div class="modal fade" id="equipmentModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog w-800" role="document">
@@ -803,25 +803,25 @@
           <div class="mb-3">
              <input type="hidden" class="form-control" id="equipmentId" name="ID">
             <label for="equipment-name" class="col-form-label">Name:</label>
-            <input type="text" class="form-control" id="equipment-name" name="name">
+            <input type="text" class="form-control" id="equipment-name" name="name"><span class="text-danger" id="ename"></span>
           </div>
              @csrf
            <div class="mb-3">
             <label for="equipment-name" class="col-form-label">Image:</label>
-            <input type="file" class="form-control" id="equipment-image" alt="equipment-image" name="images">
+            <input type="file" class="form-control" id="equipment-image" alt="equipment-image" name="images"><span class="text-danger" id="eimg"></span>
             <img id="frame" src="" width="100px" height="100px" style="display:none;" class="rounded-circle" style="border:2px solid;"/><i class="fa fa-check-circle yes" style="font-size:48px;color:green; display:none;text-align: left;"></i>
           </div>
            <div class="mb-3">
             <label for="equipment-name" class="col-form-label">Model No.:</label>
-            <input type="text" class="form-control" id="equipment-model" name="model">
+            <input type="text" class="form-control" id="equipment-model" name="model"><span class="text-danger" id="emodel"></span>
           </div>
            <div class="mb-3">
             <label for="equipment-name" class="col-form-label">Price:</label>
-            <input type="number" class="form-control" id="equipment-price" maxlength="10" name="price">
+            <input type="number" class="form-control" id="equipment-price" maxlength="10" name="price"><span class="text-danger" id="eprice"></span>
           </div>
            <div class="mb-3">
             <label for="equipment-name" class="col-form-label">Qty:</label>
-            <input type="number" class="form-control" id="equipment-qty" maxlength="5" name="qty">
+            <input type="number" class="form-control" id="equipment-qty" maxlength="5" name="qty"><span class="text-danger" id="eqty"></span>
           </div>
            <div class="mb-3">
             <label for="equipment-name" class="col-form-label">Stock:</label>
@@ -842,7 +842,7 @@
     </div>
   </div>
 </div>
-<!---------------modal-close--------->
+<!-----------End Equipment Modal---------------->
 
 
 <!-------------------Employee Modal -------------->
@@ -874,7 +874,8 @@
                                                     <div class="controls">
                                                         <input type="text" name="first_name" class="form-control"
                                                             required
-                                                            data-validation-required-message="First Name field is required" id="efirst">
+                                                            data-validation-required-message="First Name field is required" id="efirst"><span
+                                                        class="text-danger" id="fname"></span>
                                                     </div>
                                                 </div>
                                             </div>
@@ -885,7 +886,8 @@
                                                     <div class="controls">
                                                         <input type="text" name="last_name" class="form-control"
                                                             required
-                                                            data-validation-required-message="Last Name field is required" id="elast">
+                                                            data-validation-required-message="Last Name field is required" id="elast"><span
+                                                        class="text-danger" id="lname"></span>
                                                     </div>
                                                 </div>
                                             </div>
@@ -897,7 +899,8 @@
                                                         class="text-danger">*</span>
                                                     <div class="controls">
                                                         <input type="email" name="email" class="form-control" required
-                                                            data-validation-required-message="Email field is required" id="e-email">
+                                                            data-validation-required-message="Email field is required" id="e-email"><span
+                                                        class="text-danger" id="email"></span>
                                                     </div>
                                                 </div>
                                             </div>
@@ -905,7 +908,8 @@
                                                 <div class="form-group mb-3">
                                                     <label class="form-label">Contact Number</label>
                                                     <input type="text" name="phone" class="form-control"
-                                                        placeholder="Phone" id="ecnt">
+                                                        placeholder="Phone" id="ecnt"><span
+                                                        class="text-danger" id="phone"></span>
                                                 </div>
                                             </div>
                                             <div class="col-md-12">
@@ -917,7 +921,8 @@
                                                     <span class="input-group-text"><i class="fa fa-lock" style="color: #000;"></i></span>
                                                     <input type="password" class="form-control" name="password"
                                                         placeholder="Password" required
-                                                        data-validation-required-message="Password field is required" id="epass">
+                                                        data-validation-required-message="Password field is required" id="epass"><span
+                                                        class="text-danger" id="pass"></span>
                                                 </div>
                                             </div>
                                             </div>
@@ -1274,6 +1279,7 @@ getchart(charturl);
         i++; 
     });
     $("#delete_rows").click(function(){
+      alert("sdfsd")
       if(i>1){
     $("#addrr"+(i-1)).html('');
     i--;
@@ -2102,7 +2108,7 @@ if(koopId == 'show')
     $("#upload").change(function() {
       readURL(this);
     });
-    let id = '<?php echo auth('owner')->user()->id; ?>';
+    let id = $("#owner_id").val();
 
     $("#main-tab").show();
     $("#show-history").hide();
@@ -2190,7 +2196,7 @@ if(koopId == 'show')
       $(".report-color").css("color", "#000");
       $(".Setting").css("background-color", "#ffffff");
       $(".setting-color").css("color", "#000");
-      let id = '<?php echo auth('owner')->user()->id; ?>';
+      let id = $("#owner_id").val();
       $("#main-tab").show();
       $("#show-history").hide();
        $("#show-maintenance").hide();
@@ -3498,8 +3504,8 @@ text-align: center;><div class="images-div"></div>
       $("#view-notification").hide();
       $("#edit-profile-details").hide();
       var assetUrl = "{{env('ASSET_URL')}}";
-       var profileUrl = "{{env('PROFILE_URL')}}";
-
+      var profileUrl = "{{env('PROFILE_URL')}}";
+      let id = $("#owner_id").val();
       var appUrl = "{{env('APP_URL')}}";
   
       const api_url =
@@ -3825,7 +3831,7 @@ text-align: center;><div class="images-div"></div>
       let email = $('#email').val();
       let password = $('#password').val();
       let formData = new FormData();
-      // var files = $('#upload')[0].files[0];
+      let id = $("#owner_id").val();
 
       formData.append('id', id);
      
@@ -4151,7 +4157,7 @@ function show(data) {
 
   /*--------Reject Order Api Integration Start-----------*/
  function reject(orderId) {
-    let id = '<?php echo auth('owner')->user()->id; ?>';
+    let id = $("#owner_id").val();
     var assetUrl = "{{env('ASSET_URL')}}";
 
    var appUrl = "{{env('APP_URL')}}";
@@ -4238,7 +4244,7 @@ if (data.status == 'true') {
  function getPending()
   {
       let vid = $('#ownerid').val();
-      let id = '<?php echo auth('owner')->user()->id; ?>';
+      let id = $("#owner_id").val();
       var assetUrl = "{{env('ASSET_URL')}}";
 
       var appUrl = "{{env('APP_URL')}}";
@@ -4877,6 +4883,12 @@ $('#add-equipment').click(function(){
    }
 });  
       }else{
+
+    $("#ename").css('display', 'none')
+    $("#eimg").css('display', 'none')
+    $("#eqty").css('display', 'none')
+    $("#emodel").css('display', 'none')
+    $("#eprice").css('display', 'none')
          for(i=0; i<files.length; i++) {
          formData.append('images', files[i]);
          }
@@ -4913,7 +4925,7 @@ $('#add-equipment').click(function(){
                 success: function(data) {
                     console.log(data);
                  
-                 if(data.status== 'true')
+                 if(data.status== true)
                  {
                  $('#equipment-name').val('');
                  $('#equipment-image').text('')
@@ -4942,16 +4954,49 @@ $('#add-equipment').click(function(){
               
              
                 }else{
-                  Swal.fire({
-                     title: 'Failed!',
-                      heading: 'Alert',
-                  text: data.message,
-                  icon: 'warning',
-                  offset: 50,
-                  loader: true, 
-                  timer: 5000,       // Change it to false to disable loader
-                  loaderBg: '#9EC600'
-                  });
+
+      $.each(data.data, function (i) {
+      $.each(data.data[i], function (key, val) {
+    
+      if(i == 'name')
+          { 
+             $("#ename").css('display', 'block')
+              $("#ename").css('color', 'red')
+              $("#ename").text(val)
+          }else if(i == 'images'){
+             $("#eimg").css('display', 'block')
+              $("#eimg").css('color', 'red')
+              $("#eimg").text(val)
+          }else if(i == 'model_no'){
+             $("#emodel").css('display', 'block')
+              $("#emodel").css('color', 'red')
+              $("#emodel").text(val)
+          }else if(i == 'price'){
+             $("#eprice").css('display', 'block')
+              $("#eprice").css('color', 'red')
+              $("#eprice").text(val)
+          }
+          else{
+            $("#eqty").css('display', 'block')
+              $("#eqty").css('color', 'red')
+              $("#eqty").text(val)
+          }         
+    });
+});
+
+
+
+
+                  // Swal.fire({
+                  //    title: 'Failed!',
+                  //     heading: 'Alert',
+                  // text: data.message,
+                  // icon: 'warning',
+                  // offset: 50,
+                  // loader: true, 
+                  // timer: 5000,       // Change it to false to disable loader
+                  // loaderBg: '#9EC600'
+                  // });
                 }
 
 
@@ -5244,10 +5289,12 @@ function editPlan(id)
         getapi(api_url);
         function show(data) {
           let count = 0;
+          let counts = 0;
           let tab = '';
            for (let r of data.data.features) {
             count = count+1;
-             tab += `<tr><td>${count}</td><td> Features: <input type="text" class="form-control" id="plan-freaturs"name="features[]" value="${r}"><td></tr>`;
+             tab += `<tr id="addrr${counts}"><td>${count}</td><td> Features: <input type="text" class="form-control" id="plan-freaturs"name="features[]" value="${r}"><td></tr>`;
+             counts = counts+1;
           
         }
          document.getElementById("tab_logics").innerHTML = tab;
@@ -5256,9 +5303,8 @@ function editPlan(id)
                  $('#plan-start').val(data.data.start_date);
                  $('#plan-end').val(data.data.end_date);
                  $('#plan-price').val(data.data.price);
-                
                  $('#plan-description').val(data.data.description);
-           $('#addPlanModal').modal('show');
+                 $('#addPlanModal').modal('show');
           
           }
 }
@@ -5338,9 +5384,10 @@ function addEmployee()
 function CreateEmp()
 { 
  let id = $("#emp-id").val();
- alert(id)
+
  if(id != '')
  {
+   
   $.ajax({
                 type: "POST",
                 url: '{!! route("update.employee")!!}',
@@ -5370,6 +5417,7 @@ function CreateEmp()
                       loaderBg: '#9EC600'
                  
               });
+                    $("#employeeModal").modal('hide')
                     getCardPlan()
                     getPlan()
                     getEmployee()
@@ -5389,10 +5437,11 @@ function CreateEmp()
               });
                  
  }else{
-   $("#pname").css('display', 'none')
-   $("#pstart").css('display', 'none')
-   $("#pend").css('display', 'none')
-    $("#pprice").css('display', 'none')
+   $("#fname").css('display', 'none')
+    $("#lname").css('display', 'none')
+   $("#pass").css('display', 'none')
+   $("#phone").css('display', 'none')
+    $("#email").css('display', 'none')
    $.ajax({
                 type: "POST",
                 url: '{!! route("add.employee")!!}',
@@ -5423,29 +5472,37 @@ function CreateEmp()
                       loaderBg: '#9EC600'
                  
               });
+                   $("#employeeModal").modal('hide')
+                    getCardPlan()
                     getPlan()
+                    getEmployee()
                 }else{
-              $.each(data.data, function (i) {
-    $.each(data.data[i], function (key, val) {
-      alert(val);
-      // if(i == 'name')
-      //     { 
-      //        $("#pname").css('display', 'block')
-      //         $("#pname").css('color', 'red')
-      //         $("#pname").text(val)
-      //     }else if(i == 'start_date'){
-      //        $("#pstart").css('display', 'block')
-      //         $("#pstart").css('color', 'red')
-      //         $("#pstart").text(val)
-      //     }else if(i == 'price'){
-      //        $("#pprice").css('display', 'block')
-      //         $("#pprice").css('color', 'red')
-      //         $("#pprice").text(val)
-      //     }else{
-      //       $("#pend").css('display', 'block')
-      //         $("#pend").css('color', 'red')
-      //         $("#pend").text(val)
-      //     }
+      $.each(data.data, function (i) {
+      $.each(data.data[i], function (key, val) {
+    
+      if(i == 'first_name')
+          { 
+             $("#fname").css('display', 'block')
+              $("#fname").css('color', 'red')
+              $("#fname").text(val)
+          }else if(i == 'last_name'){
+             $("#lname").css('display', 'block')
+              $("#lname").css('color', 'red')
+              $("#lname").text(val)
+          }else if(i == 'password'){
+             $("#pass").css('display', 'block')
+              $("#pass").css('color', 'red')
+              $("#pass").text(val)
+          }else if(i == 'phone'){
+             $("#phone").css('display', 'block')
+              $("#phone").css('color', 'red')
+              $("#phone").text(val)
+          }
+          else{
+            $("#email").css('display', 'block')
+              $("#email").css('color', 'red')
+              $("#email").text(val)
+          }
       
    
                  
@@ -5505,10 +5562,32 @@ $("#emp-id").val(id);
         getapi(api_url);
         function show(data) {
           let count = 0;
-          let tab = '';
-          
-        
-              $("#ecmp").append(`<option value"${data.data.company_id}" selected>${data.data.company_id}<option>`);
+          let role = '';
+           let role1 = '';
+            let role2 = '';
+            let tab = '';
+            for (let i of data.data.cmp) {
+            
+                let name = i.id ==data.data.company_id?'selected':'' 
+             tab +=`<option value="${i.id}" style="color:#808080;" ${name}>${i.company_name}</option>`;
+            
+            }
+           if(data.data.roleid == 4)
+           {
+             role = 'selected';
+           }else if(data.data.roleid == 3)
+           {
+            role1 = 'selected';
+           }else{
+            role2 = 'selected';
+           }
+             // role = data.data.roleid == 4?data.data.roleid == 3:'selected':'selected':'selected';
+           
+            
+             document.getElementById("ecmp").innerHTML = tab;
+             let tab1 = `<option value="" style="color:#808080;">Select Job Position</option><option value="4" style="color:#808080;" ${role}>Owner</option><option value="3" style="color:#808080;" ${role1}>District Manager</option><option value="2" style="color:#808080;" ${role2}>Manager</option>`;
+              document.getElementById("ejob").innerHTML = tab1;
+             
                 $('#efirst').val(data.data.first_name);
                  $('#elast').val(data.data.last_name);
                  $('#e-email').val(data.data.email);

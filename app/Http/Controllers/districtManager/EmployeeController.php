@@ -102,6 +102,7 @@ class EmployeeController extends Controller
     public function show($id)
     {
          $users = User::find($id);
+         $users['cmp'] = Company::all();
         if ($users) {
             $response['status'] = true;
             $response['data'] = $users;
@@ -130,26 +131,11 @@ class EmployeeController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
-  //          $validator = Validator::make($request->all(), [
-  //           'first_name' => 'required',
-  //           'last_name' => 'required',
-  //           'email' => 'required|email|unique:users',
-  //           'phone' => 'unique:users',
-  //           'password' => 'required|min:8|same:con_password'
-  //       ]);
-  //   if ($validator->fails()) {
-  //        $response = [
-  //           'status' => false,
-  //           'message' => 'errors',
-  //           'data'    =>  $validator->errors(),
-  //       ];    
-        
-  //   return response()->json($response);
-  // }
+      
         $input = $request->all();
-        dd($input);
+      
         if($input['con_password'] == '')
         {
             unset($input['password']);

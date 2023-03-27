@@ -5,6 +5,7 @@ namespace App\Http\Controllers\districtManager;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Validator;
 use App\Model\Equipment;
 use Session;
 use Auth;
@@ -69,8 +70,8 @@ class DistrictManagerController extends Controller
     public function add_equipment(Request $request)
     {
         // dd($request->all());
-         if ($request->isMethod('post')) {
-            $request->validate([
+        
+           $validator = Validator::make($request->all(), [
                 'name' => 'required',
                 'images' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
                 'model_no' => 'required',
@@ -78,7 +79,15 @@ class DistrictManagerController extends Controller
                  'qty' => 'required',
 
             ]);
-           
+    if ($validator->fails()) {
+         $response = [
+            'status' => false,
+            'message' => 'errors',
+            'data'    =>  $validator->errors(),
+        ];    
+        
+    return response()->json($response);
+  }
         $input = $request->all();
       
         $imageName = time().'.'.$request->images->extension();  
@@ -92,13 +101,13 @@ class DistrictManagerController extends Controller
             Write Code Here for
             Store $imageName name in DATABASE from HERE 
         */
-      }
+      
     if ($store) {
 
-            $response['status'] = 'true';
+            $response['status'] = true;
             $response['data'] = $store;
         } else {
-            $response['error'] = 'false';
+            $response['status'] = false;
             $response['message'] = 'Addition of Equipment is failed!';
         }
         return response()->json($response);
