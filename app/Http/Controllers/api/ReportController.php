@@ -398,7 +398,7 @@ class ReportController extends Controller
                     ->whereMonth('createdAt', '=', Carbon::now()->subMonth()->month)
                     ->groupBy(DB::raw("Month(createdAt)"))
                     ->pluck('totalAmount', 'month_name');
-   
+//    dd($users);
             $users['labels'] = $users->keys();
             $users['value'] = $users->values();
             $response['status'] = 'true';

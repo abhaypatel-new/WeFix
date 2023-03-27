@@ -73,7 +73,7 @@
 							<tr>
 								
 								<th>Name</th>
-								<th>Category</th>
+								<th>Company</th>
 								<th>Email</th>
 								<th>Contact</th>
                                 <th>Shop</th>
@@ -115,7 +115,7 @@
 						<tfoot>
 							<tr>
 								<th>Name</th>
-								<th>Category</th>
+								<th>Company</th>
 								<th>Email</th>
 								<th>Contact</th>
 								<th>Shop</th>

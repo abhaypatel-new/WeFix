@@ -118,15 +118,30 @@
                                                         placeholder="Phone">
                                                 </div>
                                             </div>
-                                            <div class="form-group">
-                                                <label class="form-label">Password</label><span
-                                                    class="text-danger">*</span>
-                                                <div class="input-group mb-3 controls">
-                                                    <span class="input-group-text"><i class="ti-lock"></i></span>
-                                                    <input type="password" class="form-control" name="password"
-                                                        placeholder="Password">
-                                                </div>
-                                            </div>
+                                            <div class="col-md-12">
+
+                                                    <div class="form-group">
+                                                        <label class="form-label">Password</label><span
+                                                            class="text-danger">*</span>
+                                                        <div class="input-group mb-3 controls">
+                                                            <span class="input-group-text"><i class="ti-lock"></i></span>
+                                                            <input type="password" class="form-control" name="password"
+                                                                placeholder="Password" >
+                                                        </div>
+                                                    </div>
+                                                    </div>
+                                                    <div class="col-md-12">
+
+                                                    <div class="form-group">
+                                                        <label class="form-label">Confirm Password</label><span
+                                                            class="text-danger">*</span>
+                                                        <div class="input-group mb-3 controls">
+                                                            <span class="input-group-text"><i class="ti-lock"></i></span>
+                                                            <input type="password" name="password2"  data-validation-match-match="password" class="form-control" > 
+
+                                                        </div>
+                                                    </div>
+                                                    </div>
                                         </div>
 
                                         <!-- <h4 class="box-title text-info mb-0 mt-20"><i class="ti-save me-15"></i>
@@ -288,14 +303,14 @@
                                                         <label class="radio-inline p-0 me-10">
                                                             <div class="radio radio-info">
                                                                 <input type="radio" name="status" id="radio1"
-                                                                    value="publish"  {{$vendor->is_active == "publish"  ? 'checked' : ''}}>
+                                                                    value="1"  {{$vendor->is_active == 1  ? 'checked' : ''}}>
                                                                 <label for="radio1">Published</label>
                                                             </div>
                                                         </label>
                                                         <label class="radio-inline">
                                                             <div class="radio radio-info">
                                                                 <input type="radio" name="status" id="radio2"
-                                                                    value="draft"  {{$vendor->is_active == "draft"  ? 'checked' : ''}}>
+                                                                    value="9"  {{$vendor->is_active == 0  ? 'checked' : ''}}>
                                                                 <label for="radio2">Draft</label>
                                                             </div>
                                                         </label>
@@ -334,20 +349,6 @@
     </div>
     <!-- /.content-wrapper -->
 
-    <footer class="main-footer">
-        <div class="pull-right d-none d-sm-inline-block">
-            <ul class="nav nav-primary nav-dotted nav-dot-separated justify-content-center justify-content-md-end">
-                <li class="nav-item">
-                    <a class="nav-link" href="javascript:void(0)">FAQ</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Purchase Now</a>
-                </li>
-            </ul>
-        </div>
-        &copy; 2021 <a href="https://www.multipurposethemes.com/">Multipurpose Themes</a>. All Rights Reserved.
-    </footer>
-    <!-- Control Sidebar -->
 
 
     <!-- Add the sidebar's background. This div must be placed immediately after the control sidebar -->
@@ -405,6 +406,17 @@ function getCitys() {
         });
 
 }
+
+$('input:text').bind('input:text', function() {
+        var c = this.selectionStart,
+            r = /[^a-z0-9 .]/gi,
+            v = $(this).val();
+        if(r.test(v)) {
+            $(this).val(v.replace(r, ''));
+            c--;
+        }
+        this.setSelectionRange(c, c);
+        });
 </script>
 
 </html>

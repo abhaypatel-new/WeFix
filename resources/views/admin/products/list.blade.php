@@ -18,10 +18,15 @@
     <!-- Style-->
     <link rel="stylesheet" href="{{ asset('css/style.css') }}">
     <link rel="stylesheet" href="{{ asset('css/skin_color.css') }}">
-
+  <!-- <link rel="stylesheet" href="https://gyrocode.github.io/jquery-datatables-checkboxes/1.2.11/css/dataTables.checkboxes.css"> -->
 
 </head>
-
+<style>
+    .dt-checkboxes {
+        position: unset !important;
+        opacity: 1 !important;
+    }
+</style>
 <body class="hold-transition light-skin sidebar-mini theme-primary fixed">
 
     <div class="wrapper">
@@ -66,34 +71,54 @@
                                 <div class="box-header with-border">
                                     <h3 class="box-title">Products</h3>
                                 </div>
+
                                 <!-- /.box-header -->
                                 <div class="box-body">
                                     <div class="table-responsive">
-                                        <table id="example5" class="table table-bordered table-striped"
+                                        <table id="example5" class="table table-striped"
                                             style="width:100%">
                                             <thead>
                                                 <tr>
+                                                    <th></th>
                                                     <th>Image</th>
                                                     <th>Name</th>
                                                     <th>Category</th>
                                                     <th>Brands</th>
+                                                    <th>Barcode</th>
                                                     <th>Status</th>
                                                     <th>Action</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                @foreach($products as $product)
+                                                @foreach($products as $key=>$product)
                                                 <tr>
+                                                    <td>{{$key+1}}</td>
                                                     <td>
-                                                        <div class="me-15 w-50 d-table">
-                                                            <img src="{{ asset('images/products/'.$product->thumbnail_image)}}"
-                                                                class="avatar avatar-lg rounded10 bg-primary-light"
+                                                        <?php  
+                                                        if($product->thumbnail_image != '')
+                                                        {
+                                                            $imgs=$product->thumbnail_image;
+                                                        }else{
+                                                            $imgs='noimage.png';
+                                                        }
+                                                        $path = '/var/www/html/WeFix/public/images/products/'.$imgs;
+                                                        $type = pathinfo($path, PATHINFO_EXTENSION);
+                                                        $data = file_get_contents($path);
+                                                        $base64 = 'data:image/' . $type . ';base64,' . base64_encode($data);
+
+                                                         ?>
+                                                        <!-- <div class="me-15 w-50 d-table"> -->
+                                                            <img src="{{$base64}}"
+                                                                class="avatar avatar-lg rounded10 bg-primary-light "
                                                                 alt="">
-                                                        </div>
+                                                             
+                                                        <!-- </div> -->
                                                     </td>
                                                     <td>{{$product->product_name}}</td>
                                                     <td>{{$product->category_name}}</td>
                                                     <td>{{$product->brand}}</td>
+                                                    <td>                {!! QrCode::size(50)->backgroundColor(255,90,0)->generate($product->category_name) !!}
+                                                   </td>
                                                     <td>
                                                         <div class="form-group">
                                                             <select class="form-control" style="width: 100%;">
@@ -115,15 +140,10 @@
                                                                         href="{{ url('admin/products/edit/'. encrypt($product->id))}}"><i
                                                                             class="mdi mdi-pencil"></i></a>
                                                                 </td>
-                                                                <td><a class="btn btn-danger mt-2 "
-                                                                        data-bs-toggle="modal"
-                                                                        data-bs-target="#modal-center{{ $product->id }}"><i
-                                                                            class="mdi mdi-delete"></i></a>
-                                                                </td>
+                                                              
                                                             </tr>
                                                         </table>
                                                     </td>
-                                                    <!-- Modal -->
                                                     <div class="modal center-modal fade"
                                                         id="modal-center{{ $product->id }}" tabindex="-1">
                                                         <div class="modal-dialog">
@@ -139,10 +159,9 @@
                                                                         {{$product->product_name}}</p>
                                                                 </div>
                                                                 <div class="modal-footer modal-footer-uniform">
-                                                                    <button type="button" class="btn btn-default"
-                                                                        data-bs-dismiss="modal">Close</button>
-                                                                    <button type="button"
-                                                                        class="btn btn-danger float-end">Delete</button>
+                                                                   
+                                                                    <a href="{{url('product/delete/'.$product->id)}}"
+                                                                        class="btn btn-danger float-end">Delete</a>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -154,6 +173,8 @@
                                             </tbody>
                                             <tfoot>
                                                 <tr>
+                                                    <th></th>
+  
                                                     <th>Image</th>
                                                     <th>Name</th>
                                                     <th>Category</th>
@@ -185,19 +206,7 @@
     </div>
     <!-- /.content-wrapper -->
 
-    <footer class="main-footer">
-        <div class="pull-right d-none d-sm-inline-block">
-            <ul class="nav nav-primary nav-dotted nav-dot-separated justify-content-center justify-content-md-end">
-                <li class="nav-item">
-                    <a class="nav-link" href="javascript:void(0)">FAQ</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Purchase Now</a>
-                </li>
-            </ul>
-        </div>
-        &copy; 2021 <a href="https://www.multipurposethemes.com/">Multipurpose Themes</a>. All Rights Reserved.
-    </footer>
+
 
 
     <!-- Add the sidebar's background. This div must be placed immediately after the control sidebar -->
@@ -214,12 +223,91 @@
     <script src="{{ asset('js/pages/chat-popup.js')}}"></script>
     <script src="{{ asset('assets/icons/feather-icons/feather.min.js')}}"></script>
     <script src="{{ asset('assets/vendor_components/datatable/datatables.min.js')}}"></script>
+    <script src="https://gyrocode.github.io/jquery-datatables-checkboxes/1.2.11/js/dataTables.checkboxes.min.js"></script>
 
     <!-- EduAdmin App -->
     <script src="{{ asset('js/template.js')}}"></script>
 
     <script src="{{ asset('js/pages/data-table.js')}}"></script>
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.2/jspdf.debug.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.2.3/jspdf.plugin.autotable.js"></script> -->
+<script>
 
+      // Setup - add a text input to each footer cell
+      $('#example5 tfoot th').each( function () {
+        var title = $(this).text();
+        $(this).html( '<input type="text" placeholder="Search '+title+'" />' );
+    } );
+ 
+    // DataTable
+    var table = $('#example5').DataTable({   
+      dom: 'Bfrtip',
+      buttons: [
+      'print'
+    ],  
+      'columnDefs': [
+         {
+            'targets': 0,
+            'checkboxes': {
+               'selectRow': true
+            }
+         }
+      ],
+      'select': {
+         'style': 'multi'
+      },
+      'order': [[1, 'asc']],
+      
+   });
+ 
+    // Apply the search
+    table.columns().every( function () {
+        var that = this;
+ 
+        $( 'input', this.footer() ).on( 'keyup change', function () {
+            if ( that.search() !== this.value ) {
+                that
+                    .search( this.value )
+                    .draw();
+            }
+        } );
+    } );
+	
+// function generate() {
+//       var doc = new jsPDF();
+
+//   doc.autoTable({
+//     html: '#example5',
+//     bodyStyles: {minCellHeight: 15},
+//     didDrawCell: function(data) {
+//       if (data.column.index === 1 && data.cell.section === 'body') {
+//          var td = data.cell.raw;
+//         //  var img = td.getElementsByTagName('img')[0];
+//          var img = td.getElementsByTagName('img');
+//          console.log(td)
+//         //  console.log(img)
+//          var dim = data.cell.height - data.cell.padding('vertical');
+//          var textPos = data.cell.textPos;
+//          doc.addImage(img.src, textPos.x,  textPos.y, dim, dim);
+//       }
+//     }
+//   });
+
+//       doc.save("table.pdf");
+//     }
+
+$('input:text').bind('input:text', function() {
+        var c = this.selectionStart,
+            r = /[^a-z0-9 .]/gi,
+            v = $(this).val();
+        if(r.test(v)) {
+            $(this).val(v.replace(r, ''));
+            c--;
+        }
+        this.setSelectionRange(c, c);
+        });
+
+</script>
 
 </body>
 

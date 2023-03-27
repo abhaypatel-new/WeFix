@@ -66,7 +66,7 @@
 				<!-- /.box-header -->
 				<div class="box-body">
 					<div class="table-responsive">
-					  <table id="example5" class="table table-bordered table-striped" style="width:100%">
+					  <table id="example5" class="table table-striped" style="width:100%">
 						<thead>
 							<tr>
 								<th>Name</th>
@@ -83,7 +83,9 @@
 								<td>{{$vendor->Category}}</td>
 								<td>{{$vendor->email}}</td>
 								<td>{{$vendor->phone}}</td>
-								<td><a class="btn btn-info m-2 " href="{{ url('admin/vendors/edit/'. encrypt($vendor->id))}}"><i class="mdi mdi-pencil"></i></a><a class="btn btn-danger mt-2 "   data-bs-toggle="modal" data-bs-target="#modal-center{{ $vendor->id }}" ><i class="mdi mdi-delete"></i></a></td>
+								<td><a class="btn btn-info m-2 " href="{{ url('admin/vendors/edit/'. encrypt($vendor->id))}}"><i class="mdi mdi-pencil"></i></a>
+                                <!-- <a class="btn btn-danger mt-2 "   data-bs-toggle="modal" data-bs-target="#modal-center{{ $vendor->id }}" ><i class="mdi mdi-delete"></i></a> -->
+                            </td>
 							</tr>
 							   <!-- Modal -->
                               <div class="modal center-modal fade" id="modal-center{{ $vendor->id }}" tabindex="-1">
@@ -97,8 +99,8 @@
                             			<p>Are you sure you want to delete {{$vendor->first_name.' '}}{{$vendor->last_name}}</p>
                             		  </div>
                             		  <div class="modal-footer modal-footer-uniform">
-                            			<button type="button" class="btn btn-default" data-bs-dismiss="modal">Close</button>
-                            			<button type="button" class="btn btn-danger float-end">Delete</button>
+                            			<a href="{{url('admin/customers/delete/'.$vendor->id)}}" class="btn btn-danger float-end">Delete</a>
+                            	
                             		  </div>
                             		</div>
                             	  </div>
@@ -138,20 +140,7 @@
 	  </div>
   </div>
   <!-- /.content-wrapper -->
-  
-   <footer class="main-footer">
-    <div class="pull-right d-none d-sm-inline-block">
-        <ul class="nav nav-primary nav-dotted nav-dot-separated justify-content-center justify-content-md-end">
-		  <li class="nav-item">
-			<a class="nav-link" href="javascript:void(0)">FAQ</a>
-		  </li>
-		  <li class="nav-item">
-			<a class="nav-link" href="#">Purchase Now</a>
-		  </li>
-		</ul>
-    </div>
-	  &copy; 2021 <a href="https://www.multipurposethemes.com/">Multipurpose Themes</a>. All Rights Reserved.
-  </footer>
+
 </div>
 <!-- ./wrapper -->
 
@@ -174,6 +163,22 @@
     setTimeout(function() {
         $('.alert-success').fadeOut('fast');
     }, 2000);
+	$(document).ready(function () {
+            $('#example5').DataTable({
+                searching: true
+            });
+        });
+
+        $('input:text').bind('input:text', function() {
+        var c = this.selectionStart,
+            r = /[^a-z0-9 .]/gi,
+            v = $(this).val();
+        if(r.test(v)) {
+            $(this).val(v.replace(r, ''));
+            c--;
+        }
+        this.setSelectionRange(c, c);
+        });
     </script>
 
 </body>

@@ -92,7 +92,7 @@
                                                     <label class="form-label">District Name</label> <span
                                                         class="text-danger">*</span>
                                                     <div class="controls">
-                                                        <input type="text" name="name" class="form-control" required
+                                                        <input type="text"  pattern="^[a-zA-Z0-9]+$"  name="name" class="form-control" required
                                                             data-validation-required-message="First Name field is required">
                                                     </div>
                                                 </div>
@@ -105,8 +105,9 @@
                                                         data-placeholder="Choose a Cities" name="cities[]" tabindex="1"
                                                         required
                                                         data-validation-required-message="City field is required">
+                                                        <option value="0">All Cities</option>
                                                         @foreach($cities as $city)
-                                                        <option value="{{$city->id}}">{{$city->city}}</option>
+                                                        <option value="{{$city->id}}">{{$city->name}}</option>
                                                         @endforeach
 
                                                     </select>
@@ -116,9 +117,6 @@
                                         </div>
                                     </div>
                                     <div class="box-footer">
-                                        <button type="button" class="btn btn-warning me-1">
-                                            <i class="ti-trash"></i> Cancel
-                                        </button>
                                         <button type="submit" class="btn btn-primary" name="create" value="create">
                                             <i class="ti-save-alt"></i> Save
                                         </button>
@@ -184,10 +182,10 @@
                                                                         {{$district->name}}</p>
                                                                 </div>
                                                                 <div class="modal-footer modal-footer-uniform">
-                                                                    <button type="button" class="btn btn-default"
-                                                                        data-bs-dismiss="modal">Close</button>
-                                                                    <button type="button"
-                                                                        class="btn btn-danger float-end">Delete</button>
+                                                                    <a  class="btn btn-default"
+                                                                        data-bs-dismiss="modal">Close</a>
+                                                                    <a href="{{url('admin/disctricts/delete/'.$district->id)}}"
+                                                                        class="btn btn-danger float-end">Delete</a>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -229,19 +227,6 @@
         </div>
         <!-- /.content-wrapper -->
 
-        <footer class="main-footer">
-            <div class="pull-right d-none d-sm-inline-block">
-                <ul class="nav nav-primary nav-dotted nav-dot-separated justify-content-center justify-content-md-end">
-                    <li class="nav-item">
-                        <a class="nav-link" href="javascript:void(0)">FAQ</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Purchase Now</a>
-                    </li>
-                </ul>
-            </div>
-            &copy; 2021 <a href="https://www.multipurposethemes.com/">Multipurpose Themes</a>. All Rights Reserved.
-        </footer>
 
     </div>
     <!-- ./wrapper -->
@@ -267,6 +252,17 @@
     setTimeout(function() {
         $('.alert-success').fadeOut('fast');
     }, 2000);
+
+    $('input:text').bind('input:text', function() {
+        var c = this.selectionStart,
+            r = /[^a-z0-9 .]/gi,
+            v = $(this).val();
+        if(r.test(v)) {
+            $(this).val(v.replace(r, ''));
+            c--;
+        }
+        this.setSelectionRange(c, c);
+        });
     </script>
 
 </body>

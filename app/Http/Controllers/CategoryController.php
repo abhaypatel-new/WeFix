@@ -113,8 +113,10 @@ class CategoryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function delete($id)
     {
-        //
+        DB::table('categories')->where('id',$id)->delete();
+        return   redirect()->back()->with('message', 'Category delete successfully!');
+
     }
 }

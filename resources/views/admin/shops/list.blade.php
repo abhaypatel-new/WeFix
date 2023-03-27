@@ -87,7 +87,7 @@
                                 <!-- /.box-header -->
                                 <div class="box-body">
                                     <div class="table-responsive">
-                                        <table id="example4" class="table table-bordered table-striped"
+                                        <table id="example4" class="table table-striped"
                                             style="width:100%">
                                             <thead>
                                                 <tr>
@@ -103,17 +103,13 @@
                                                 <tr>
                                                     <td>{{$company->company_name}}</td>
                                                     <td>{{$company->company_desc}}</td>
-                                                    <td></td>
+                                                    <td>{{$company->province}}</td>
                                                     <td>
                                                         <table>
                                                             <tr>
                                                                 <td><a class="btn btn-info m-2 "  href="{{ url('admin/shops/company/edit/'. encrypt($company->id))}}" ><i
                                                                             class="mdi mdi-pencil"></i></a></td>
-                                                                <td><a class="btn btn-danger mt-2 "
-                                                                        data-bs-toggle="modal"
-                                                                        data-bs-target="#modal-center{{ $company->id }}"><i
-                                                                            class="mdi mdi-delete"></i></a>
-                                                                </td>
+                                                          
                                                             </tr>
                                                         </table>
                                                     </td>
@@ -172,13 +168,7 @@
 
                                                                         </div>
                                                                         <div class="body-footer">
-                                                                            <!-- <button type="button"
-                                                                            class="btn btn-warning me-1">
-                                                                            <i class="ti-trash"></i> Cancel
-                                                                        </button>
-                                                                        <button type="submit" class="btn btn-primary">
-                                                                            <i class="ti-save-alt"></i> Save
-                                                                        </button> -->
+                                                                          
                                                                         </div>
                                                                 </div>
                                                             </div>
@@ -210,10 +200,8 @@
                                                                     {{$company->company_name}}</p>
                                                             </div>
                                                             <div class="modal-footer modal-footer-uniform">
-                                                                <button type="button" class="btn btn-default"
-                                                                    data-bs-dismiss="modal">Close</button>
-                                                                <button type="button"
-                                                                    class="btn btn-danger float-end">Delete</button>
+                                                                <a href="{{url('comapny/delete/'.$company->id)}}"
+                                                                    class="btn btn-danger float-end">Delete</a>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -257,7 +245,7 @@
                                 <!-- /.box-header -->
                                 <div class="box-body">
                                     <div class="table-responsive">
-                                        <table id="example5" class="table table-bordered table-striped"
+                                        <table id="example5" class="table table-striped"
                                             style="width:100%">
                                             <thead>
                                                 <tr>
@@ -266,8 +254,8 @@
                                                     <th>Company</th>
                                                     <th>Store Number</th>
                                                     <th>District</th>
-                                                    <th>Owner</th>
                                                     <th>Total Earning</th>
+                                                    <th>Status</th>
                                                     <th>Actions</th>
                                                 </tr>
                                             </thead>
@@ -279,24 +267,20 @@
                                                     <td>{{$shop->store_number}}</td>
                                                     <td>{{$shop->district_name}}</td>
                                                     <td></td>
-                                                    <td></td>
+                                                    <td>{{$shop->status}}</td>
                                                     <td>
                                                         <table>
                                                             <tr>
                                                                 <td><a class="btn btn-info m-2 "
                                                                         href="{{ url('admin/shops/edit/'. encrypt($shop->id))}}"><i
                                                                             class="mdi mdi-pencil"></i></a></td>
-                                                                <td><a class="btn btn-danger mt-2 "
-                                                                        data-bs-toggle="modal"
-                                                                        data-bs-target="#modal-center{{ $shop->id }}"><i
-                                                                            class="mdi mdi-delete"></i></a>
-                                                                </td>
+                                                                
                                                             </tr>
                                                         </table>
                                                     </td>
                                                 </tr>
                                                 <!-- Modal -->
-                                                <div class="modal center-modal fade" id="modal-center{{ $shop->id }}"
+                                                <div class="modal center-modal fade" id="modal{{ $shop->id }}"
                                                     tabindex="-1">
                                                     <div class="modal-dialog">
                                                         <div class="modal-content">
@@ -309,10 +293,8 @@
                                                                 <p>Are you sure you want to delete {{$shop->name}}</p>
                                                             </div>
                                                             <div class="modal-footer modal-footer-uniform">
-                                                                <button type="button" class="btn btn-default"
-                                                                    data-bs-dismiss="modal">Close</button>
-                                                                <button type="button"
-                                                                    class="btn btn-danger float-end">Delete</button>
+                                                                <a href="{{ url('admin/shops/delete/'.$shop->id) }}"
+                                                                    class="btn btn-danger float-end">Delete</a>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -324,12 +306,12 @@
                                             <tfoot>
                                                 <tr>
 
-                                                    <th>Name</th>
+                                                <th>Name</th>
                                                     <th>Company</th>
-                                                    <th>D Manager</th>
-                                                    <th>Manager</th>
-                                                    <th>Owner</th>
+                                                    <th>Store Number</th>
+                                                    <th>District</th>
                                                     <th>Total Earning</th>
+                                                    <th>Status</th>
                                                     <th>Actions</th>
                                                 </tr>
                                             </tfoot>
@@ -356,19 +338,7 @@
     </div>
     <!-- /.content-wrapper -->
 
-    <footer class="main-footer">
-        <div class="pull-right d-none d-sm-inline-block">
-            <ul class="nav nav-primary nav-dotted nav-dot-separated justify-content-center justify-content-md-end">
-                <li class="nav-item">
-                    <a class="nav-link" href="javascript:void(0)">FAQ</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Purchase Now</a>
-                </li>
-            </ul>
-        </div>
-        &copy; 2021 <a href="https://www.multipurposethemes.com/">Multipurpose Themes</a>. All Rights Reserved.
-    </footer>
+  
 
     </div>
     <!-- ./wrapper -->
@@ -391,6 +361,25 @@
     setTimeout(function() {
         $('.alert-success').fadeOut('fast');
     }, 2000);
+    $(document).ready(function () {
+           $('#example5').DataTable({
+               searching: true
+           });
+           $('#example4').DataTable({
+               searching: true
+           });
+       });
+
+       $('input').bind('input', function() {
+        var c = this.selectionStart,
+            r = /[^a-z0-9 .]/gi,
+            v = $(this).val();
+        if(r.test(v)) {
+            $(this).val(v.replace(r, ''));
+            c--;
+        }
+        this.setSelectionRange(c, c);
+        });
     </script>
 
 </body>

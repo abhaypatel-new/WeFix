@@ -93,7 +93,7 @@
                                                     <label class="form-label">Last Name</label> <span
                                                         class="text-danger">*</span>
                                                     <div class="controls">
-                                                        <input type="text" name="last_name" class="form-control"
+                                                        <input type="text"  placeholder="Last name" name="last_name" class="form-control"
                                                             required
                                                             data-validation-required-message="Last Name field is required">
                                                     </div>
@@ -106,18 +106,23 @@
                                                     <label class="form-label">E-mail</label><span
                                                         class="text-danger">*</span>
                                                     <div class="controls">
-                                                        <input type="email" name="email" class="form-control" required
+                                                        <input type="email"  placeholder="Email" name="email" class="form-control" required
                                                             data-validation-required-message="Email field is required">
                                                     </div>
                                                 </div>
                                             </div>
                                             <div class="col-md-6">
                                                 <div class="form-group">
+                                                <div class="controls">
+
                                                     <label class="form-label">Contact Number</label>
                                                     <input type="text" name="phone" class="form-control"
-                                                        placeholder="Phone">
+                                                        placeholder="Phone" required data-validation-required-message="Contact Number field is required">
+                                                </div>
                                                 </div>
                                             </div>
+                                            <div class="col-md-12">
+
                                             <div class="form-group">
                                                 <label class="form-label">Password</label><span
                                                     class="text-danger">*</span>
@@ -127,6 +132,19 @@
                                                         placeholder="Password" required
                                                         data-validation-required-message="Password field is required">
                                                 </div>
+                                            </div>
+                                            </div>
+                                            <div class="col-md-12">
+
+                                            <div class="form-group">
+                                                <label class="form-label">Confirm Password</label><span
+                                                    class="text-danger">*</span>
+                                                <div class="input-group mb-3 controls">
+                                                    <span class="input-group-text"><i class="ti-lock"></i></span>
+                                                    <input type="password"  placeholder="Confirm Password" name="password2"  data-validation-required-message="Confirm Password field is required"  data-validation-match-match="password" class="form-control" required> 
+
+                                                </div>
+                                            </div>
                                             </div>
                                         </div>
 
@@ -220,10 +238,14 @@
 
                                             <div class="col-md-4">
                                                 <div class="form-group">
-                                                    <label class="form-label">Postal Code</label>
+                                                <div class="controls">
+
+                                                    <label class="form-label">Postal Code</label><span
+                                                        class="text-danger">*</span>
                                                     <input type="text" name="postal_code" class="form-control"
-                                                        placeholder="Postal Code">
+                                                        placeholder="Postal Code" required data-validation-required-message="Postal Code is required" >
                                                 </div>
+                                            </div>
                                             </div>
                                         </div>
 
@@ -258,7 +280,7 @@
                                                 <label class="form-label">Service Area</label><span
                                                     class="text-danger">*</span>
                                                 <select class="form-select  select2" multiple="multiple"
-                                                    name="service_area[]" required
+                                                    name="service_area[]" required  placeholder="Select Service Area"
                                                     data-validation-required-message="Service Area field is required">
                                                     <option value="">Select Service Area</option>
                                                     @foreach($cities as $city)
@@ -278,30 +300,30 @@
 
                                     <div class="row mt-3">
 
-                                            <!--/span-->
-                                            <div class="col-md-6">
-                                                <div class="form-group">
-                                                    <label class="fw-700 fs-16 form-label">Status</label>
-                                                    <div class="radio-list">
-                                                        <label class="radio-inline p-0 me-10">
-                                                            <div class="radio radio-info">
-                                                                <input type="radio" name="status" 
-                                                                    value="publish" checked>
-                                                                <label for="radio1">Published</label>
-                                                            </div>
-                                                        </label>
-                                                        <label class="radio-inline">
-                                                            <div class="radio radio-info">
-                                                                <input type="radio" name="status"
-                                                                    value="draft">
-                                                                <label for="radio2">Draft</label>
-                                                            </div>
-                                                        </label>
+                                                <!--/span-->
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label class="fw-700 fs-16 form-label">Status</label>
+                                                        <div class="radio-list">
+                                                            <label class="radio-inline p-0 me-10">
+                                                                <div class="radio radio-info">
+                                                                    <input type="radio" name="status" id="radio1"
+                                                                        value="1" checked>
+                                                                    <label for="radio1">Published</label>
+                                                                </div>
+                                                            </label>
+                                                            <label class="radio-inline">
+                                                                <div class="radio radio-info">
+                                                                    <input type="radio" name="status" id="radio2"
+                                                                        value="0">
+                                                                    <label for="radio2">Draft</label>
+                                                                </div>
+                                                            </label>
+                                                        </div>
                                                     </div>
                                                 </div>
+                                                <!--/span-->
                                             </div>
-                                            <!--/span-->
-                                        </div>
                                     <!-- /.box-body -->
                                     <div class="box-footer">
                                         <button type="button" class="btn btn-warning me-1">
@@ -330,22 +352,7 @@
             <!-- /.content -->
         </div>
     </div>
-    <!-- /.content-wrapper -->
-
-    <footer class="main-footer">
-        <div class="pull-right d-none d-sm-inline-block">
-            <ul class="nav nav-primary nav-dotted nav-dot-separated justify-content-center justify-content-md-end">
-                <li class="nav-item">
-                    <a class="nav-link" href="javascript:void(0)">FAQ</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Purchase Now</a>
-                </li>
-            </ul>
-        </div>
-        &copy; 2021 <a href="https://www.multipurposethemes.com/">Multipurpose Themes</a>. All Rights Reserved.
-    </footer>
-    <!-- Control Sidebar -->
+  
 
 
     <!-- Add the sidebar's background. This div must be placed immediately after the control sidebar -->
@@ -403,6 +410,17 @@ function getCitys() {
         });
 
 }
+
+$('input:text').bind('input:text', function() {
+        var c = this.selectionStart,
+            r = /[^a-z0-9 .]/gi,
+            v = $(this).val();
+        if(r.test(v)) {
+            $(this).val(v.replace(r, ''));
+            c--;
+        }
+        this.setSelectionRange(c, c);
+        });
 </script>
 
 </html>

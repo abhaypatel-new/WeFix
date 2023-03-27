@@ -23,10 +23,10 @@ class EmployeeController extends Controller
     {
         $all = array(); 
         $all = User::where('d_manager_id', '!=', null)->get();
-       
+   
      foreach ($all as $key => $reports) {
             $cname = Company::find($reports->company_id);
-           
+         
             $all[$key]['name'] = $reports->first_name.' '.$reports->last_name;
             $all[$key]['company'] = $cname->company_name;
             $all[$key]['role'] = (($reports->roleid == 1)?'Vendor':(($reports->roleid == 3)?'District-Manager':(($reports->roleid == 4)?'Owner':'Manager')));
@@ -102,7 +102,6 @@ class EmployeeController extends Controller
     public function show($id)
     {
          $users = User::find($id);
-         $users['cmp'] = Company::all();
         if ($users) {
             $response['status'] = true;
             $response['data'] = $users;
@@ -133,9 +132,7 @@ class EmployeeController extends Controller
      */
     public function update(Request $request)
     {
-      
         $input = $request->all();
-      
         if($input['con_password'] == '')
         {
             unset($input['password']);

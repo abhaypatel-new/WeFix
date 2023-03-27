@@ -111,15 +111,21 @@
                                                 </div>
                                                 <div class="col-md-6">
                                                     <div class="form-group">
-                                                        <label class="fw-700 fs-16 form-label">Product Name <span
+                                                        <label class="fw-700 fs-16 form-label">Store Name <span
                                                                 class="text-danger">*</span></label>
-                                                        <div class="controls">
-                                                            <input type="text" class="form-control"
-                                                                placeholder="Product Name" name="product_name" required
-                                                                data-validation-required-message="Product Name field is required">
-                                                        </div>
+                                                        <select class="form-select" data-placeholder="Choose a Shop"
+                                                            name="shop_id" tabindex="1" required
+                                                            data-validation-required-message="Shop field is required">
+                                                            <option>Select Store Name</option>
+                                                            @foreach($shops as $shop)
+                                                            <option value="{{ $shop->id }}">{{$shop->name}}
+                                                            </option>
+                                                            @endforeach
+                                                        </select>
                                                     </div>
                                                 </div>
+
+                                                
 
                                                 <!--/span-->
 
@@ -135,6 +141,19 @@
                                                         <table class="table no-border td-padding">
                                                             <tbody>
                                                                 <tr>
+                                                                    <td>
+                                                                    <div class="col-md-12">
+                                                                        <div class="form-group">
+                                                                            <label class="fw-700 fs-16 form-label">Product Name <span
+                                                                                    class="text-danger">*</span></label>
+                                                                            <div class="controls">
+                                                                                <input type="text" class="form-control"
+                                                                                    placeholder="Product Name" name="product_name" required
+                                                                                    data-validation-required-message="Product Name field is required">
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    </td>
                                                                     <td>
                                                                         <div class="col-md-12">
                                                                             <div class="form-group">
@@ -210,10 +229,22 @@
                                                                                     class="fw-700 fs-16 form-label">Warranty
                                                                                 </label>
                                                                                 <div class="controls">
-                                                                                    <input type="text"
-                                                                                        class="form-control"
-                                                                                        placeholder="Warranty"
-                                                                                        name="warranty">
+                                                                                    <select class="form-control" name="warranty" id="warranty">
+                                                                                        <option value="">Select Warranty</option>
+                                                                                        <option value="3 Months">3 Months</option>
+                                                                                        <option value="6 Months">6 Months</option>
+                                                                                        <option value="1 Year">1 Year</option>
+                                                                                        <option value="2 Year">2 Year</option>
+                                                                                        <option value="3 Year">3 Year</option>
+                                                                                        <option value="4 Year">4 Year</option>
+                                                                                        <option value="5 Year">5 Year</option>
+                                                                                        <option value="6 Year">6 Year</option>
+                                                                                        <option value="7 Year">7 Year</option>
+                                                                                        <option value="8 Year">8 Year</option>
+                                                                                        <option value="9 Year">9 Year</option>
+                                                                                        <option value="10 Year">10 Year</option>
+                                                                                    </select>
+                                                                                    
                                                                                 </div>
                                                                             </div>
                                                                         </div>
@@ -323,19 +354,7 @@
         </div>
         <!-- /.content-wrapper -->
 
-        <footer class="main-footer">
-            <div class="pull-right d-none d-sm-inline-block">
-                <ul class="nav nav-primary nav-dotted nav-dot-separated justify-content-center justify-content-md-end">
-                    <li class="nav-item">
-                        <a class="nav-link" href="javascript:void(0)">FAQ</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Purchase Now</a>
-                    </li>
-                </ul>
-            </div>
-            &copy; 2021 <a href="https://www.multipurposethemes.com/">Multipurpose Themes</a>. All Rights Reserved.
-        </footer>
+    
 
     </div>
     <!-- ./wrapper -->
@@ -390,6 +409,17 @@
             alert("Your browser doesn't support to File API")
         }
     });
+
+    $('input:text').bind('input:text', function() {
+        var c = this.selectionStart,
+            r = /[^a-z0-9 .]/gi,
+            v = $(this).val();
+        if(r.test(v)) {
+            $(this).val(v.replace(r, ''));
+            c--;
+        }
+        this.setSelectionRange(c, c);
+        });
     </script>
 
 </body>

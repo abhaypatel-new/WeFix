@@ -180,7 +180,7 @@
 
                                                 <div class="col-md-6">
                                                     <div class="form-group">
-                                                        <label class="fw-700 fs-16 form-label">Last Number<span
+                                                        <label class="fw-700 fs-16 form-label">Last Name<span
                                                                 class="text-danger">*</span></label>
                                                         <div class="controls">
                                                             <input type="text" class="form-control" name="last_name"
@@ -193,7 +193,7 @@
 
                                             <div class="row mt-3">
 
-                                                <div class="col-md-4">
+                                                <div class="col-md-6">
                                                     <div class="form-group">
                                                         <label class="fw-700 fs-16 form-label">Email<span
                                                                 class="text-danger">*</span></label>
@@ -204,19 +204,8 @@
                                                         </div>
                                                     </div>
                                                 </div>
-
-                                                <div class="col-md-4">
-                                                    <div class="form-group">
-                                                        <label class="fw-700 fs-16 form-label">Password<span
-                                                                class="text-danger">*</span></label>
-                                                        <div class="controls">
-                                                            <input type="password" class="form-control" name="password"
-                                                                placeholder="Password" required
-                                                                data-validation-required-message="Password field is required">
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-4">
+                                                
+                                                <div class="col-md-6">
                                                     <div class="form-group">
                                                         <label class="fw-700 fs-16 form-label">Phone<span
                                                                 class="text-danger">*</span></label>
@@ -228,6 +217,33 @@
                                                     </div>
                                                 </div>
                                             </div>
+                                            <div class="row">
+                                            <div class="col-md-12">
+
+                                                <div class="form-group">
+                                                    <label class="form-label">Password</label><span
+                                                        class="text-danger">*</span>
+                                                    <div class="input-group mb-3 controls">
+                                                        <span class="input-group-text"><i class="ti-lock"></i></span>
+                                                        <input type="password" class="form-control" name="password"
+                                                            placeholder="Password" required
+                                                            data-validation-required-message="Password field is required">
+                                                    </div>
+                                                </div>
+                                                </div>
+                                                <div class="col-md-12">
+
+                                                <div class="form-group">
+                                                    <label class="form-label">Confirm Password</label><span
+                                                        class="text-danger">*</span>
+                                                    <div class="input-group mb-3 controls">
+                                                        <span class="input-group-text"><i class="ti-lock"></i></span>
+                                                        <input type="password" name="password2" placeholder="Confirm Password" data-validation-required-message="Confirm Password is required" data-validation-match-match="password" class="form-control" required> 
+
+                                                    </div>
+                                                </div>
+                                                </div>
+                                            </div>
 
                                             <div class="col-md-12">
                                                 <div class="form-group">
@@ -236,33 +252,9 @@
                                                         placeholder="Company description goes here..."></textarea>
                                                 </div>
                                             </div>
+                                            <input type="hidden" name="status" value="active">
 
-                                            <div class="row mt-3">
-
-                                                <!--/span-->
-                                                <div class="col-md-6">
-                                                    <div class="form-group">
-                                                        <label class="fw-700 fs-16 form-label">Status</label>
-                                                        <div class="radio-list">
-                                                            <label class="radio-inline p-0 me-10">
-                                                                <div class="radio radio-info">
-                                                                    <input type="radio" name="status" 
-                                                                        value="active" checked>
-                                                                    <label for="radio1">Active</label>
-                                                                </div>
-                                                            </label>
-                                                            <label class="radio-inline">
-                                                                <div class="radio radio-info">
-                                                                    <input type="radio" name="status"
-                                                                        value="inactive">
-                                                                    <label for="radio2">Inactive</label>
-                                                                </div>
-                                                            </label>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <!--/span-->
-                                            </div>
+                                            
 
 
                                         </div>
@@ -432,8 +424,7 @@
 
                                             </div>
                                             <div class="col-md-6">
-                                                <a class="btn btn-primary mt-3" data-bs-toggle="modal"
-                                                    data-bs-target="#modal-center"> Add District</a>
+                                                <a class="btn btn-primary mt-3" href="{{url('admin/disctricts')}}"> Add District</a>
                                             </div>
 
                                         </div>
@@ -442,33 +433,8 @@
 
                                         <!-- /.modal -->
 
-
-                                        <div class="row mt-3">
-
-                                            <!--/span-->
-                                            <div class="col-md-6">
-                                                <div class="form-group">
-                                                    <label class="fw-700 fs-16 form-label">Status</label>
-                                                    <div class="radio-list">
-                                                        <label class="radio-inline p-0 me-10">
-                                                            <div class="radio radio-info">
-                                                                <input type="radio" name="status" 
-                                                                    value="publish" checked>
-                                                                <label for="radio1">Published</label>
-                                                            </div>
-                                                        </label>
-                                                        <label class="radio-inline">
-                                                            <div class="radio radio-info">
-                                                                <input type="radio" name="status"
-                                                                    value="draft">
-                                                                <label for="radio2">Draft</label>
-                                                            </div>
-                                                        </label>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <!--/span-->
-                                        </div>
+ <input type="hidden" name="status" value="1">
+                                        
 
                                     </div>
                                     <!-- /.box-body -->
@@ -485,50 +451,7 @@
                             <!-- /.box -->
                         </div>
 
-                        <div class="modal center-modal fade" id="modal-center" tabindex="-1">
-                            <div class="modal-dialog">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title">Add District</h5>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                            aria-label="Close"></button>
-                                    </div>
-                                    <div class="modal-body">
-                                        <form novalidate action="{{ route('create_district')}}" method="post">
-                                            @csrf
-                                            <div class="col-md-12">
-                                                <h5>Company<span class="text-danger">*</span></h5>
-
-                                                <select class="form-select" data-placeholder="Choose a Company"
-                                                    name="company_id" tabindex="1" required
-                                                    data-validation-required-message="Company field is required">
-                                                    <option value="">Select Company</option>
-                                                    @foreach($companies as $company)
-                                                    <option value="{{ $company->id }}">{{ $company->company_name }}
-                                                    </option>
-                                                    @endforeach
-
-                                                </select>
-
-
-                                            </div>
-                                            <div class="form-group">
-                                                <label class="fw-700 fs-16 form-label">District Name</label>
-                                                <input type="text" class="form-control" name="district_name"
-                                                    placeholder="District Name" required
-                                                    data-validation-required-message="District Name field is required">
-                                            </div>
-                                    </div>
-                                    <div class="modal-footer modal-footer-uniform">
-                                        <button type="button" class="btn btn-default"
-                                            data-bs-dismiss="modal">Close</button>
-                                        <button type="submit" class="btn btn-primary float-end">Save</button>
-                                    </div>
-                                    </form>
-
-                                </div>
-                            </div>
-                        </div>
+                        
                     </div>
 
                     <!--/.col (left) -->
@@ -543,20 +466,6 @@
         </div>
     </div>
     <!-- /.content-wrapper -->
-
-    <footer class="main-footer">
-        <div class="pull-right d-none d-sm-inline-block">
-            <ul class="nav nav-primary nav-dotted nav-dot-separated justify-content-center justify-content-md-end">
-                <li class="nav-item">
-                    <a class="nav-link" href="javascript:void(0)">FAQ</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Purchase Now</a>
-                </li>
-            </ul>
-        </div>
-        &copy; 2021 <a href="https://www.multipurposethemes.com/">Multipurpose Themes</a>. All Rights Reserved.
-    </footer>
 
 
     </div>
@@ -578,6 +487,7 @@
 
     <script src="{{ asset('js/pages/advanced-form-element.js') }}"></script>
     <script src="{{ asset('assets/vendor_components/select2/dist/js/select2.full.js') }}"></script>
+
     <script>
     // getManagers()
     // getCustomers()
@@ -686,6 +596,17 @@
             });
 
     }
+
+    $('input:text').bind('input:text', function() {
+        var c = this.selectionStart,
+            r = /[^a-z0-9 .]/gi,
+            v = $(this).val();
+        if(r.test(v)) {
+            $(this).val(v.replace(r, ''));
+            c--;
+        }
+        this.setSelectionRange(c, c);
+        });
     </script>
 </body>
 

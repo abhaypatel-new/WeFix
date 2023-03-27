@@ -37,8 +37,12 @@ class ProductController extends Controller
                 'product_name' =>$input['product_name'] ,
                 'product_description'  => $input['product_description'],
                 'status' =>$input['status'] ,
+                'shop_id' =>$input['shop_id'] ,
                 'brand'  => $input['brand'],
                 'model_number'  => $input['model_number'],
+                'serial_number'  => $input['serial_number'],
+                'warranty'  => $input['warranty'],
+                'purchase_date'  => $input['purchase_date'],
                 'category' =>$input['category'] ,              
                 'catalog_visibility' =>1 ,
                 'featured'  => 1,
@@ -93,8 +97,9 @@ class ProductController extends Controller
             // }
         }
         $categories = DB::table('categories')->orderBy('id', 'desc')->get();
+        $shops = DB::table('shops')->orderBy('id', 'desc')->get();
 
-        return view('admin.products.create',compact('categories'));
+        return view('admin.products.create',compact('categories','shops'));
 
     }
 
@@ -132,7 +137,9 @@ class ProductController extends Controller
         $decryptid=decrypt($id);
         $product = DB::table('products')->where('id', $decryptid)->first();
         $product_images = DB::table('product_images')->where('pid', $decryptid)->get();
-        return view('admin.products.edit',compact('categories','product','product_images'));
+        $shops = DB::table('shops')->orderBy('id', 'desc')->get();
+
+        return view('admin.products.edit',compact('shops','categories','product','product_images'));
 
     }
 
@@ -165,7 +172,8 @@ class ProductController extends Controller
        
             $update=['product_name' => $input['product_name'],
             'product_description'=>$input['product_description'],
-            'status'=>$input['status'],
+                'shop_id' =>$input['shop_id'] ,
+                'status'=>$input['status'],
             'brand'=>$input['brand'],
             'model_number'=>$input['model_number'],
             'category'=>$input['category']];   
@@ -192,22 +200,7 @@ class ProductController extends Controller
     {
         //
     }
-    public function earnings()
-    {
-        return view('admin.reports.earnings');
-    }
-    public function sales()
-    {
-        return view('admin.reports.sales');
-    }
-    public function customers()
-    {
-        return view('admin.reports.customer');
-    }
-    public function vendors()
-    {
-        return view('admin.reports.vendor');
-    }
+ 
 
     public function removeImage($id)
     {
@@ -222,5 +215,12 @@ class ProductController extends Controller
         DB::table('products')->where('id', $id)->update($update);
         return   redirect()->back()->with('success', 'Image Remove Successfully');
 
+    }
+
+    public function product_img_delete($id)
+    {
+
+        DB::table('product_images')->where('id', $id)->delete();
+        return   redirect()->back()->with('success', 'Image Remove Successfully');
     }
 }

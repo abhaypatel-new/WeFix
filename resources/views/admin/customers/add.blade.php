@@ -86,7 +86,7 @@
                                                         class="text-danger">*</span>
                                                     <div class="controls">
                                                         <input type="text" name="first_name" class="form-control"
-                                                            required
+                                                            required placeholder="First Name"
                                                             data-validation-required-message="First Name field is required">
                                                     </div>
                                                 </div>
@@ -96,7 +96,7 @@
                                                     <label class="form-label">Last Name</label> <span
                                                         class="text-danger">*</span>
                                                     <div class="controls">
-                                                        <input type="text" name="last_name" class="form-control"
+                                                        <input type="text" placeholder="Last Name" name="last_name" class="form-control"
                                                             required
                                                             data-validation-required-message="Last Name field is required">
                                                     </div>
@@ -109,18 +109,25 @@
                                                     <label class="form-label">E-mail</label><span
                                                         class="text-danger">*</span>
                                                     <div class="controls">
-                                                        <input type="email" name="email" class="form-control" required
+                                                        <input type="email" placeholder="Email" name="email" class="form-control" required
                                                             data-validation-required-message="Email field is required">
                                                     </div>
                                                 </div>
                                             </div>
                                             <div class="col-md-6">
                                                 <div class="form-group">
-                                                    <label class="form-label">Contact Number</label>
+                                                    <label class="form-label">Contact Number</label><span
+                                                        class="text-danger">*</span>
+                                                    <div class="controls">
+
                                                     <input type="text" name="phone" class="form-control"
-                                                        placeholder="Phone">
+                                                        placeholder="Phone" required
+                                                            data-validation-required-message="Phone field is required">
+                                                   </div>
                                                 </div>
                                             </div>
+                                            <div class="col-md-12">
+
                                             <div class="form-group">
                                                 <label class="form-label">Password</label><span
                                                     class="text-danger">*</span>
@@ -131,6 +138,20 @@
                                                         data-validation-required-message="Password field is required">
                                                 </div>
                                             </div>
+                                            </div>
+                                            <div class="col-md-12">
+
+                                            <div class="form-group">
+                                                <label class="form-label">Confirm Password</label><span
+                                                    class="text-danger">*</span>
+                                                <div class="input-group mb-3 controls">
+                                                    <span class="input-group-text"><i class="ti-lock"></i></span>
+                                                    <input type="password" placeholder="Confirm Password" name="password2" data-validation-required-message="Confirm Password field is required" data-validation-match-match="password" class="form-control" required> 
+
+                                                </div>
+                                            </div>
+                                            </div>
+                                            
                                         </div>
                                         <h4 class="box-title text-info mb-0 mt-20"><i class="ti-save me-15"></i>
                                             Requirements</h4>
@@ -163,7 +184,7 @@
                                                     <label class="fw-700 fs-16 form-label">Job Position</label><span
                                                         class="text-danger">*</span>
                                                     <select class="form-select" data-placeholder="Choose a Job Position"
-                                                        name="roleid" tabindex="1" required
+                                                        name="roleid" tabindex="1" required id="job_position"
                                                         data-validation-required-message="Job Position field is required">
                                                         <option value="">Select Job Position</option>
                                                         <option value="4">Owner</option>
@@ -172,46 +193,47 @@
                                                     </select>
                                                 </div>
                                             </div>
-                                          
+                                            <!-- <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label class="form-label">City</label><span
+                                                        class="text-danger">*</span>
+                                                    <select class="form-select select2" multiple="multiple"
+                                                        name="city[]" required
+                                                        data-validation-required-message="City field is required">
+                                                        <option value="">Select Your City</option>
+                                                        <option>Toronto</option>
+                                                        <option>Montréal</option>
+                                                        <option>Vancouver</option>
+                                                        <option>Ottawa</option>
+                                                    </select>
+                                                </div>
+                                            </div> -->
                                         </div>
 
                                         <div class="row">
 
-                                            <div class="col-md-6">
+                                            <div class="col-md-6"  id="dm">
                                                 <div class="form-group">
-                                                    <label class="fw-700 fs-16 form-label">District Manager</label>
+                                                    <label class="fw-700 fs-16 form-label">District</label>
                                                     <select class="form-select"
-                                                        data-placeholder="Choose a District Manager" name="d_manager_id"
-                                                        tabindex="1" >
-                                                        <option value="">Select District Manager</option>
-                                                        @foreach($d_managers as $user)
-                                                        <option value="{{ $user->id }}">{{ $user->first_name }}
+                                                        data-placeholder="Choose a District" name="district_name"
+                                                        tabindex="1">
+                                                        <option value="">Select District</option>
+                                                        @foreach($districts as $user)
+                                                        <option value="{{ $user->id }}">{{ $user->name }}
                                                         </option>
                                                         @endforeach
                                                     </select>
                                                 </div>
                                             </div>
+                                            <input type="hidden" name="manager_id" value="">
 
-                                            <div class="col-md-6">
-                                                <div class="form-group">
-                                                    <label class="fw-700 fs-16 form-label">Manager</label>
-                                                    <select class="form-select" data-placeholder="Choose a Manager"
-                                                        name="manager_id" tabindex="1" >
-                                                        <option value="">Select Manager</option>
-                                                        @foreach($managers as $user)
-                                                        <option value="{{ $user->id }}">{{ $user->first_name }}
-                                                        </option>
-                                                        @endforeach
-                                                    </select>
-                                                </div>
-                                            </div>
-
-                                            <div class="col-md-6">
+                                            <div class="col-md-6" id="rs">
                                                 <div class="form-group">
                                                     <label class="fw-700 fs-16 form-label">Reporting Store</label>
                                                     <select class="form-select"
                                                         data-placeholder="Choose a Reporting Store" name="shop_id"
-                                                        tabindex="1" >
+                                                        tabindex="1">
                                                         <option value="">Select Reporting Store</option>
                                                         @foreach($shops as $shop)
                                                         <option value="{{ $shop->id }}">{{ $shop->name }}
@@ -220,7 +242,28 @@
                                                     </select>
                                                 </div>
                                             </div>
-                                         
+
+                                            <div class="col-md-6" id="limit">
+                                                <div class="form-group">
+                                                    <label class="fw-700 fs-16 form-label">Approval Limit</label>
+                                                    <input type="text" placeholder="Set Approval Limit"  name="approval_limit" class="form-control">
+                                                </div>
+                                            </div>
+                                            <!-- <div class="col-md-6">
+    <div class="form-group">
+        <label class="form-label">City</label><span
+            class="text-danger">*</span>
+        <select class="form-select select2" multiple="multiple"
+            name="city[]" required
+            data-validation-required-message="City field is required">
+            <option value="">Select Your City</option>
+            <option>Toronto</option>
+            <option>Montréal</option>
+            <option>Vancouver</option>
+            <option>Ottawa</option>
+        </select>
+    </div>
+</div> -->
                                         </div>
                                         <div class="form-group">
                                             <label class="form-label">About Employee</label>
@@ -231,28 +274,30 @@
 
                                     <div class="row mt-3">
 
-                                        <!--/span-->
-                                        <div class="col-md-6">
-                                            <div class="form-group">
-                                                <label class="fw-700 fs-16 form-label">Status</label>
-                                                <div class="radio-list">
-                                                    <label class="radio-inline p-0 me-10">
-                                                        <div class="radio radio-info">
-                                                            <input type="radio" name="status" value="publish" checked>
-                                                            <label for="radio1">Published</label>
+                                                <!--/span-->
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label class="fw-700 fs-16 form-label">Status</label>
+                                                        <div class="radio-list">
+                                                            <label class="radio-inline p-0 me-10">
+                                                                <div class="radio radio-info">
+                                                                    <input type="radio" name="status" id="radio1"
+                                                                        value="1" checked>
+                                                                    <label for="radio1">Published</label>
+                                                                </div>
+                                                            </label>
+                                                            <label class="radio-inline">
+                                                                <div class="radio radio-info">
+                                                                    <input type="radio" name="status" id="radio2"
+                                                                        value="0">
+                                                                    <label for="radio2">Draft</label>
+                                                                </div>
+                                                            </label>
                                                         </div>
-                                                    </label>
-                                                    <label class="radio-inline">
-                                                        <div class="radio radio-info">
-                                                            <input type="radio" name="status" value="draft">
-                                                            <label for="radio2">Draft</label>
-                                                        </div>
-                                                    </label>
+                                                    </div>
                                                 </div>
+                                                <!--/span-->
                                             </div>
-                                        </div>
-                                        <!--/span-->
-                                    </div>
                                     <!-- /.box-body -->
                                     <div class="box-footer">
                                         <button type="button" class="btn btn-warning me-1">
@@ -283,19 +328,8 @@
     </div>
     <!-- /.content-wrapper -->
 
-    <footer class="main-footer">
-        <div class="pull-right d-none d-sm-inline-block">
-            <ul class="nav nav-primary nav-dotted nav-dot-separated justify-content-center justify-content-md-end">
-                <li class="nav-item">
-                    <a class="nav-link" href="javascript:void(0)">FAQ</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Purchase Now</a>
-                </li>
-            </ul>
-        </div>
-        &copy; 2021 <a href="https://www.multipurposethemes.com/">Multipurpose Themes</a>. All Rights Reserved.
-    </footer>
+
+    
     <!-- Control Sidebar -->
 
 
@@ -321,6 +355,48 @@
 
     <script src="{{ asset('js/pages/advanced-form-element.js') }}"></script>
     <script src="{{ asset('assets/vendor_components/select2/dist/js/select2.full.js') }}"></script>
+    <script>
+        $('#dm').hide();
+        $('#rs').hide();
+        $('#limit').hide();
+
+    $('#job_position').on('change', function() {
+        if(this.value == 3){
+            $('#rs').hide();
+            $('#limit').hide();
+
+
+            $('#dm').show()
+        }
+
+        if(this.value == 2){
+            $('#dm').hide()
+            $('#limit').hide();
+
+            $('#rs').show();
+
+        }
+
+        if(this.value == 4){
+            $('#dm').hide()
+
+            $('#rs').hide();
+            $('#limit').show();
+
+        }
+    });
+
+    $('input:text').bind('input:text', function() {
+        var c = this.selectionStart,
+            r = /[^a-z0-9 .]/gi,
+            v = $(this).val();
+        if(r.test(v)) {
+            $(this).val(v.replace(r, ''));
+            c--;
+        }
+        this.setSelectionRange(c, c);
+        });
+    </script>
 </body>
 
 </html>

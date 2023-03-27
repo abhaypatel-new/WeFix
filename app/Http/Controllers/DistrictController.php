@@ -50,7 +50,7 @@ class DistrictController extends Controller
             'is_active'  => 1,
             'roleid'=>3
         ));
-        return redirect()->route('district-manager.list');
+        return redirect()->back();
         exit;
         }
         

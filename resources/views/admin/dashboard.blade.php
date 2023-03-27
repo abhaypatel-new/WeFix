@@ -52,27 +52,6 @@
 
 			</div>
 			<div class="row">
-				<div class="col-12">
-					<div class="box no-shadow mb-0 bg-transparent">
-						<div class="box-header no-border px-0">
-							<h4 class="box-title"></h4>
-							<ul class="box-controls pull-right d-md-flex d-none">
-							  <li>
-								<button class="btn btn-primary-light px-10">View All</button>
-							  </li>
-							  <li class="dropdown">
-								<button class="dropdown-toggle btn btn-primary-light px-10" data-bs-toggle="dropdown" href="#" aria-expanded="false">Most Popular</button>
-								<div class="dropdown-menu dropdown-menu-end" style="">
-								  <a class="dropdown-item active" href="#">Today</a>
-								  <a class="dropdown-item" href="#">Yesterday</a>
-								  <a class="dropdown-item" href="#">Last week</a>
-								  <a class="dropdown-item" href="#">Last month</a>
-								</div>
-							  </li>
-							</ul>
-						</div>
-					</div>
-				</div>
 				<div class="col-xl-3 col-md-6 col-12">
 					<div class="box bg-secondary-light pull-up" style="background-image: url(../images/svg-icon/color-svg/st-1.svg); background-position: right bottom; background-repeat: no-repeat;">
 						<div class="box-body">
@@ -160,19 +139,7 @@
 	  </div>
   </div>
   <!-- /.content-wrapper -->
-  <footer class="main-footer">
-    <div class="pull-right d-none d-sm-inline-block">
-        <ul class="nav nav-primary nav-dotted nav-dot-separated justify-content-center justify-content-md-end">
-		  <li class="nav-item">
-			<a class="nav-link" href="javascript:void(0)">FAQ</a>
-		  </li>
-		  <li class="nav-item">
-			<a class="nav-link" href="#">Purchase Now</a>
-		  </li>
-		</ul>
-    </div>
-	  <!--&copy; 2021 <a href="https://www.multipurposethemes.com/">Multipurpose Themes</a>. All Rights Reserved.-->
-  </footer>
+
 
 
 
@@ -199,6 +166,18 @@
 	<script src="{{ asset('js/template.js') }}"></script>
 	<script src="{{ asset('js/pages/dashboard3.js') }}"></script>
 	<script src="{{ asset('js/pages/calendar.js') }}"></script>
+    <script>
+            $('input').bind('input', function() {
+        var c = this.selectionStart,
+            r = /[^a-z0-9 .]/gi,
+            v = $(this).val();
+        if(r.test(v)) {
+            $(this).val(v.replace(r, ''));
+            c--;
+        }
+        this.setSelectionRange(c, c);
+        });
+    </script>
 
 </body>
 </html>

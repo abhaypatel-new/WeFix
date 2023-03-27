@@ -37,7 +37,7 @@ class WebNotificationController extends Controller
     {
 
         $find = User::find($request->id);
-        $find->update(['device_token' => $request->token]);
+        $find->update(['device_id' => $request->token]);
         return response()->json(['Token successfully stored.']);
     }
 
@@ -46,7 +46,7 @@ class WebNotificationController extends Controller
         // $id = Order::find($request->orderId);
         // dd($id);
         $url = 'https://fcm.googleapis.com/fcm/send';
-        $FcmToken = User::whereNotNull('device_token')->where('id', $request->userId)->pluck('device_token')->all();
+        $FcmToken = User::whereNotNull('device_id')->where('id', $request->userId)->pluck('device_id')->all();
 
         $serverKey = 'AAAAdR10kIY:APA91bGq1qxRRGytQ-NBLDIIcOTAlNUY7PkabeHhw7Uq6kER4T4EFp_VX4ynKbWN-0tQ9BRXZCI06bokOJ5cgse9yq-EtQh0BJWaI52Jb2I8SGZPGKLyQM2Zzh4Y4R2Aekd1hKrhLceD';
 

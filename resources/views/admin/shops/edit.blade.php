@@ -221,34 +221,10 @@
 
                                         </div>
                                         
+ <input type="hidden" name="status" value="1">
                                        
 
-                                        <div class="row mt-3">
-
-                                            <!--/span-->
-                                            <div class="col-md-6">
-                                                <div class="form-group">
-                                                    <label class="fw-700 fs-16 form-label">Status</label>
-                                                    <div class="radio-list">
-                                                        <label class="radio-inline p-0 me-10">
-                                                            <div class="radio radio-info">
-                                                                <input type="radio" name="status" id="radio1"
-                                                                    value="publish"  {{$shop->status == "publish"  ? 'checked' : ''}}>
-                                                                <label for="radio1">Published</label>
-                                                            </div>
-                                                        </label>
-                                                        <label class="radio-inline">
-                                                            <div class="radio radio-info">
-                                                                <input type="radio" name="status" id="radio2"
-                                                                    value="draft"  {{$shop->status == "draft"  ? 'checked' : ''}}>
-                                                                <label for="radio2">Draft</label>
-                                                            </div>
-                                                        </label>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <!--/span-->
-                                        </div>
+                                        
 
                                     </div>
                                     <!-- /.box-body -->
@@ -324,19 +300,7 @@
     </div>
     <!-- /.content-wrapper -->
 
-    <footer class="main-footer">
-        <div class="pull-right d-none d-sm-inline-block">
-            <ul class="nav nav-primary nav-dotted nav-dot-separated justify-content-center justify-content-md-end">
-                <li class="nav-item">
-                    <a class="nav-link" href="javascript:void(0)">FAQ</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Purchase Now</a>
-                </li>
-            </ul>
-        </div>
-        &copy; 2021 <a href="https://www.multipurposethemes.com/">Multipurpose Themes</a>. All Rights Reserved.
-    </footer>
+ 
 
 
     </div>
@@ -399,7 +363,16 @@
             });
 
     }
-
+    $('input:text').bind('input:text', function() {
+        var c = this.selectionStart,
+            r = /[^a-z0-9 .]/gi,
+            v = $(this).val();
+        if(r.test(v)) {
+            $(this).val(v.replace(r, ''));
+            c--;
+        }
+        this.setSelectionRange(c, c);
+        });
     </script>
 </body>
 

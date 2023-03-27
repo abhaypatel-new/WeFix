@@ -18,7 +18,7 @@ class VendorController extends Controller
         $raw_query=raw_querys(1);
         $vendors = DB::select( DB::raw($raw_query) );
         
-        $proviences=DB::table('ca_cities')->select('province')
+        $proviences=DB::table('canadacities')->select('province')
             ->distinct()->get();
 
         return view('admin.vendors.list',compact('vendors'));
@@ -38,20 +38,25 @@ class VendorController extends Controller
                 'email' => 'required|unique:users',
             ]);
             $input= $request->all();
-         
-            
+      
         DB::table('users')->insert(array(
             'first_name' =>$input['first_name'] ,
             'last_name'  => $input['last_name'],
             'email' =>$input['email'] ,
             'phone'  => $input['phone'],
             'password' =>Hash::make($input['password']) ,
-            // 'district_name' =>$input['district_name'] ,
-            // 'company'  => $input['company'],
-            'category' =>implode(',',$input['category']) ,
-            // 'city'  => implode(',',$input['city']),
+            'country' =>$input['province'] ,
+            'city' =>$input['city'] ,
+            'postal_code' =>$input['postal_code'] ,
+            'gst_number' =>$input['gst_number'] ,
+            'address' =>$input['address'] ,
+            'company'  => $input['company'],
+            'address'  => $input['address'],
+            'category' =>$input['category'] ,
+            'service_area' =>implode(',',$input['service_area']) ,
+            'city'  => $input['city'],
             'desc' =>$input['desc'] ,
-            'is_active'  => 1,
+            'is_active'  =>  $input['status'] ,
             'roleid'=>1
         ));
         return redirect()->route('vendor.list');
@@ -59,11 +64,14 @@ class VendorController extends Controller
         }
         
         $categories = DB::table('categories')->orderBy('id', 'desc')->get();
-        $proviences=DB::table('ca_cities')->select('province')
+        $proviences=DB::table('canadacities')->select('province')
         ->distinct()->get();
+
+        $cities=DB::table('canadacities')->get();
+
         $managers = DB::table('users')->where('roleid', 2)->get();
      
-        return view('admin.vendors.add',compact('categories','proviences','managers'));
+        return view('admin.vendors.add',compact('categories','proviences','managers','cities'));
     }
 
     /**
@@ -102,8 +110,11 @@ class VendorController extends Controller
         $vendor = DB::table('users')->where('id', $decryptid)->first();
         $categories = DB::table('categories')->orderBy('id', 'desc')->get();
         $managers = DB::table('users')->where('roleid', 2)->get();
+        $proviences=DB::table('canadacities')->select('province')
+        ->distinct()->get();
+        $cities=DB::table('canadacities')->get();
 
-        return view('admin.vendors.edit',compact('vendor','categories','managers'));
+        return view('admin.vendors.edit',compact('vendor','categories','managers','proviences','cities'));
 
     }
 
@@ -120,7 +131,6 @@ class VendorController extends Controller
          $input= $request->all();
          $city='';
         //  $city=isset($input['city']) ? implode(',',$input['city']) : '';
-         $category=isset($input['category']) ? implode(',',$input['category']) : '';
          
          $users= DB::table('users')->where('email',$input['email'])->where('id','!=',$decryptid)->first();
           if(empty($users))
@@ -128,14 +138,43 @@ class VendorController extends Controller
              if(empty($input['password']))
              {
                  
-             $update=['first_name' => $input['first_name'],'last_name'=>$input['last_name'],'email'=>$input['email'],
-             'phone'=>$input['phone'],
-             'category'=>$category,'desc'=>$input['desc']];
+             $update=[ 'first_name' =>$input['first_name'] ,
+             'last_name'  => $input['last_name'],
+             'email' =>$input['email'] ,
+             'phone'  => $input['phone'],
+             'country' =>$input['province'] ,
+             'city' =>$input['city'] ,
+             'postal_code' =>$input['postal_code'] ,
+             'gst_number' =>$input['gst_number'] ,
+             'address' =>$input['address'] ,
+             'company'  => $input['company'],
+             'address'  => $input['address'],
+             'category' =>$input['category'] ,
+             'service_area' =>implode(',',$input['service_area']) ,
+             'city'  => $input['city'],
+             'desc' =>$input['desc'] ,
+             'is_active'  => $input['status'] ,
+             'roleid'=>1];
              }else{
                  
-             $update=['first_name' => $input['first_name'],'last_name'=>$input['last_name'],'email'=>$input['email'],
-             'phone'=>$input['phone'],'password'=>Hash::make($input['password']),
-             'category'=>$category,'desc'=>$input['desc']];
+             $update=[ 'first_name' =>$input['first_name'] ,
+             'last_name'  => $input['last_name'],
+             'email' =>$input['email'] ,
+             'phone'  => $input['phone'],
+             'password' =>Hash::make($input['password']) ,
+             'country' =>$input['province'] ,
+             'city' =>$input['city'] ,
+             'postal_code' =>$input['postal_code'] ,
+             'gst_number' =>$input['gst_number'] ,
+             'address' =>$input['address'] ,
+             'company'  => $input['company'],
+             'address'  => $input['address'],
+             'category' =>$input['category'] ,
+             'service_area' =>implode(',',$input['service_area']) ,
+             'city'  => $input['city'],
+             'desc' =>$input['desc'] ,
+             'is_active'  =>  $input['status'] ,
+             'roleid'=>1];
              }
       
              $affected = DB::table('users')

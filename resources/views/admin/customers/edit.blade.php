@@ -121,15 +121,32 @@
                                                         placeholder="Phone">
                                                 </div>
                                             </div>
-                                            <div class="form-group">
-                                                <label class="form-label">Password</label><span
-                                                    class="text-danger">*</span>
-                                                <div class="input-group mb-3 controls">
-                                                    <span class="input-group-text"><i class="ti-lock"></i></span>
-                                                    <input type="password" class="form-control" name="password"
-                                                        placeholder="Password">
-                                                </div>
-                                            </div>
+
+                                            <div class="col-md-12">
+
+                                                    <div class="form-group">
+                                                        <label class="form-label">Password</label><span
+                                                            class="text-danger">*</span>
+                                                        <div class="input-group mb-3 controls">
+                                                            <span class="input-group-text"><i class="ti-lock"></i></span>
+                                                            <input type="password" class="form-control" name="password"
+                                                                placeholder="Password" >
+                                                        </div>
+                                                    </div>
+                                                    </div>
+                                                    <div class="col-md-12">
+
+                                                    <div class="form-group">
+                                                        <label class="form-label">Confirm Password</label><span
+                                                            class="text-danger">*</span>
+                                                        <div class="input-group mb-3 controls">
+                                                            <span class="input-group-text"><i class="ti-lock"></i></span>
+                                                            <input type="password" name="password2"    data-validation-match-match="password" class="form-control" > 
+
+                                                        </div>
+                                                    </div>
+                                                    </div>
+                                            
                                         </div>
                                         <h4 class="box-title text-info mb-0 mt-20"><i class="ti-save me-15"></i>
                                             Requirements</h4>
@@ -163,7 +180,7 @@
                                                         class="text-danger">*</span>
                                                     <select class="form-select" data-placeholder="Choose a Job Position"
                                                         name="roleid" tabindex="1" required
-                                                        data-validation-required-message="Job Position field is required">
+                                                        data-validation-required-message="Job Position field is required"  id="job_position">
                                                         <option value="">Select Job Position</option>
                                                         <option  {{ $customer->roleid ==4  ? 'selected' : ''}} value="4">Owner</option>
                                                         <option  {{ $customer->roleid ==3  ? 'selected' : ''}} value="3">District Manager</option>
@@ -190,36 +207,33 @@
 
                                         <div class="row">
 
-                                            <div class="col-md-6">
+                                        <div class="col-md-6">
+                                          
+
+                                            <div class="col-md-6" id="dm" @if($customer->district_name == NULL) style="display:none;" @endif>
                                                 <div class="form-group">
-                                                    <label class="fw-700 fs-16 form-label">District Manager</label>
+                                                    <label class="fw-700 fs-16 form-label">District</label>
                                                     <select class="form-select"
-                                                        data-placeholder="Choose a District Manager" name="d_manager_id"
+                                                        data-placeholder="Choose a District" name="district_name"
                                                         tabindex="1" >
                                                         <option value="">Select District Manager</option>
-                                                        @foreach($d_managers as $user)
-                                                        <option  {{ $customer->d_manager_id == $user->id  ? 'selected' : ''}}  value="{{ $user->id }}">{{ $user->first_name }}
+                                                        @foreach($districts as $user)
+                                                        <option  {{ $customer->district_name == $user->id  ? 'selected' : ''}}  value="{{ $user->id }}">{{ $user->name }}
                                                         </option>
                                                         @endforeach
                                                     </select>
                                                 </div>
                                             </div>
-
-                                            <div class="col-md-6">
+                                            <div class="col-md-6" id="limit" @if($customer->approval_limit == NULL || $customer->approval_limit == 0) style="display:none;" @endif>
                                                 <div class="form-group">
-                                                    <label class="fw-700 fs-16 form-label">Manager</label>
-                                                    <select class="form-select" data-placeholder="Choose a Manager"
-                                                        name="manager_id" tabindex="1" >
-                                                        <option value="">Select Manager</option>
-                                                        @foreach($managers as $user)
-                                                        <option {{ $customer->manager_id == $user->id  ? 'selected' : ''}} value="{{ $user->id }}">{{ $user->first_name }}
-                                                        </option>
-                                                        @endforeach
-                                                    </select>
+                                                    <label class="fw-700 fs-16 form-label">Approval Limit</label>
+                                                    <input type="text" name="approval_limit" class="form-control" value=" {{ $customer->approval_limit}}">
                                                 </div>
                                             </div>
 
-                                            <div class="col-md-6">
+                                            
+
+                                            <div class="col-md-6" id="rs" @if($customer->shop_id == '') style="display:none;" @endif>
                                                 <div class="form-group">
                                                     <label class="fw-700 fs-16 form-label">Reporting Store</label>
                                                     <select class="form-select"
@@ -233,6 +247,7 @@
                                                     </select>
                                                 </div>
                                             </div>
+                                            
                                             <!-- <div class="col-md-6">
     <div class="form-group">
         <label class="form-label">City</label><span
@@ -254,28 +269,35 @@
                                             <textarea rows="5" class="form-control" name="desc"
                                                 placeholder="About Employee">{{$customer->desc}}</textarea>
                                         </div>
+
                                         <div class="row mt-3">
 
-                                        <!--/span-->
-                                        <div class="col-md-6">
-                                            <div class="form-group">
-                                                <label class="fw-700 fs-16 form-label">Status</label>
-                                                <div class="radio-list">
-                                                    <label class="radio-inline p-0 me-10">
-                                                        <div class="radio radio-info">
-                                                            <input type="radio"  {{$customer->is_active == "publish"  ? 'checked' : ''}} name="status" value="publish" checked>
-                                                            <label for="radio1">Published</label>
-                                                        </div>
-                                                    </label>
-                                                    <label class="radio-inline">
-                                                        <div class="radio radio-info">
-                                                            <input type="radio"  {{$customer->is_active == "draft"  ? 'checked' : ''}} name="status" value="draft">
-                                                            <label for="radio2">Draft</label>
-                                                        </div>
-                                                    </label>
+                                            <!--/span-->
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label class="fw-700 fs-16 form-label">Status</label>
+                                                    <div class="radio-list">
+                                                        <label class="radio-inline p-0 me-10">
+                                                            <div class="radio radio-info">
+                                                                <input type="radio" name="status" id="radio1"
+                                                                    value="1"  {{$customer->is_active == 1  ? 'checked' : ''}}>
+                                                                <label for="radio1">Published</label>
+                                                            </div>
+                                                        </label>
+                                                        <label class="radio-inline">
+                                                            <div class="radio radio-info">
+                                                                <input type="radio" name="status" id="radio2"
+                                                                    value="9"  {{$customer->is_active == 0  ? 'checked' : ''}}>
+                                                                <label for="radio2">Draft</label>
+                                                            </div>
+                                                        </label>
+                                                    </div>
                                                 </div>
                                             </div>
+                                            <!--/span-->
                                         </div>
+
+                                        
                                         <!--/span-->
                                     </div>
                                     </div>
@@ -311,20 +333,6 @@
     </div>
     <!-- /.content-wrapper -->
 
-    <footer class="main-footer">
-        <div class="pull-right d-none d-sm-inline-block">
-            <ul class="nav nav-primary nav-dotted nav-dot-separated justify-content-center justify-content-md-end">
-                <li class="nav-item">
-                    <a class="nav-link" href="javascript:void(0)">FAQ</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Purchase Now</a>
-                </li>
-            </ul>
-        </div>
-        &copy; 2021 <a href="https://www.multipurposethemes.com/">Multipurpose Themes</a>. All Rights Reserved.
-    </footer>
-    <!-- Control Sidebar -->
 
 
     <!-- Add the sidebar's background. This div must be placed immediately after the control sidebar -->
@@ -350,5 +358,42 @@
     <script src="{{ asset('js/pages/advanced-form-element.js') }}"></script>
     <script src="{{ asset('assets/vendor_components/select2/dist/js/select2.full.js') }}"></script>
 </body>
+
+<script>
+    $('#job_position').on('change', function() {
+        if(this.value == 3){
+            $('#rs').hide();
+            $('#limit').hide();
+
+            $('#dm').show()
+        }
+
+        if(this.value == 2){
+            $('#dm').hide()
+            $('#limit').hide();
+
+            $('#rs').show();
+
+        }
+        if(this.value == 4){
+            $('#dm').hide()
+
+            $('#rs').hide();
+            $('#limit').show();
+
+        }
+    });
+
+    $('input:text').bind('input:text', function() {
+        var c = this.selectionStart,
+            r = /[^a-z0-9 .]/gi,
+            v = $(this).val();
+        if(r.test(v)) {
+            $(this).val(v.replace(r, ''));
+            c--;
+        }
+        this.setSelectionRange(c, c);
+        });
+    </script>
 
 </html>

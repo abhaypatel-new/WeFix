@@ -37,13 +37,13 @@
 		<div class="content-header">
 			<div class="d-flex align-items-center">
 				<div class="me-auto">
-					<h3 class="page-title">Owner List</h3>
+					<h3 class="page-title">Employee List</h3>
 					<div class="d-inline-block align-items-center">
 						<nav>
 							<ol class="breadcrumb">
 								<li class="breadcrumb-item"><a href="#"><i class="mdi mdi-home-outline"></i></a></li>
-								<li class="breadcrumb-item" aria-current="page">Owner</li>
-								<li class="breadcrumb-item active" aria-current="page">Owner List</li>
+								<li class="breadcrumb-item" aria-current="page">Employee</li>
+								<li class="breadcrumb-item active" aria-current="page">Employee List</li>
 							</ol>
 						</nav>
 					</div>
@@ -67,12 +67,12 @@
 				<!-- /.box-header -->
 				<div class="box-body">
 					<div class="table-responsive">
-					  <table id="example5" class="table table-bordered table-striped" style="width:100%">
+					  <table id="example5" class="table table-striped" style="width:100%">
 						<thead>
 							<tr>
 							
 								<th>Name</th>
-								<th>Category</th>
+								<th>Company</th>
 								<th>Email</th>
 								<th>Contact</th>
 								<th>Role</th>
@@ -87,7 +87,9 @@
 								<td>{{$customer->email}}</td>
 								<td>{{$customer->phone}}</td>
 								<td>{{$customer->role}}</td>
-								<td><a class="btn btn-info m-2 " href="{{ url('admin/customers/edit/'. encrypt($customer->id))}}" ><i class="mdi mdi-pencil"></i></a><a class="btn btn-danger mt-2 "  data-bs-toggle="modal" data-bs-target="#modal-center{{ $customer->id }}"><i class="mdi mdi-delete"></i></a></td>
+								<td><a class="btn btn-info m-2 " href="{{ url('admin/customers/edit/'. encrypt($customer->id))}}" ><i class="mdi mdi-pencil"></i></a>
+                                <!-- <a class="btn btn-danger mt-2 "  data-bs-toggle="modal" data-bs-target="#modal-center{{ $customer->id }}"><i class="mdi mdi-delete"></i></a> -->
+                            </td>
 							</tr>
 							 <!-- Modal -->
                               <div class="modal center-modal fade" id="modal-center{{ $customer->id }}" tabindex="-1">
@@ -101,8 +103,7 @@
                             			<p>Are you sure you want to delete {{$customer->first_name.' '}}{{$customer->last_name}}</p>
                             		  </div>
                             		  <div class="modal-footer modal-footer-uniform">
-                            			<button type="button" class="btn btn-default" data-bs-dismiss="modal">Close</button>
-                            			<button type="button" class="btn btn-danger float-end">Delete</button>
+                            			<a href="{{url('admin/customers/delete/'.$customer->id)}}" class="btn btn-danger float-end">Delete</a>
                             		  </div>
                             		</div>
                             	  </div>
@@ -115,10 +116,10 @@
 							<tr>
 							
 								<th>Name</th>
-								<th>Category</th>
+								<th>Company</th>
 								<th>Email</th>
 								<th>Contact</th>
-								<th>Shop</th>
+								<th>Role</th>
 								<th>Actions</th>
 							</tr>
 						</tfoot>
@@ -145,19 +146,7 @@
   </div>
   <!-- /.content-wrapper -->
   
-   <footer class="main-footer">
-    <div class="pull-right d-none d-sm-inline-block">
-        <ul class="nav nav-primary nav-dotted nav-dot-separated justify-content-center justify-content-md-end">
-		  <li class="nav-item">
-			<a class="nav-link" href="javascript:void(0)">FAQ</a>
-		  </li>
-		  <li class="nav-item">
-			<a class="nav-link" href="#">Purchase Now</a>
-		  </li>
-		</ul>
-    </div>
-	  &copy; 2021 <a href="https://www.multipurposethemes.com/">Multipurpose Themes</a>. All Rights Reserved.
-  </footer>
+
 
 </div>
 <!-- ./wrapper -->
@@ -177,6 +166,24 @@
 	
 	<script src="{{ asset('js/pages/data-table.js')}}"></script>
 	
+	<script>
+   
+	$(document).ready(function () {
+            $('#example5').DataTable({
+                searching: true
+            });
+        });
 
+        $('input:text').bind('input:text', function() {
+        var c = this.selectionStart,
+            r = /[^a-z0-9 .]/gi,
+            v = $(this).val();
+        if(r.test(v)) {
+            $(this).val(v.replace(r, ''));
+            c--;
+        }
+        this.setSelectionRange(c, c);
+        });
+    </script>
 </body>
 </html>

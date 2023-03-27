@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use App\Admin;
+use Auth;
 use Session;
 
 class AdminController extends Controller
@@ -16,15 +17,15 @@ class AdminController extends Controller
      */
     public function index()
     {
-        $districts = DB::table('users')->where('roleid', 3)->count();
+        $districts=DB::table('users')->where('roleid',3)->count();
+  
+        $customers=DB::table('users')->where('roleid',4)->count();
+        $vendors=DB::table('users')->where('roleid',1)->count();
+        $managers=DB::table('users')->where('roleid',2)->count();
 
-        $customers = DB::table('users')->where('roleid', 4)->count();
-        $vendors = DB::table('users')->where('roleid', 1)->count();
-        $managers = DB::table('users')->where('roleid', 2)->count();
-
-        return view('admin.dashboard', compact('districts', 'managers', 'customers', 'vendors'));
+         return view('admin.dashboard',compact('districts','managers','customers','vendors'));
     }
-
+    
     public function showLoginForm()
     {
         return view('admin.login');
@@ -37,27 +38,28 @@ class AdminController extends Controller
      */
     public function create(Request $request)
     {
-        $request->validate([
-
+       $request->validate([
+        
             'email' => 'required|email|max:255',
             'password' => 'required|min:6|max:255',
         ]);
+        
+        
+    $credentials = [
+        'email' => $request['email'],
+        'password' => $request['password'],
+    ];
 
-        $credentials = [
-            'email' => $request['email'],
-            'password' => $request['password'],
-        ];
+    // Dump data
+    // dd($credentials);
 
-        // Dump data
-        // dd($credentials);
+    if (Auth::guard('admin')->attempt($credentials)) {
+        return redirect()->route('admin.dashboard');
+        exit;
+    }
 
-        if (Auth::guard('admin')->attempt($credentials)) {
-            return redirect()->route('admin.dashboard');
-            exit;
-        }
-
-        return redirect()->back()->with('message', 'You have entered an invalid username or password!');
-
+    return   redirect()->back()->with('message', 'You have entered an invalid username or password!');
+     
     }
 
     /**
@@ -77,9 +79,14 @@ class AdminController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show()
     {
-        //
+      
+      
+
+        return view('admin.profile.view');
+
+    
     }
 
     /**
@@ -100,9 +107,9 @@ class AdminController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
-        //
+        return   redirect()->back()->with('message', 'Somthing went wrong!');
     }
 
     /**
@@ -115,119 +122,157 @@ class AdminController extends Controller
     {
         //
     }
-
-    public function signOut()
-    {
-
+    
+    public function signOut() {
+        
         Session::flush();
         Auth::logout();
-
+  
         return Redirect('admin');
     }
 
     public function get_managers()
     {
         $users = DB::table('users')
-            ->selectRaw('users.first_name,users.last_name,users.id,CASE WHEN shops.id IS NULL THEN 0 ELSE 1 END status')
-            ->leftJoin('shops', 'users.id', '=', 'shops.managerid')
-            ->where('roleid', 2)->get();
+        ->selectRaw('users.first_name,users.last_name,users.id,CASE WHEN shops.id IS NULL THEN 0 ELSE 1 END status')
+        ->leftJoin('shops', 'users.id', '=', 'shops.managerid')        
+        ->where('roleid',2)->get();
         return json_encode($users);
+
 
     }
 
     public function get_customers()
     {
         $users = DB::table('users')
-            ->selectRaw('users.first_name,users.last_name,users.id,CASE WHEN shops.id IS NULL THEN 0 ELSE 1 END status')
-            ->leftJoin('shops', 'users.id', '=', 'shops.customerid')
-            ->where('roleid', 4)->get();
+        ->selectRaw('users.first_name,users.last_name,users.id,CASE WHEN shops.id IS NULL THEN 0 ELSE 1 END status')
+        ->leftJoin('shops', 'users.id', '=', 'shops.customerid')        
+        ->where('roleid',4)->get();
         return json_encode($users);
+
 
     }
 
+
+    public function get_cities()
+    {
+        $cities = DB::table('canadacities')
+        ->where('province',$_GET['province'])->get();
+        
+        return json_encode($cities);
+
+
+    }
+    
     public function ca_cities()
     {
-        if ($_GET['edit'] == 1) {
-            $users = DB::table('users')->where('id', $_GET['managerid'])->first();
-            $current_user = DB::table('users')->where('id', $_GET['current_user'])->first();
-            $result = [];
-
-            foreach (explode(',', $users->city) as $main_city) {
-                $data['status'] = false;
-                foreach (explode(',', $current_user->city) as $city) {
-                    if ($main_city == $city) {
-                        $data['status'] = true;
+        if($_GET['edit']==1)
+        {
+            $users = DB::table('users')->where('id',$_GET['managerid'])->first();
+            $current_user = DB::table('users')->where('id',$_GET['current_user'])->first();
+            $result=[];
+          
+            foreach(explode(',', $users->city) as $main_city)
+            {
+                $data['status']=false;
+                foreach(explode(',', $current_user->city) as $city)
+                    {
+                        if($main_city==$city)
+                        {
+                            $data['status']=true;
+                        }
                     }
-                }
 
-                $data['text'] = $main_city;
-                array_push($result, $data);
+                    $data['text']=$main_city;
+                    array_push($result,$data);
+                  
 
             }
 
             return json_encode($result);
+          
+        }
+        else
+        {
+            $users = DB::table('users')->where('id',$_GET['managerid'])->first();
 
-        } else {
-            $users = DB::table('users')->where('id', $_GET['managerid'])->first();
-
-            $selected_city = explode(',', $users->city);
-
+            $selected_city=explode(',', $users->city);
+           
             return json_encode($selected_city);
         }
 
+    
     }
+    public function create_district(Request $request)
+    {
+        $input=$request->all();
+        $insert=['company_id'=>$input['company_id'],'name'=>$input['district_name']];
+        DB::table('districts')->insert($insert);
+        return   redirect()->back()->with('success', 'District Added Successfully');
 
+    }
     public function disctricts(Request $request)
     {
-        get_comma_sepearted_id_names('users', 'categories', 'category');
-        //     exit;
-        if ($request->isMethod('post')) {
-            $input = $request->all();
+        get_comma_sepearted_id_names('users','categories','category');
+    //     exit;
+        if ($request->isMethod('post'))
+        {
+            $input= $request->all();
 
-            if (isset($input['create'])) {
+            if(isset($input['create']))
+            {
 
                 $request->validate([
                     'name' => 'required|unique:districts',
                 ]);
 
                 DB::table('districts')->insert(array(
-                    'name' => $input['name'],
-                    'userid' => 0,
-                    'city' => implode(',', $input['cities']),
+                    'name' =>$input['name'] ,
+                    'userid' =>0 ,
+                    'city' =>implode(',',$input['cities']) ,
                 ));
 
-                return redirect()->back()->with('success', 'District Added Successfully');
+             return   redirect()->back()->with('success', 'District Added Successfully');
 
             }
 
         }
-        $cities = DB::table('cities')->get();
+        $cities = DB::table('canadacities')->get();
         // $districts = DB::table('districts')->get();
-        $raw_query = get_comma_sepearted_id_names('districts', 'cities', 'city');
+        $raw_query= get_comma_sepearted_id_cities();
+   
+       $districts = DB::select( DB::raw($raw_query) );
 
-        $districts = DB::select(DB::raw($raw_query));
-
-        return view('admin.shops.district', compact('cities', 'districts'));
+        return view('admin.shops.district',compact('cities','districts'));
     }
 
     public function settings(Request $request)
     {
-        if ($request->isMethod('post')) {
-            $input = $request->all();
-            if (isset($input['approval_limits'])) {
-                $update = ['value' => $input['approval_limits']];
-
+        if ($request->isMethod('post'))
+        {
+            $input=$request->all();
+            if(isset($input['approval_limits']))
+            {
+                $update=['value' => $input['approval_limits']];   
+                
                 $affected = DB::table('settings')
-                    ->where('type', 'approval_limits')
-                    ->update($update);
-                return redirect()->back()->with('success', 'Setting Updated');
+                ->where('type','approval_limits')
+                ->update($update);
+                return   redirect()->back()->with('success', 'Setting Updated');
             }
             // print_r($request->all());
             exit;
         }
-        $approval_limits = DB::table('settings')->where('type', 'approval_limits')->first();
+        $approval_limits = DB::table('settings')->where('type','approval_limits')->first();
 
-        return view('admin.setting', compact('approval_limits'));
+        return  view('admin.setting',compact('approval_limits'));
+    }
+
+    public function district_delete($id)
+    {
+             DB::table('districts')->delete($id);
+             return   redirect()->back()->with('success', 'District Deleted Successfully');
+
     }
 
 }

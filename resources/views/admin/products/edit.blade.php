@@ -20,6 +20,12 @@
 
 </head>
 <style>
+    .img_class {
+        width:100px !important;
+        height:100px !important;
+        position:inherit !important;
+        margin-top:3rem;
+    }
 .imageThumb {
   max-height: 75px;
   border: 2px solid;
@@ -78,7 +84,8 @@
 
                 <!-- Main content -->
                 <section class="content">
-
+                <div class="row">
+                        
                     <div class="row">
                         <div class="col-12">
                             <div class="box">
@@ -108,15 +115,21 @@
                                                 </div>
                                                 <div class="col-md-6">
                                                     <div class="form-group">
-                                                        <label class="fw-700 fs-16 form-label">Product Name <span
+                                                        <label class="fw-700 fs-16 form-label">Store Name <span
                                                                 class="text-danger">*</span></label>
-                                                        <div class="controls">
-                                                            <input type="text" class="form-control"
-                                                                placeholder="Product Name" value="{{$product->product_name}}" name="product_name" required
-                                                                data-validation-required-message="Product Name field is required">
-                                                        </div>
+                                                        <select class="form-select" data-placeholder="Choose a Shop"
+                                                            name="shop_id" tabindex="1" required
+                                                            data-validation-required-message="Store Name field is required">
+                                                            <option>Select Store Name</option>
+                                                            @foreach($shops as $shop)
+                                                            <option {{ $shop->id == $product->shop_id  ? 'selected' : ''}} value="{{ $shop->id }}">{{$shop->name}}
+                                                            </option>
+                                                            @endforeach
+                                                        </select>
                                                     </div>
                                                 </div>
+
+                                                
 
                                                 <!--/span-->
 
@@ -131,6 +144,7 @@
                                                     <div class="table-responsive">
                                                         <table class="table no-border td-padding">
                                                             <tbody>
+                                                             
                                                                 <tr>
                                                                     <td>
                                                                         <div class="col-md-12">
@@ -148,6 +162,19 @@
                                                                                 </div>
                                                                             </div>
                                                                         </div>
+                                                                    </td>
+                                                                    <td>
+                                                                    <div class="col-md-12">
+                                                                        <div class="form-group">
+                                                                            <label class="fw-700 fs-16 form-label">Product Name <span
+                                                                                    class="text-danger">*</span></label>
+                                                                            <div class="controls">
+                                                                                <input type="text" class="form-control"
+                                                                                    placeholder="Product Name" value="{{$product->product_name}}" name="product_name" required
+                                                                                    data-validation-required-message="Product Name field is required">
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
                                                                     </td>
 
                                                                 </tr>
@@ -201,19 +228,32 @@
                                                                         </div>
                                                                     </td>
                                                                     <td>
-                                                                        <div class="col-md-12">
+                                                                    <div class="col-md-12">
                                                                             <div class="form-group">
                                                                                 <label
                                                                                     class="fw-700 fs-16 form-label">Warranty
                                                                                 </label>
                                                                                 <div class="controls">
-                                                                                    <input type="text"
-                                                                                        class="form-control"
-                                                                                        placeholder="Warranty"  value="{{$product->warranty}}"
-                                                                                        name="warranty">
+                                                                                    <select class="form-control" name="warranty" id="warranty">
+                                                                                        <option value="">Select Warranty</option>
+                                                                                        <option  {{ $product->warranty == '3 Months'  ? 'selected' : ''}} value="3 Months">3 Months</option>
+                                                                                        <option  {{ $product->warranty == '6 Months'  ? 'selected' : ''}} value="6 Months">6 Months</option>
+                                                                                        <option  {{ $product->warranty == '1 Year'  ? 'selected' : ''}} value="1 Year">1 Year</option>
+                                                                                        <option  {{ $product->warranty == '2 Year'  ? 'selected' : ''}} value="2 Year">2 Year</option>
+                                                                                        <option  {{ $product->warranty == '3 Year'  ? 'selected' : ''}} value="3 Year">3 Year</option>
+                                                                                        <option  {{ $product->warranty == '4 Year'  ? 'selected' : ''}} value="4 Year">4 Year</option>
+                                                                                        <option  {{ $product->warranty == '5 Year'  ? 'selected' : ''}} value="5 Year">5 Year</option>
+                                                                                        <option  {{ $product->warranty == '6 Year'  ? 'selected' : ''}} value="6 Year">6 Year</option>
+                                                                                        <option  {{ $product->warranty == '7 Year'  ? 'selected' : ''}} value="7 Year">7 Year</option>
+                                                                                        <option  {{ $product->warranty == '8 Year'  ? 'selected' : ''}} value="8 Year">8 Year</option>
+                                                                                        <option  {{ $product->warranty == '9 Year'  ? 'selected' : ''}} value="9 Year">9 Year</option>
+                                                                                        <option  {{ $product->warranty == '10 Year'  ? 'selected' : ''}} value="10 Year">10 Year</option>
+                                                                                    </select>
+                                                                                    
                                                                                 </div>
                                                                             </div>
                                                                         </div>
+                                                                        
                                                                     </td>
 
                                                                 </tr>
@@ -238,6 +278,7 @@
 
                                                                     </td>
                                                                 </tr>
+                                                            
 
                                                             </tbody>
                                                         </table>
@@ -251,16 +292,21 @@
                                                         <input type="file" id="files" name="images[]" multiple />
                                                     </div>
                                                 </div>
-                                                <div class="col-md-12 mt-3">
+                                                <div class="mt-5">
 
                                                 @foreach($product_images as $image) 
-                                                    <img style="width:130px;" src="{{ asset('images/products/'.$image->images)}}" alt="">
-                                                
+                                                    <img class="img_class" src="{{ asset('images/products/'.$image->images)}}" alt="">
+                                                   <a href="{{url('admin/products/product_img_delete/')}}/{{$image->id}}"> <i class="fa fa-close rounded px-2 text-light" style="background:red;margin-top:-4px;"></i></a>
+
                                                 @endforeach
                                                 </div>
+                                                
+                                            </div>
+                                            <div class="row">
+                                               
                                             </div>
 
-
+                                             
                                             <!-- <div class="row">
                                                 <div class="col-md-2 imgUp">
                                                     <label class="fw-700 fs-16 form-label">Product Images <span
@@ -282,6 +328,7 @@
                                                 <i class="fa fa-plus imgAdd"></i>
 
                                             </div> -->
+                                       
 
                                             <div class="row mt-3">
 
@@ -328,19 +375,7 @@
         </div>
         <!-- /.content-wrapper -->
 
-        <footer class="main-footer">
-            <div class="pull-right d-none d-sm-inline-block">
-                <ul class="nav nav-primary nav-dotted nav-dot-separated justify-content-center justify-content-md-end">
-                    <li class="nav-item">
-                        <a class="nav-link" href="javascript:void(0)">FAQ</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Purchase Now</a>
-                    </li>
-                </ul>
-            </div>
-            &copy; 2021 <a href="https://www.multipurposethemes.com/">Multipurpose Themes</a>. All Rights Reserved.
-        </footer>
+ 
 
     </div>
     <!-- ./wrapper -->
@@ -361,40 +396,51 @@
 
     <script>
     $(document).ready(function() {
-        if (window.File && window.FileList && window.FileReader) {
-            $("#files").on("change", function(e) {
-                var files = e.target.files,
-                    filesLength = files.length;
-                for (var i = 0; i < filesLength; i++) {
-                    var f = files[i]
-                    var fileReader = new FileReader();
-                    fileReader.onload = (function(e) {
-                        var file = e.target;
-                        $("<span class=\"pip\">" +
-                            "<img class=\"imageThumb\" src=\"" + e.target.result +
-                            "\" title=\"" + file.name + "\"/>" +
-                            "<br/><span class=\"remove\">Remove image</span>" +
-                            "</span>").insertAfter("#files");
-                        $(".remove").click(function() {
-                            $(this).parent(".pip").remove();
-                        });
+        // if (window.File && window.FileList && window.FileReader) {
+        //     $("#files").on("change", function(e) {
+        //         var files = e.target.files,
+        //             filesLength = files.length;
+        //         for (var i = 0; i < filesLength; i++) {
+        //             var f = files[i]
+        //             var fileReader = new FileReader();
+        //             fileReader.onload = (function(e) {
+        //                 var file = e.target;
+        //                 $("<span class=\"pip\">" +
+        //                     "<img class=\"imageThumb\" src=\"" + e.target.result +
+        //                     "\" title=\"" + file.name + "\"/>" +
+        //                     "<br/><span class=\"remove\">Remove image</span>" +
+        //                     "</span>").insertAfter("#files");
+        //                 $(".remove").click(function() {
+        //                     $(this).parent(".pip").remove();
+        //                 });
 
-                        // Old code here
-                        /*$("<img></img>", {
-                          class: "imageThumb",
-                          src: e.target.result,
-                          title: file.name + " | Click to remove"
-                        }).insertAfter("#files").click(function(){$(this).remove();});*/
+        //                 // Old code here
+        //                 /*$("<img></img>", {
+        //                   class: "imageThumb",
+        //                   src: e.target.result,
+        //                   title: file.name + " | Click to remove"
+        //                 }).insertAfter("#files").click(function(){$(this).remove();});*/
 
-                    });
-                    fileReader.readAsDataURL(f);
-                }
-                console.log(files);
-            });
-        } else {
-            alert("Your browser doesn't support to File API")
-        }
+        //             });
+        //             fileReader.readAsDataURL(f);
+        //         }
+        //         console.log(files);
+        //     });
+        // } else {
+        //     alert("Your browser doesn't support to File API")
+        // }
     });
+
+    $('input:text').bind('input:text', function() {
+        var c = this.selectionStart,
+            r = /[^a-z0-9 .]/gi,
+            v = $(this).val();
+        if(r.test(v)) {
+            $(this).val(v.replace(r, ''));
+            c--;
+        }
+        this.setSelectionRange(c, c);
+        });
     </script>
 
 </body>
