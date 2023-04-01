@@ -6,6 +6,10 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Model\Equipment;
+use App\Model\Product;
+use App\Model\Shop;
+use QrCode;
+use App\Model\Category;
 use Session;
 use Auth;
 
@@ -106,16 +110,26 @@ class DistrictManagerController extends Controller
       public function get_equipment(Request $request)
     {
        $store = array(); 
-        $store = Equipment::where('status',0)->get();
+        // $store = Equipment::where('status',0)->get();
+         $store = Product::where('status',0)->get();
      foreach ($store as $key => $reports) {
             
-            $img = env('ASSET_URL').'/images/products/'.$reports->images;
-         
+            $img = env('ASSET_URL').'/images/products/'.$reports->thumbnail_image;
+            $cat = Category::where('id', $reports->category)->first();
+             $shop = Shop::where('id', $reports->shop_id)->first();
+            
+            $store[$key]['category_name'] = $cat->name;
+            $qr = QrCode::size(80)->backgroundColor(255,90,0)->generate(env('BASE_URL').'product-details?id='.$reports->id);
+            $store[$key]['qrcode'] = '<div class="card-body" style="cursor: pointer;">'.
+              $qr.'
+            
+        </div>';
             $store[$key]['images'] = $img;
+            $store[$key]['shop'] = $shop->name;
             $btn = 
            $store[$key]['action'] = '<a class="btn btn-info btn-sm"title="view" href="#" onclick="getSingleEquipment(' . $reports->id . ')"> <i class="fa fa-eye"></i></a>&nbsp;<a class="btn btn-info btn-sm"title="edit" href="#" onclick="editEquipment(' . $reports->id . ')"> <i class="fa fa-edit"></i></a>&nbsp;<a class="btn btn-info btn-sm"title="view" href="#" onclick="DelEquipment(' . $reports->id . ')"> <i class="fa fa-trash"></i></a>';
         }
-    
+    // dd($store);
     if ($store) {
 
             $response['status'] = 'true';
@@ -134,8 +148,21 @@ class DistrictManagerController extends Controller
      */
     public function getSingleEquipment(Request $request)
     {
-
-        $viewReport = Equipment::find($request->id);
+        if($request->id != '')
+        {
+          $viewReport = Product::find($request->id);
+        $cat = Category::where('id', $viewReport->category)->first();
+             $shop = Shop::where('id', $viewReport->shop_id)->first();
+            
+            $viewReport['category_name'] = $cat->name;
+            $qr = QrCode::size(80)->backgroundColor(255,90,0)->generate(env('APP_URL').'/product-details?id='.$viewReport->id);
+            $viewReport['qrcode'] = '<div class="card"><div class="card-body">'.
+              $qr.'
+            </div>
+        </div>';
+            $viewReport['shop'] = $shop->name;   
+        }
+       
 
       
         if ($viewReport) {
@@ -228,7 +255,7 @@ class DistrictManagerController extends Controller
         Session::flush();
         Auth::logout();
 
-        return Redirect('Dmanager');
+        return Redirect('owner');
 
     }
 

@@ -3,6 +3,7 @@
 use App\Http\Controllers\api\ReportController;
 use App\Http\Controllers\districtManager\DistrictManagerController;
 use App\Http\Controllers\districtManager\PlanController;
+use App\Http\Controllers\customer\CustomerController;
 use App\Http\Controllers\districtManager\EmployeeController;
 use Illuminate\Support\Facades\Route;
 
@@ -44,6 +45,7 @@ Route::get('/qrcode', function () {
 Route::get('/product-details', function () {
     return view('front-end.product-details');
 });
+
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::get('get-notification-list', [WebNotificationController::class, 'notificationList'])->name('notification.list');
 Route::get('read-notification/{id}', [WebNotificationController::class, 'readNotification'])->name('notification.read');
@@ -80,5 +82,5 @@ Route::get('get/employee', [EmployeeController::class, 'index'])->name('get.empl
 Route::get('single-emp/{id}', [EmployeeController::class, 'show'])->name('single.employee');
 Route::post('update/employee', [EmployeeController::class, 'update'])->name('update.employee');
 /*--------------Employee Routes Start-------------*/
-
+ Route::get('generate-invoice/{id}',  [ReportController::class, 'generate_invoice'])->name('generate-invoice');
 Route::get('/logout', [DistrictManagerController::class, 'signOut'])->name('district.logout');

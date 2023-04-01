@@ -28,7 +28,7 @@ class PlanController extends BaseController
             $store[$key]['features'] = json_decode($reports->features);
             $store[$key]['action'] = '<a class="btn btn-info btn-sm"title="edit" href="#" onclick="editPlan(' . $reports->id . ')"> <i class="fa fa-edit"></i></a>';
         }
-      
+     
     if ($store) {
        
             $response['status'] = 'true';

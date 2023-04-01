@@ -23,7 +23,8 @@
                                 <h3>Drop you image here </h3>
                                <div class="file-upload-wrapper btn btn-success" style="opacity: 1 !important; background:transparent;">
                                <input type="file" class="file-upload" name="product-img" id="product-img" alt="product-img" multiple style="opacity: 0;"/>
-                               <img id="frame" src="" width="100px" height="100px" style="display:none;" class="rounded-circle" style="border:2px solid;"/>
+                               <div class="multiple_img" id="uploaded_image"></div>
+                              
                              
                                <i class="fa fa-check-circle yes" style="font-size:48px;color:green; display:none;text-align: left;"></i>
                             </div>
@@ -73,7 +74,9 @@
                                 <h3>Drop you image here </h3>
                                <div class="file-upload-wrapper btn btn-success" style="opacity: 1 !important;background:transparent;">
                                <input type="file" class="file-upload" name="product-img" id="product-img" alt="product-img" multiple style="opacity: 0;"/>
-                               <img id="frame" src="" width="100px" height="100px" class="rounded-circle" style="border:2px solid;"/>
+                               <div id="myImg">
+</div>
+                             <!--   <img id="frame" src="" width="100px" height="100px" class="rounded-circle" style="border:2px solid;"/> -->
                                <!-- <span style="display:none; color: #7FFFD4; text-align: start;" id="upload-alert"><i class="fa fa-check-circle" style="font-size:48px;color:green"></i></span> -->
                                <i class="fa fa-check-circle yes" style="font-size:48px;color:green;text-align: left;"></i>
                             </div>
@@ -216,13 +219,17 @@
      $(document).ready(function() {
         $("#frame").css('display', 'none');
         $(".yes").css('display', 'none');
-        $("#product-img").change(function() {
-        $("#frame").css('display', 'block');
-        $(".yes").css('display', 'block');
-        $("#upload-alert").text('Image Uploaded');
-        $("#upload-alert").css('display', 'block');
-        frame.src=URL.createObjectURL(event.target.files[0]);
-        Swal.fire({
+      
+        $(":file").change(function() {
+             $(".yes").css('display', 'block');
+    if (this.files && this.files[0]) {
+      for (var i = 0; i < this.files.length; i++) {
+        var reader = new FileReader();
+        reader.onload = imageIsLoaded;
+        reader.readAsDataURL(this.files[i]);
+      }
+    }
+     Swal.fire({
     title: 'Upload',
     heading: 'success',
     text: 'Image uploaded',
@@ -233,7 +240,14 @@
     loader: true,        // Change it to false to disable loader
     loaderBg: '#9EC600'
     });
-    });
+  });
+        
+   
+
+
+function imageIsLoaded(e) {
+  $('#myImg').append('<img src=' + e.target.result + ' height="100px" style="border:2px solid;" class="rounded-circle">');
+};
        
         var getUrlParameter = function getUrlParameter(sParam) {
     var sPageURL = window.location.search.substring(1),

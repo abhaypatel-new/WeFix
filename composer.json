@@ -10,6 +10,7 @@
         "ext-openssl": "*",
         "aws/aws-sdk-php": "^3.209",
         "brian2694/laravel-toastr": "^5.56",
+        "carlos-meneses/laravel-mpdf": "^2.1",
         "ckeditor/ckeditor": "^4.17",
         "doctrine/dbal": "^3.2",
         "fideloper/proxy": "^4.4",

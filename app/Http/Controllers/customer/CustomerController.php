@@ -150,8 +150,8 @@ class CustomerController extends Controller
             'email' => 'required|email|max:255',
             'password' => 'required|min:6|max:255',
         ]);
-       if($request['role'] == 'Dmanager')
-       {
+       // if($request['role'] == 'Dmanager')
+       // {
       
         $credentials = [
             'email' => $request['email'],
@@ -164,7 +164,7 @@ class CustomerController extends Controller
             return redirect()->route('district.dashboard');
             exit;
         }
-    }else{
+  
         $credentials = [
             'email' => $request['email'],
             'password' => $request['password'],
@@ -187,13 +187,7 @@ class CustomerController extends Controller
             exit;
         }
         }
-    }
-        
-        // Hash::make($request['password']);
-        // Dump data
-
-       
-        
+   
         return redirect()->back()->with('message', 'You have entered an invalid username or password!');
 
     }

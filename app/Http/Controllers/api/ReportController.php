@@ -3,16 +3,21 @@
 namespace App\Http\Controllers\api;
 
 use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
 use App\Model\Category;
 use App\Model\Notification;
 use App\Model\Order;
 use App\Model\Product;
+use App\Model\ProductImage;
 use App\Model\Setting;
 use App\User;
+use App\Model\Shop;
 use Carbon\Carbon;
+use QrCode;
 use Auth;
 use DB;
-use Illuminate\Http\Request;
+use PDF;
+
 
 class ReportController extends Controller
 {
@@ -41,7 +46,7 @@ class ReportController extends Controller
             }
             $report[$key]['product_name'] = $product_name->product_name;
             $report[$key]['owner_name'] = $reports->customer->first_name . ' ' . $reports->customer->last_name;
-            $report[$key]['action'] = '<a class="btn btn-info btn-sm"title="view" href="#" onclick="viewReport(' . $reports->id . ')"> <i class="fa fa-eye"></i></a>&nbsp;&nbsp;';
+            $report[$key]['action'] = '<a class="btn btn-info btn-sm"title="view" href="#" onclick="viewReport(' . $reports->id . ')"> <i class="fa fa-eye"></i></a>&nbsp;&nbsp; <a class="btn btn-info btn-sm"title="view" href="' . url('generate-invoice/' . $reports->id) . '" target="_blank"> <i class="fa fa-download"></i></a>&nbsp;&nbsp;';
         }
         if ($report) {
 
@@ -317,7 +322,6 @@ class ReportController extends Controller
      public function generateInvoice(Request $request)
     {
       $input=$request->all();
-      $input['payment_status'] = "Paid";
        $update=['order_amount' => $input['total_amount'],
             'price' => $input['price'][0],
             'total' => $input['total'][0],
@@ -328,7 +332,8 @@ class ReportController extends Controller
             'extra_charge'=>$input['extra'],
             'labour_charge'=>$input['labour'],
             'invoice_notes'=>$input['invoice_notes'],
-            'payment_status'=> $input['payment_status']];
+            'is_generated'=> 1,
+            'generated_date'=> now()];
 
             $delReport = DB::table('orders')->where('order_id', $request->order_id)->update($update);  
   
@@ -415,8 +420,29 @@ class ReportController extends Controller
         $viewReport = Order::where('order_id', $request->id)->first();
      
      $productReport = Product::find($viewReport->product_id);
+       $qr = QrCode::size(80)->backgroundColor(255,90,0)->generate(env('BASE_URL').'product-details?id='.$productReport->id);
+            $viewReport['qrcode'] = '<div class="card-body" style="cursor: pointer;">'.
+              $qr.'
+            
+        </div>';
+     $cat = Category::where('id', $productReport->category)->first();
+     $shop = Shop::where('id', $productReport->shop_id)->first();
+     $order_img = ProductImage::where('pid', $viewReport->order_id)->where('images' ,'!=', null)->get();
+     $order_imgs = ProductImage::where('pid', $viewReport->order_id)->where('vendor_images' ,'!=', null)->get();
+    
+      // foreach ($order_img as $key => $lists) {
+      //   $order_img[$key]['order_images'] = $lists->images;
+      // }
+     $viewReport['category_name'] = $cat->name;
+     $viewReport['shop_name'] = $shop->name;
      $viewReport['product_name'] = $productReport->product_name;
+     $viewReport['model_number'] = $productReport->model_number;
+     $viewReport['brand'] = $productReport->brand;
+     $viewReport['title'] = $productReport->title;
      $viewReport['thumbnail_image'] = $productReport->thumbnail_image;
+
+     $viewReport['order_images'] =  $order_img;
+      $viewReport['quote_images'] =  $order_imgs;
      $owner_name = User::find($viewReport->owner_id);
      $viewReport['owner_name'] = $owner_name->first_name . ' ' . $owner_name->last_name;
      $viewReport['phone'] = $owner_name->phone;
@@ -436,5 +462,36 @@ class ReportController extends Controller
      }
      return response()->json($response);
 
+ }
+ public function generate_invoice(Request $request, $id)
+ {
+  
+        $viewReport = Order::where('id', $id)->first();
+        // dd($viewReport);
+        $productReport = Product::find($viewReport->product_id);
+        $viewReport['product_name'] = $productReport->product_name;
+        $viewReport['thumbnail_image'] = $productReport->thumbnail_image;
+        $owner_name = User::find($viewReport->owner_id);
+        $viewReport['owner_name'] = $owner_name->first_name . ' ' . $owner_name->last_name;
+        $viewReport['phone'] = $owner_name->phone;
+        $viewReport['image'] = $owner_name->image;
+        $viewReport['street_address'] = $owner_name->street_address;
+        $vendore_name = User::find($viewReport->vendor_id);
+        $viewReport['vname'] = $vendore_name->first_name . ' ' . $vendore_name->last_name;
+        $viewReport['vendor_phone'] = $vendore_name->phone;
+        $viewReport['vendor_image'] = $vendore_name->image;
+        $viewReport['vendor_street_address'] = $vendore_name->street_address;
+         if ($viewReport) {
+             $data = [
+            'foo' => 'bar'
+        ];
+
+        // $pdf = PDF::loadView('pdf.document', $data);
+          $pdf = PDF::loadView('front-end.invoice',compact('viewReport'));
+           return $pdf->stream('order_invoice_'.$viewReport->order_id);
+        } else {
+            return view('front-end.invoice');
+        }
+        
  }
 }

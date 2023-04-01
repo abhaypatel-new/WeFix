@@ -163,7 +163,7 @@ return [
         Illuminate\View\ViewServiceProvider::class,
         App\Providers\SocialLoginServiceProvider::class,
         Madnest\Madzipper\MadzipperServiceProvider::class,
-
+        Mccarlosen\LaravelMpdf\LaravelMpdfServiceProvider::class,
         /*
          * Package Service Providers...
          */
@@ -238,6 +238,7 @@ return [
         'Helper' => \App\CPU\Helpers::class,
         'Madzipper' => Madnest\Madzipper\Madzipper::class,
         'QrCode' => SimpleSoftwareIO\QrCode\Facades\QrCode::class,
+        'PDF' => Mccarlosen\LaravelMpdf\Facades\LaravelMpdf::class,
     ],
 
 ];

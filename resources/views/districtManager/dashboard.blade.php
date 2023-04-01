@@ -115,7 +115,8 @@
           </div>
 
           @else
-          <a class="btn btn-outline-success my-2 my-sm-0" href="{{url('Dmanager')}}">Login</a><a class="btn btn-outline-success my-2 my-sm-0" href="#">Register</a>
+         <script>window.location = "{{ url('owner') }}";</script>
+         
 
           @endif
 
@@ -220,9 +221,9 @@
           </div>
            <div class="card" id="show-equipment">
             <h5 class="card-header">Equipment</h5>
-             <div onclick="showEqModal()" style="padding: 14px 20px 0px 20px;">
+           <!--   <div onclick="showEqModal()" style="padding: 14px 20px 0px 20px;">
             <button class="btn btn-primary" style="float: right;padding: 10px 35px 10px 35px;"><i
-              class="fa fa-plus"></i> Add Equipment</button></div>
+              class="fa fa-plus"></i> Add Equipment</button></div> -->
            <div class="col-xl-12 float-end">
              </div>
             <div class="card" id="get-equipment">
@@ -235,8 +236,9 @@
                     <th>Image</th>
                     <th>Model</th>
                     <th>Stock</th>
-                    <th>Quantity</th>
-                    <th>Price</th>
+                    <th>Category</th>
+                    <th>Shop</th>
+                     <th>Qrcode</th>
                     <th>Action</th>
 
                 </tr>
@@ -249,16 +251,16 @@
           </div>
            <div class="card" id="show-maintenance" style="display:inline-table !important;">
             <h5 class="card-header">Maintenace</h5>
-            <div onclick="addPlan()" style="padding: 14px 20px 0px 20px;">
+          <!--   <div onclick="addPlan()" style="padding: 14px 20px 0px 20px;">
             <button class="btn btn-primary" style="float: right;padding: 10px 35px 10px 35px;"><i
               class="fa fa-plus"></i> Add Plan</button>
-            </div>
+            </div> -->
             
-            <h2 style="text-align:center">Maintenance Plans</h2>
-              <div class="card" id="get-plan-card" style="flex-direction: initial !important;">
+            <!-- <h2 style="text-align:center">Maintenance Plans</h2> -->
+            <!--   <div class="card" id="get-plan-card" style="flex-direction: initial !important;">
               
-              </div>
-             <hr>
+              </div> -->
+             <!-- <hr> -->
             <div class="card" id="get-maintenance">
                <table id="maintenance-table">
             <thead>
@@ -279,10 +281,10 @@
           </table>
             </div>
           </div>
-          <div class="card" id="show-employee" style="display:inline-table !important;">
+          <div class="card" id="show-employee" style="display: flex;">
             <h5 class="card-header">Employee</h5>
-            <div onclick="addEmployee()">
-            <button class="btn btn-primary"><i
+            <div onclick="addEmployee()" style="padding:5px;">
+            <button class="btn btn-primary" style="float: right;"><i
               class="fa fa-plus"></i> Add Employee</button>
             </div>
             <div class="card" id="get-employee">
@@ -308,7 +310,7 @@
            <div class="card " id="view-report">
             <h5 class="card-header">Report-Details</h5>
             <div class="col-xl-12 float-end">
-          <a class="btn btn-primary text-capitalize border-0" data-mdb-ripple-color="dark"  onclick="myfunction()"><i
+          <a class="btn btn-primary text-capitalize border-0 Printurl" data-mdb-ripple-color="dark" href="#" target="_blank"><i
               class="fas fa-print "></i> Print</a>
           <a class="btn btn-primary text-capitalize" data-mdb-ripple-color="dark"  onclick="getBackReport()"><i
               class="fa fa-arrow-left"></i> Back</a>
@@ -844,7 +846,26 @@
 </div>
 <!-----------End Equipment Modal---------------->
 
+<!-----------Start Popup Modal---------------->
+<div class="modal fade" id="exampleModalPopups"tabindex="-1" role="dialog" aria-labelledby="exampleModalLabelss" aria-hidden="true">
+  <div class="modal-dialog w-800" role="document">
+    <div class="modal-content ">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabelss">Invoice details</h5>
+        <button type="button" class="close btn btn-secondary" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="">
+       <div class="card-body" id="getPopupDetails">
+    </div>
+        
+    </div>
+  </div>
+</div>
+</div>
 
+<!-----------End Popup Modal---------------->
 <!-------------------Employee Modal -------------->
  
 <div class="modal fade" id="employeeModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -982,11 +1003,11 @@
                                         </div>
 
                                        
-                                        <div class="form-group mb-3">
+                                     <!--    <div class="form-group mb-3">
                                             <label class="form-label">About Employee</label>
                                             <textarea rows="5" class="form-control" name="desc"
                                                 placeholder="About Employee" id="eabout"></textarea>
-                                        </div>
+                                        </div> -->
                                     </div>
 
                                     <div class="row mt-3">
@@ -1085,6 +1106,11 @@
   
   <script type="text/javascript">
     $(window).load(function(){
+     let id = $("#owner_id").val();
+     if(id == '')
+     {
+      location.href = 'Dmanager';
+     }
     $("#dashboard-body").css('backgrount', 'transparent');
     $(".dn").css('display', 'none');
     $("#show-history").hide();
@@ -1467,7 +1493,9 @@ getchart(charturl);
             let address = uid == 4?data.data.vendor_street_address:data.data.street_address;
             // let tax = parseFloat(13 / 100) * parseFloat(data.data.order_amount) ;
             // let grandTotal = Math.round(parseFloat(data.data.order_amount) + parseFloat(tax));
-
+             const href =
+      '{!! url("generate-invoice")!!}/' + data.data.id;
+         $(".Printurl").attr('href', href);
            tab =`
       <div class="row d-flex align-items-baseline">
         <div class="col-xl-12">
@@ -1764,6 +1792,9 @@ $("#view-report").hide();
 $("#list-notification").show();
 $("#view-notification").hide();
 $("#edit-profile-details").hide();
+ $("#show-equipment").hide();
+ $("#show-employee").hide();
+ $("#show-maintenance").hide();
 var assetUrl = "{{env('ASSET_URL')}}";
  var profileUrl = "{{env('PROFILE_URL')}}";
 
@@ -2269,7 +2300,7 @@ if(koopId == 'show')
 
             tab += `
   <div class="proOuterBox">
-  <div class="row g-0">
+  <div class="row g-0" onclick="getfulldetails(this.id)" id="${r.order_id}" style="cursor: pointer;">
     <div class="col-md-3">
       <img src="${img}" class="productImg" alt="..." id="${id}" >
     </div>
@@ -3293,7 +3324,7 @@ text-align: center;><div class="images-div"></div>
               let status = r.note == null ? r.order_status : 'Accept';
 
               tab += ` <div class="proOuterBox">
-  <div class="row g-0">
+  <div class="row g-0" onclick="getfulldetails(this.id)" id="${r.order_id}" style="cursor: pointer;">
     <div class="col-md-3">
       <img src="${img}" class="productImg" alt="..." id="${id}"  >
     </div>
@@ -3777,7 +3808,7 @@ text-align: center;><div class="images-div"></div>
                let note = r.note == null ?"There is no note" : r.note;
 
               tab += ` <div class="proOuterBox">
-<div class="row g-0">
+<div class="row g-0" onclick="getfulldetails(this.id)" id="${r.order_id}" style="cursor: pointer;">
     <div class="col-md-3">
       <img src="${img}" class="productImg" alt="..." id="${id}" >
     </div>
@@ -3863,15 +3894,20 @@ text-align: center;><div class="images-div"></div>
         // Storing data in form of JSON
         var data1 = await response.json();
         if (data1.status == true) {
-          $.toast({
-            heading: 'Alert',
-            text: 'Profile datails updated successfully',
-            icon: 'info',
-            loader: true, // Change it to false to disable loader
-            loaderBg: '#9EC600' // To change the background
-          });
-          
-          $("#edit-profile-details").show();
+           Swal.fire({
+                      title: 'Updated',
+                      heading: 'success',
+                      text: 'rofile datails updated successfull',
+                      icon: 'success',
+                      position:"top-center",
+                      timer: 3000,  
+                      offset: 40,
+                      loader: true,        // Change it to false to disable loader
+                      loaderBg: '#9EC600'   
+              });
+         
+           $("#show-profile").show();
+          $("#edit-profile-details").hide();
         } else {
 
           $.toast({
@@ -4772,16 +4808,17 @@ function  getequipment()
         return meta.row + meta.settings._iDisplayStart + 1;
     } },
                 
-                { data: 'name', name: 'name' },
+                { data: 'product_name', name: 'product_name' },
               
                 { data: 'images', name: 'images',
                  render: function( data, type, full, meta ) {
                         return "<img src=\"" + data + "\" height=\"50\" class=\"rounded-circle\"/>";
                     } },
-                { data: 'model_no', name: 'model_no' },
-                { data: 'stock', name: 'stock' },
-                { data: 'qty', name: 'qty' },
-                { data: 'price', name: 'price' },
+                { data: 'model_number', name: 'model_number' },
+                { data: 'brand', name: 'brand' },
+                { data: 'category_name', name: 'category_name' },
+                { data: 'shop', name: 'shop' },
+                  { data: 'qrcode', name: 'qrcode' },
                 { data: 'action', name: 'action' },
                 ],
                 aaSorting: [[0, 'desc']], }); 
@@ -5011,7 +5048,7 @@ function getSingleEquipment(id)
   $("#single-detail").show();
   $("#show-equipment").hide();
     var assetUrl = "{{env('ASSET_URL')}}/images/products/";
-
+     var asset = "{{env('ASSET_URL')}}/";
       var appUrl = "{{env('APP_URL')}}";
      
         const api_url =
@@ -5047,27 +5084,35 @@ function getSingleEquipment(id)
               let img2 = '';
               var x = new Array();
              if(data.data.images != null){
-                 img2 = `<img src="${data.data.images}" height="100" width="100" alt="">`;
+                 img2 = `<img src="${data.data.thumbnail_images}" height="100" width="100" alt="">`;
              }else{
               img2 = `<img src="${assetUrl + 'product-dummy.png'}" height="100" width="100" alt="" >`;
              }
-              tab += ` <div class="proOuterBox">
+              tab = ` <div class="proOuterBox">
   <div class="row g-0">
     <div class="col-md-3">
-      <img src="${assetUrl + data.data.images}" class="productImg" alt="..." id="${id}"  >
+      <img src="${assetUrl + data.data.thumbnail_images}" class="productImg" alt="..." id="${id}"  >
     </div>
     <div class="col-md-9">
       <div class="card-body">
-        <h2 class="card-title">${data.data.name}</h2>
-        <h5  class="card-title">${data.data.model_no}</h5>
-        <p>${data.data.description}</p>
+        <h2 class="card-title">${data.data.product_name}</h2>
+        <h5  class="card-title">${data.data.model_number}</h5>
+        <h4 style="font-size: 20px; color: #453d3d;" class="card-title"> Title: ${data.data.title} </div></h4>
+        <p>${data.data.product_description}</p>
         <div class="metaInfo dmetaInfo">
-         <h4 style="font-size: 20px;" class="card-title">Price: ${data.data.price} </h5>
-            <h4 style="font-size: 20px; color: #453d3d;" class="card-title"> Quantity: ${data.data.qty} &nbsp; &nbsp;Stock:${data.data.stock}</div></h4>
-  <div class="container mt-3" id="multi-img"> </div> </div> </div></div>
+         <h4 style="font-size: 20px;" class="card-title">Category: ${data.data.category_name} </h5>
+            <h4 style="font-size: 20px; color: #453d3d;" class="card-title"> Shop: ${data.data.shop} &nbsp; &nbsp;Brand:${data.data.brand}</div></h4>
+  <div class="container mt-3" id="multi-img">${data.data.qrcode} </div> </div> </div></div>
   </div>  </div>
 </div>`;
  document.getElementById("get-single-equipment").innerHTML = tab;
+            }else{
+                tab = ` <div class="vendor-name-history"><div class="images-div"></div>
+
+<p><img src="${asset}nodata.png" alt="" width="200" class="rounded-circle" id="">${data.message}
+</p>
+</div>`;
+          document.getElementById("get-single-equipment").innerHTML = tab;
             }
 
           }
@@ -5599,7 +5644,122 @@ $("#emp-id").val(id);
           }
 
 }
+function getfulldetails(id)
+{
+$("#exampleModalPopups").modal('show');
+ var assetUrl = "http://209.97.156.170/WeFix/public/images/products/";
+      var purl = "{{env('PROFILE_URL')}}";
+      var appUrl = "{{env('APP_URL')}}";  
+      var placeholder = window.location.origin+'/WeFix';     
+            $.ajax({
+                type: "GET",
+                url: '{!! route("get.single.order")!!}?id=' + id,
+               
+                success: function(data) {
+                    console.log(data);
+                    
+                      let tab = '';
+                      let tab1 = '';
+                      let count = 0;
+      
+      if (data.status == 'true') {
+       
+            let img1 = '';
+            let img3 = '';
+            let order_date = '';
+            let note_date = '';
+              var x = new Array();
+              var y = new Array();
+             if((data.data.order_images).length>0){
+                x = data.data.order_images
+                
+             }else{
+              img1 = `<img src="${placeholder + '/public/product-dummy.png'}" height="100" width="100" alt=""  style="height: 100px !important;">`;
+             }
+            for (let i of x) {
+              order_date = i.created_at;
+              img1 += `<img src="${assetUrl + i.images}" height="100" width="100" alt="">`;
 
+            }
+             if((data.data.quote_images).length>0){
+                y = data.data.quote_images
+             }else{
+              img3 = `<img src="${placeholder + '/public/product-dummy.png'}" height="100" width="100" alt=""  style="height: 100px !important;">`;
+             }
+        for (let i of y) {
+           note_date = i.created_at;
+          img3 += `<img src="${assetUrl + i.vendor_images}" height="100" width="100" alt="">`;
+
+        }
+      
+              
+              let note =  data.data.note == null ? "There is no any note!" :  data.data.note;
+              if(data.data.note != null || data.data.note != null)
+              {
+                   tab1 = `
+        <div class="metaInfo dmetaInfo">
+         <h4 style="font-size: 20px;color: #453d3d;" class="card-title">Quote Details</h4>
+         <hr>
+         <h4 style="font-size: 20px;color: #453d3d;" class="card-title">Vendor quotation: <small style="font-size:15px; color:#453d3d;"> ${data.data.note}</small></h4>
+            <h4 style="font-size: 20px; color: #453d3d;" class="card-title">To: ${data.data.owner_name} &nbsp; &nbsp;Phone:${data.data.phone} </h4>
+              <h4 style="font-size: 20px; color: #453d3d;" class="card-title">Status: ${data.data.order_status} &nbsp; &nbsp;Date:${note_date}</h4>
+            </div>
+           <div class="mt-3" id="multi-img">${img3} </div>`;
+              }
+              let img2 = '';
+              var x = new Array();
+             if(data.data.images != null){
+                 img2 = `<img src="${data.data.thumbnail_images}" height="100" width="100" alt="">`;
+             }else{
+              img2 = `<img src="${assetUrl + 'product-dummy.png'}" height="100" width="100" alt="" >`;
+             }
+              tab = ` <div class="proOuterBox">
+              <div class="metaInfo dmetaInfo text-center">
+         <h4 style="font-size: 20px;color: #453d3d;" class="card-title">OrderID: ${data.data.order_id}</h4>
+            </div>
+  <div class="row g-0 pt-2">
+    <div class="col-md-3">
+      <img src="${assetUrl + data.data.thumbnail_image}" class="productImg" alt="..." id="${id}"  >
+    </div>
+    <div class="col-md-9">
+      <div class="card-body">
+       
+        <div class="row g-0">
+        <div class="col-sm-9">
+         <h2 class="card-title">
+         ${data.data.product_name}
+         <h2>
+        </div>
+         <div class="col-sm-3">
+         ${data.data.qrcode}
+        </div>
+        </div>
+         
+        <h5  class="card-title">Model: ${data.data.model_number} Brand: ${data.data.brand}</h5>
+        <h4 style="font-size: 20px; color: #453d3d;" class="card-title"> Title: ${data.data.title} </div></h4>
+       
+        <div class="metaInfo dmetaInfo">
+         <h4 style="font-size: 20px;color: #453d3d;" class="card-title">Order Details</h4>
+         <hr>
+         <h4 style="font-size: 20px;color: #453d3d;" class="card-title">Oder Note: <small style="font-size:15px; color:#453d3d;">${data.data.description}</small></h4>
+            <h4 style="font-size: 20px; color: #453d3d;" class="card-title">To: ${data.data.vendor_name} &nbsp; &nbsp;Phone:${data.data.vendor_phone}</h4>
+            <h4 style="font-size: 20px; color: #453d3d;" class="card-title">Status: ${data.data.order_status} &nbsp; &nbsp;Date:${order_date}</h4></div>
+  <div class="mt-3" id="multi-img">${img1} </div><hr>${tab1} </div> </div></div>
+  </div>  </div>
+</div>`;
+ document.getElementById("getPopupDetails").innerHTML = tab;
+            }else{
+                tab = ` <div class="vendor-name-history"><div class="images-div"></div>
+
+<p><img src="${asset}nodata.png" alt="" width="200" class="rounded-circle" id="">${data.message}
+</p>
+</div>`;
+          document.getElementById("getPopupDetails").innerHTML = tab;
+            }
+
+          }
+        });
+}
 </script>
 
 </html>
