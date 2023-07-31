@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Customer\CustomProductController;
+use App\Http\Controllers\api\ReportController;
 use App\Http\Controllers\SellerOfferController;
 use App\Http\Controllers\Customer\Auth\LoginController;
 use App\Http\Controllers\api\Customerproduct;
@@ -202,6 +203,6 @@ use App\Http\Controllers\api\v1\ConfigController;
  Route::post('seller_update', [Customerproduct::class, 'seller_update']);
  Route::post('seller_delete', [Customerproduct::class, 'seller_delete']);
  Route::post('seller_view/{id}', [Customerproduct::class, 'seller_view']);
-
+ Route::post('invoice', [ReportController::class, 'generateInvoice'])->name('invoice.generate');
 //});
  

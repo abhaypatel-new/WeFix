@@ -5,7 +5,7 @@ namespace App\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Shop extends Model
+class District extends Model
 {
     use HasFactory;
 
@@ -13,7 +13,7 @@ class Shop extends Model
 
     public function Order()
     {
-        return $this->hasMany(Order::class, 'shop_id');
+        return $this->hasMany(Order::class, 'district_id');
     }
 }
 

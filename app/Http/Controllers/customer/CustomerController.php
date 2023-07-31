@@ -7,6 +7,11 @@ use Auth;
 use Hash;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use App\Model\Category;
+use App\Model\Notification;
+use App\Model\Order;
+use App\Model\Product;
+use App\User;
 use Session;
 
 class CustomerController extends Controller
@@ -207,4 +212,51 @@ class CustomerController extends Controller
         return Redirect('owner');
 
     }
+      /*--------Generate-Invoice-------------*/
+
+     public function generateInvoice(Request $request)
+    {
+      $input=$request->all();
+      $input['payment_status'] = "Paid";
+       $update=['order_amount' => $input['total_amount'],
+            'price' => $input['price'][0],
+            'total' => $input['total'][0],
+            'sub_total' => $input['sub_total'],
+            'tax'=>$input['tax_amount'],
+            'qty'=>$input['qty'][0],
+            'track_charge'=>$input['track'],
+            'extra_charge'=>$input['extra'],
+            'labour_charge'=>$input['labour'],
+            'invoice_notes'=>$input['invoice_notes'],
+            'payment_status'=> $input['payment_status']];
+
+            $delReport = DB::table('orders')->where('order_id', $request->order_id)->update($update);  
+  
+        if ($delReport) {
+           $viewReport = Order::where('order_id', $request->order_id)->first();
+        
+        $productReport = Product::find($viewReport->product_id);
+        $viewReport['product_name'] = $productReport->product_name;
+        $viewReport['thumbnail_image'] = $productReport->thumbnail_image;
+        $owner_name = User::find($viewReport->owner_id);
+        $viewReport['owner_name'] = $owner_name->first_name . ' ' . $owner_name->last_name;
+        $viewReport['phone'] = $owner_name->phone;
+        $viewReport['image'] = $owner_name->image;
+        $viewReport['street_address'] = $owner_name->street_address;
+        $vendore_name = User::find($viewReport->vendor_id);
+        $viewReport['vname'] = $vendore_name->first_name . ' ' . $vendore_name->last_name;
+        $viewReport['vendor_phone'] = $vendore_name->phone;
+        $viewReport['vendor_image'] = $vendore_name->image;
+        $viewReport['vendor_street_address'] = $vendore_name->street_address;
+            $response['status'] = 'true';
+            $response['message'] = 'Invoice generated successfully.';
+            $response['data'] = $viewReport;
+        } else {
+            $response['error'] = 'false';
+            $response['message'] = 'Data Not Found';
+        }
+        return response()->json($response);
+
+    }
+     /*--------Generate-Invoice-------------*/
 }

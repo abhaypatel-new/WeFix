@@ -7,7 +7,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="csrf-token" content="{{ csrf_token() }}">
   <title>WeFix</title>
- 
+
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" >
   <!-- Style-->
     <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
@@ -19,8 +19,16 @@
   <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
 
   <style>
-
-.proposal-hovers{
+* {
+    box-sizing: border-box;
+    font-family: "poppins";
+    font-weight: 300;
+  color: #000;
+}
+.fa{
+  color: #fff;
+}
+  .proposal-hovers{
   padding-bottom: 10px;
 }
 
@@ -116,7 +124,7 @@
 
           @else
          <script>window.location = "{{ url('owner') }}";</script>
-         
+
 
           @endif
 
@@ -128,7 +136,7 @@
   @if(auth('owner')->check())
   <input type="hidden" value="{{auth('owner')->user()->roleid}}" id="ownerid">
    <input type="hidden" value="{{auth('owner')->user()->id}}" id="owner_id">
- 
+
   <section id="dashboardContainer">
   <div class="container-fluid">
     <div class="row">
@@ -212,18 +220,19 @@
           <div class="card" id="single-detail">
             <h5 class="card-header">View Equipment Details</h5>
             <div class="d-flex justify-content-center">
-              <div class="spinner-border" role="status" id="loading">
+             <!--  <div class="spinner-border" role="status" id="loading">
                 <span class="sr-only">Loading...</span>
-              </div>
+              </div> -->
             </div>
             <div class="card" id="get-single-equipment">
             </div>
           </div>
            <div class="card" id="show-equipment">
             <h5 class="card-header">Equipment</h5>
-           <!--   <div onclick="showEqModal()" style="padding: 14px 20px 0px 20px;">
-            <button class="btn btn-primary" style="float: right;padding: 10px 35px 10px 35px;"><i
-              class="fa fa-plus"></i> Add Equipment</button></div> -->
+             <div  style="padding: 14px 20px 0px 20px;">
+            <button class="btn btn-primary"  onclick="addEquipment();" style="float: right;padding: 10px 35px 10px 35px;"><i
+              class="fa fa-plus"></i> Add Equipment</button></div>
+            
            <div class="col-xl-12 float-end">
              </div>
             <div class="card" id="get-equipment">
@@ -232,7 +241,7 @@
                 <tr>
                     <th>No</th>
                     <th>Name</th>
-                     
+
                     <th>Image</th>
                     <th>Model</th>
                     <th>Stock</th>
@@ -255,10 +264,10 @@
             <button class="btn btn-primary" style="float: right;padding: 10px 35px 10px 35px;"><i
               class="fa fa-plus"></i> Add Plan</button>
             </div> -->
-            
+
             <!-- <h2 style="text-align:center">Maintenance Plans</h2> -->
             <!--   <div class="card" id="get-plan-card" style="flex-direction: initial !important;">
-              
+
               </div> -->
              <!-- <hr> -->
             <div class="card" id="get-maintenance">
@@ -315,7 +324,7 @@
           <a class="btn btn-primary text-capitalize" data-mdb-ripple-color="dark"  onclick="getBackReport()"><i
               class="fa fa-arrow-left"></i> Back</a>
              </div>
-            
+
             <div class="card" id="getsingledetails">
             </div>
           </div>
@@ -325,7 +334,7 @@
             <button class="btn btn-primary" style="float: right;padding: 10px 35px 10px 35px;"><i
               class="fa fa-arrow-left"></i> Back</button>
             </div>
-           
+
             <div class="card-body" id="getsingleNotification">
             </div>
           </div>
@@ -436,7 +445,7 @@
                 <div class="title-div" style="
             padding-bottom: 40px;">
                   <div class="list-div-today">
-                
+
 
                     <div class="list-title">
                       <h6>@if(auth('owner')->user()){{auth('owner')->user()->first_name}}@else User @endif</h6>
@@ -515,7 +524,7 @@
          <div class="box bg-secondary-light pull-up" id="pending" style="cursor: pointer;pointer;padding: 20px 15px 20px 20px; width: 265px;"> <h5 class="pending-count">Pending &nbsp;&nbsp;&nbsp;&nbsp;<span id="pending-count"  class="count-color"></span>
             </h5>
        </div>
-    
+
 </div>
     </div>
     <div class="col-md-4">
@@ -523,20 +532,20 @@
         <div class="box bg-secondary-light pull-up" id="history" style="cursor: pointer;pointer;padding: 20px 15px 20px 20px; width: 265px;"> <h5 class="">History &nbsp;&nbsp;&nbsp;&nbsp;<span id="history-count"  class="count-color"></span>
             </h5>
        </div>
-    
+
 </div>
     </div></div>
-  
-   </div> 
+
+   </div>
   <hr class="mt-0">
     <div class="" id="Proposal-card">
-  
+
 <div class="row">
   <div class="col-sm-6">
     <div class="card">
       <div class="card-body">
         <h5 class="card-title">Earnings Chart</h5>
-       
+
          <canvas id="myChart" height="100px"></canvas>
       </div>
     </div>
@@ -545,7 +554,7 @@
     <div class="card">
       <div class="card-body">
         <h5 class="card-title">Last Month Earnings</h5>
-        
+
          <canvas id="myPieChart" height="100px"></canvas>
       </div>
     </div>
@@ -569,11 +578,11 @@
         </button>
       </div>
       <div class="modal-body">
-      
+
         <form method="post" id="form_id">
                                         @csrf
            <input type="hidden" class="form-control" name="order_id"id="order_id">
-        
+
           <div class="">
    <div class="row clearfix" style="margin-bottom:20px;">
     <div class="pull-right col-md-6" style="width:100% !important;">
@@ -583,7 +592,7 @@
                     <p class="mb-0">{{auth('owner')->user()->address}}</p>
                     <p class="mb-0">{{auth('owner')->user()->phone}}</p>
                     <p class="mb-0">{{auth('owner')->user()->email}}</p>
-   
+
   </div>
     </div>
     <div class="pull-right col-md-6" style="width:100% !important;">
@@ -641,20 +650,20 @@
             <th class="text-center">Track Charges</th>
             <td class="text-center"><div class="input-group mb-2 mb-sm-0">
                 <input type="number" class="form-control" id="track" placeholder='0.00' name="track" value="0.00">
-               
+
               </div></td>
           </tr>
           <tr>
             <th class="text-center">Labour Charges</th>
             <td class="text-center"><div class="input-group mb-2 mb-sm-0">
                 <input type="number" class="form-control" id="labour" placeholder='0.00' name="labour" value="0.00">
-               
+
               </div></td>
           </tr>
            <th class="text-center">Extra Charges</th>
             <td class="text-center"><div class="input-group mb-2 mb-sm-0">
                 <input type="number" class="form-control" id="extra" placeholder='0.00' name="extra" value="0.00">
-                
+
               </div></td>
           </tr>
           <tr>
@@ -664,7 +673,7 @@
                 <div class="input-group-addon">%</div>
               </div></td>
           </tr>
-          
+
           <tr>
             <th class="text-center">Tax Amount</th>
             <td class="text-center"><input type="number" name='tax_amount' id="tax_amount" placeholder='0.00' class="form-control" readonly/></td>
@@ -678,7 +687,7 @@
     </div>
   </div>
 </div>
-      
+
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -701,9 +710,9 @@
         </button>
       </div>
       <div class="modal-body">
-      
+
     </div>
-        
+
     </div>
   </div>
 </div>
@@ -728,7 +737,7 @@
             <input type="text" class="form-control" id="plan-name" name="name"><span id="pname" style="display:none;"></span>
           </div>
              @csrf
-         
+
            <div class="mb-3">
              <div class="row">
     <div class="col">
@@ -739,24 +748,24 @@
      <label for="plan-name" class="col-form-label">Duration</label>
             <input type="date" class="form-control" id="plan-end" name="end_date"><span id="pend" style="display:none;"></span>
     </div>
-    
+
   </div>
-           
+
           </div>
            <div class="mb-3">
             <label for="plan-price" class="col-form-label">Price:</label>
             <input type="number" class="form-control" id="plan-price" maxlength="10" name="price"><span id="pprice" style="display:none;"></span>
           </div>
-        
+
            <div class="mb-3">
               <table class="table table-bordered table-hover" id="tab_logics">
         <thead>
-          
+
         </thead>
         <tbody>
           <tr id='addrr0'>
             <td >1</td>
-            <td> 
+            <td>
            Features: <input type="text" class="form-control" id="plan-freaturs"name="features[]"></td>
           </tr>
           <tr id='addrr1'></tr>
@@ -781,8 +790,8 @@
       </div>
        </form>
       </div>
-      
-        
+
+
     </div>
   </div>
 </div>
@@ -802,7 +811,7 @@
       </div>
       <div class="modal-body">
         <!-- <form method="post" id="eq_id"> -->
-          <div class="mb-3">
+         <!--  <div class="mb-3">
              <input type="hidden" class="form-control" id="equipmentId" name="ID">
             <label for="equipment-name" class="col-form-label">Name:</label>
             <input type="text" class="form-control" id="equipment-name" name="name"><span class="text-danger" id="ename"></span>
@@ -836,11 +845,256 @@
           <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
         <button type="button"class="btn btn-primary" id="add-equipment">Save</button>
-      </div>
+      </div> -->
         <!-- </form> -->
+ <div class="box-body">
+                                   
+                                        @csrf
+                                          <input type="hidden" class="form-control" id="equipmentId" name="ID">
+                                        <div class="form-body">
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label class="fw-700 fs-16 form-label">Category <span
+                                                                class="text-danger">*</span></label>
+                                                        <select class="form-select" data-placeholder="Choose a Category"
+                                                            name="category" tabindex="1" required
+                                                            data-validation-required-message="Category field is required" id="equipment-category">
+                                                            <option>Select Category</option>
+                                                            @php 
+                                                           $categories = App\Model\Category::get();
+                                                            @endphp
+                                                            @foreach($categories as $category)
+                                                            <option value="{{ $category->id }}">{{$category->name}}
+                                                            </option>
+                                                            @endforeach
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label class="fw-700 fs-16 form-label">Store Name <span
+                                                                class="text-danger">*</span></label>
+                                                        <select class="form-select" data-placeholder="Choose a Shop"
+                                                            name="shop_id" tabindex="1" required
+                                                            data-validation-required-message="Shop field is required" id="equipment-shop_id">
+                                                            <option>Select Store Name</option>
+                                                             @php 
+                                                           $shops = App\Model\Shop::get();
+                                                            @endphp
+                                                            @foreach($shops as $shop)
+                                                            <option value="{{ $shop->id }}">{{$shop->name}}
+                                                            </option>
+                                                            @endforeach
+                                                        </select>
+                                                    </div>
+                                                </div>
+
+                                                
+
+                                                <!--/span-->
+
+                                            </div>
+                                            <!--/row-->
+                                            <!--/row-->
+
+                                            <!--/row-->
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <h4 class="box-title mt-40">General Info</h4>
+                                                    <div class="table-responsive">
+                                                        <table class="table no-border td-padding">
+                                                            <tbody>
+                                                                <tr>
+                                                                    <td>
+                                                                    <div class="col-md-12">
+                                                                        <div class="form-group">
+                                                                            <label class="fw-700 fs-16 form-label">Product Name <span
+                                                                                    class="text-danger">*</span></label>
+                                                                            <div class="controls">
+                                                                                <input type="text" class="form-control"
+                                                                                    placeholder="Product Name" name="product_name" required
+                                                                                    data-validation-required-message="Product Name field is required" id="equipment-product_name">
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    </td>
+                                                                    <td>
+                                                                        <div class="col-md-12">
+                                                                            <div class="form-group">
+                                                                                <label
+                                                                                    class="fw-700 fs-16 form-label">Brand
+                                                                                    <span
+                                                                                        class="text-danger">*</span></label>
+                                                                                <div class="controls">
+                                                                                    <input type="text"
+                                                                                        class="form-control"
+                                                                                        placeholder="Brand Name"
+                                                                                        name="brand" required
+                                                                                        data-validation-required-message="Brand Name field is required" id="equipment-brand">
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </td>
+
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>
+                                                                        <div class="col-md-12">
+                                                                            <div class="form-group">
+                                                                                <label
+                                                                                    class="fw-700 fs-16 form-label">Model
+                                                                                    Number </label>
+                                                                                <div class="controls">
+                                                                                    <input type="text"
+                                                                                        class="form-control"
+                                                                                        placeholder="Model Number"
+                                                                                        name="model_number" id="equipment-model_number">
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </td>
+                                                                    <td>
+                                                                        <div class="col-md-12">
+                                                                            <div class="form-group">
+                                                                                <label
+                                                                                    class="fw-700 fs-16 form-label">Serial
+                                                                                    Number </label>
+                                                                                <div class="controls">
+                                                                                    <input type="text"
+                                                                                        class="form-control"
+                                                                                        placeholder="Serial Number"
+                                                                                        name="serial_number" id="equipment-serial_number">
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </td>
+
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>
+                                                                        <div class="col-md-12">
+                                                                            <div class="form-group">
+                                                                                <label
+                                                                                    class="fw-700 fs-16 form-label">Purchase
+                                                                                    Date </label>
+                                                                                <div class="controls">
+                                                                                    <input type="date"
+                                                                                        class="form-control"
+                                                                                        placeholder="Purchase Date"
+                                                                                        name="purchase_date" id="equipment-purchase_date">
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </td>
+                                                                    <td>
+                                                                        <div class="col-md-12">
+                                                                            <div class="form-group">
+                                                                                <label
+                                                                                    class="fw-700 fs-16 form-label">Warranty
+                                                                                </label>
+                                                                                <div class="controls">
+                                                                                    <select class="form-control" name="warranty" id="warranty">
+                                                                                        <option value="">Select Warranty</option>
+                                                                                        <option value="3 Months">3 Months</option>
+                                                                                        <option value="6 Months">6 Months</option>
+                                                                                        <option value="1 Year">1 Year</option>
+                                                                                        <option value="2 Year">2 Year</option>
+                                                                                        <option value="3 Year">3 Year</option>
+                                                                                        <option value="4 Year">4 Year</option>
+                                                                                        <option value="5 Year">5 Year</option>
+                                                                                        <option value="6 Year">6 Year</option>
+                                                                                        <option value="7 Year">7 Year</option>
+                                                                                        <option value="8 Year">8 Year</option>
+                                                                                        <option value="9 Year">9 Year</option>
+                                                                                        <option value="10 Year">10 Year</option>
+                                                                                    </select>
+                                                                                    
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </td>
+
+                                                                </tr>
+                                                                <tr>
+                                                                    <td colspan="2">
+                                                                        <div class="col-md-12">
+                                                                            <div class="form-group">
+                                                                                <label
+                                                                                    class="fw-700 fs-16 form-label">Product
+                                                                                    Description <span
+                                                                                        class="text-danger">*</span></label>
+                                                                                <div class="controls">
+                                                                                    <textarea class="form-control p-15"
+                                                                                        rows="1"
+                                                                                        name="product_description"
+                                                                                        placeholder="Product description goes here..."
+                                                                                        required
+                                                                                        data-validation-required-message="Product Description is required" id="equipment-product_description"></textarea>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+
+                                                                    </td>
+                                                                </tr>
+
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <div class="field" align="left">
+                                                        <h3>Upload your images</h3>
+                                                        <input type="file" id="equipment-image" name="images[]" multiple />
+                                                    </div>
+                                                     <img id="frame" src="" width="100px" height="100px" style="display:none;" class="rounded-circle" style="border:2px solid;"/><i class="fa fa-check-circle yes" style="font-size:48px;color:green; display:none;text-align: left;"></i>
+                                                </div>
+                                            </div>
+
+                                           
+
+                                            </div>
+
+                                            <div class="row mt-3">
+
+                                                <!--/span-->
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label class="fw-700 fs-16 form-label">Status</label>
+                                                        <div class="radio-list">
+                                                            <label class="radio-inline p-0 me-10">
+                                                                <div class="radio radio-info">
+                                                                    <input type="radio" name="status" id="radio1"
+                                                                        value="publish" checked>
+                                                                    <label for="radio1">Published</label>
+                                                                </div>
+                                                            </label>
+                                                            <label class="radio-inline">
+                                                                <div class="radio radio-info">
+                                                                    <input type="radio" name="status" id="radio2"
+                                                                        value="draft">
+                                                                    <label for="radio2">Draft</label>
+                                                                </div>
+                                                            </label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <!--/span-->
+                                            </div>
+                                        </div>
+                                        <div class="form-actions mt-10">
+                                        <button type="button" class="btn btn-warning">Cancel</button>
+                                            <button type="submit" class="btn btn-primary" id="add-equipment"> <i class="fa fa-check"></i>
+                                                Save</button>
+                                        </div>
+                                    </form>
+                                </div>
+
       </div>
-      
-        
+
+
     </div>
   </div>
 </div>
@@ -859,7 +1113,7 @@
       <div class="">
        <div class="card-body" id="getPopupDetails">
     </div>
-        
+
     </div>
   </div>
 </div>
@@ -867,7 +1121,7 @@
 
 <!-----------End Popup Modal---------------->
 <!-------------------Employee Modal -------------->
- 
+
 <div class="modal fade" id="employeeModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog w-800" role="document">
     <div class="modal-content ">
@@ -879,8 +1133,9 @@
       </div>
       <div class="modal-body">
         <form method="post" id="emp_form">
-              
+
                                     @csrf
+
                                      <input type="hidden" id="emp-id" name="id">
                                      <input type="hidden" id="createrid" value="{{auth('owner')->user()->id}}" name="d_manager_id">
                                     <div class="box-body">
@@ -954,17 +1209,17 @@
                                                     class="text-danger">*</span>
                                                 <div class="input-group mb-3 controls">
                                                     <span class="input-group-text"><i class="fa fa-lock" style="color: #000;"></i></span>
-                                                    <input type="password" placeholder="Confirm Password" name="con_password" data-validation-required-message="Confirm Password field is required" data-validation-match-match="password" class="form-control" required> 
+                                                    <input type="password" placeholder="Confirm Password" name="con_password" data-validation-required-message="Confirm Password field is required" data-validation-match-match="password" class="form-control" required>
 
                                                 </div>
                                             </div>
                                             </div>
-                                            
+
                                         </div>
                                         <h4 class="box-title text-info mb-0 mt-20"><i class="ti-save me-15"></i>
                                             Requirements</h4>
                                         <hr class="my-15">
-                                     
+
                                         <div class="row">
 
                                             <div class="col-md-6">
@@ -999,10 +1254,10 @@
                                                     </select>
                                                 </div>
                                             </div>
-                                          
+
                                         </div>
 
-                                       
+
                                      <!--    <div class="form-group mb-3">
                                             <label class="form-label">About Employee</label>
                                             <textarea rows="5" class="form-control" name="desc"
@@ -1081,8 +1336,8 @@
       </div> -->
         <!-- </form> -->
       </div>
-      
-        
+
+
     </div>
   </div>
 </div>
@@ -1103,7 +1358,7 @@
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
-  
+
   <script type="text/javascript">
     $(window).load(function(){
      let id = $("#owner_id").val();
@@ -1131,13 +1386,13 @@
     $("#show-profile").hide();
     $("#edit-profile-details").hide();
     setTimeout(
-  function() 
+  function()
   {
     $('#dashboard-body').removeClass('loading-body');
     $("#dashboard-body").css('backgrount', '#f1f3f5')
   }, 500);
-   
-   
+
+
    $('#bodyloading').fadeOut(500);
 });
   $(document).ready(function() {
@@ -1169,7 +1424,7 @@
 
     $("#show-new-workorder").hide();
     $("#main-tab").show();
-   
+
     $("#show-history").hide();
     $("#view-notification").hide();
     $("#show-notification").hide();
@@ -1194,14 +1449,14 @@ async function getchart(counturl) {
   // Storing data in form of JSON
   var data = await response.json();
   console.log(data);
-  
+
   showchart(data);
 }
 // Calling that async function
 getchart(charturl);
  function showchart(data)
  {
-  
+
    console.log(data.data.value)
     const datas = {
         labels: data.data.labels,
@@ -1214,13 +1469,13 @@ getchart(charturl);
           data: data.data.value,
         }]
       };
-  
+
       const config = {
         type: 'line',
         data: datas,
         options: {}
       };
-  
+
       const myChart = new Chart(
         document.getElementById('myChart'),
         config
@@ -1229,7 +1484,7 @@ getchart(charturl);
  async function getpiechart() {
   const piecharturl =
   '{!! route("get.pie.chart")!!}';
- 
+
 
   // Storing response
   const response = await fetch(piecharturl);
@@ -1237,13 +1492,13 @@ getchart(charturl);
   // Storing data in form of JSON
   var data = await response.json();
   console.log(data);
-  
+
   showpiechart(data);
 }
 
  function showpiechart(data)
  {
-  
+
    console.log(data.data.value)
     const datas = {
         labels: data.data.labels,
@@ -1254,19 +1509,19 @@ getchart(charturl);
           data: data.data.value,
         }]
       };
-  
+
       const config = {
         type: 'pie',
         data: datas,
         options: {}
       };
-  
+
       const myChart = new Chart(
         document.getElementById('myPieChart'),
         config
       );
  }
-    
+
   });
 </script>
 <script>
@@ -1288,7 +1543,7 @@ getchart(charturl);
     $("#add_row").click(function(){b=i-1;
         $('#addr'+i).html($('#addr'+b).html()).find('td:first-child').html(i+1);
         $('#tab_logic').append('<tr id="addr'+(i+1)+'"></tr>');
-        i++; 
+        i++;
     });
     $("#delete_row").click(function(){
       if(i>1){
@@ -1302,7 +1557,7 @@ getchart(charturl);
     $("#add_rows").click(function(){b=i-1;
         $('#addrr'+i).html($('#addrr'+b).html()).find('td:first-child').html(i+1);
         $('#tab_logics').append('<tr id="addrr'+(i+1)+'"></tr>');
-        i++; 
+        i++;
     });
     $("#delete_rows").click(function(){
       alert("sdfsd")
@@ -1310,9 +1565,9 @@ getchart(charturl);
     $("#addrr"+(i-1)).html('');
     i--;
     }
-    
+
   });
-  
+
   $('#tab_logic tbody').on('keyup change',function(){
     calc();
   });
@@ -1320,7 +1575,7 @@ getchart(charturl);
     calc_total();
   });
 
- 
+
   });
   function getNotification() {
     let id = $("#owner_id").val();
@@ -1367,27 +1622,26 @@ getchart(charturl);
         console.log(data.status);
         for (let r of data.data) {
           let img = r.image == null ? assetUrl + "product-dummy.png" : r.image;
-          tab += ` <div class="card mb-3 pl-5" style="max-width: 540px;">
-  <div class="row g-0">
-    <div class="col-md-4">
-    <input type="hidden" value="${r.id}" id="not-id">
-      <img src="${img}" class="img-fluid rounded-start" alt="...">
-    </div>
-    <div class="col-md-6">
+          tab += `<div class="card mb-3 pl-5" style="max-width: 540px;">
+                      <div class="row g-0">
+                        <div class="col-md-4">
+                          <input type="hidden" value="${r.id}" id="not-id">
+                            <img src="${img}" class="img-fluid rounded-start" alt="...">
+                        </div>
+                        <div class="col-md-6">
+                          <div class="card-body">
+                            <h5 class="card-title">${r.vendor_name}</h5>
+                            <p class="card-text">${r.message}</p>
 
-      <div class="card-body">
-        <h5 class="card-title">${r.vendor_name}</h5>
-        <p class="card-text">${r.message}</p>
+                          </div>
+                        </div>
+                        <div class="col-md-2 pt-4">
+                        <div id="del-not" class="btn btn-success" onclick="del()"><i class="fa fa-trash" aria-hidden="true"></i></div>
+                        </div>
 
-      </div>
-    </div>
-    <div class="col-md-2 pt-4">
-    <div id="del-not" class="btn btn-success" onclick="del()"><i class="fa fa-trash" aria-hidden="true"></i></div>
-    </div>
+                      </div>
 
-  </div>
-
-</div>`;
+                  </div>`;
           document.getElementById("show-data").innerHTML = tab;
         }
       } else {
@@ -1406,7 +1660,7 @@ getchart(charturl);
 
   function DelEquipment(id)
   {
-    
+
    const api_url =
       '{!! route("delete.equipment")!!}?id=' + id;
       Swal.fire({
@@ -1486,22 +1740,19 @@ getchart(charturl);
 
 
            let pimg = data.data.thumbnail_image == null ? assetUrl + "product-dummy.png" : assetUrl+'images/products/'+data.data.thumbnail_image;
-            let user = data.data.image == null ? purl + "default-profile.png" : data.data.image; 
+            let user = data.data.image == null ? purl + "default-profile.png" : data.data.image;
             let name = uid == 4?data.data.vname:data.data.owner_name;
             let notes = uid == 4?'<p>Thank you for your Maintenance</p>':'<p>Thank you</p>';
             let phone = uid == 4?data.data.vendor_phone:data.data.phone;
             let address = uid == 4?data.data.vendor_street_address:data.data.street_address;
-            // let tax = parseFloat(13 / 100) * parseFloat(data.data.order_amount) ;
-            // let grandTotal = Math.round(parseFloat(data.data.order_amount) + parseFloat(tax));
-             const href =
-      '{!! url("generate-invoice")!!}/' + data.data.id;
+             const href = '{!! url("generate-invoice")!!}/' + data.data.id;
          $(".Printurl").attr('href', href);
            tab =`
       <div class="row d-flex align-items-baseline">
         <div class="col-xl-12">
           <p style="color: #6759FF;font-size: 20px; margin-left:5px;">Invoice >> <strong class="text-danger">ID: #${data.data.order_id}</strong></p>
         </div>
-      
+
         </div>
         <hr>
       </div>
@@ -1581,7 +1832,7 @@ getchart(charturl);
               <li class="text-muted ms-3 mt-2"><span class="text-dark me-4 p-10">Tax</span>$${data.data.tax}</li>
             </ul>
             <hr>
-          
+
             <p class="text-black "><span class="text-dark me-3 p-10"> Total Amount</span><span
                 style="font-size: 20px; font-weight: 600;" class="text-dark">$${data.data.order_amount}</span></p>
           </div>
@@ -1593,7 +1844,7 @@ getchart(charturl);
           <div class="col-xl-10">
            ${notes}
           </div>
-         
+
         </div>
 
 
@@ -1646,14 +1897,14 @@ var appUrl = "{{env('APP_URL')}}";
   $('#example').DataTable({
       retrieve:true,
       destroy:true,
-      
+
       ajax: '{!! route('report') !!}',
       columns: [
           { data: 'id', name: 'id',
             render: function (data, type, row, meta) {
   return meta.row + meta.settings._iDisplayStart + 1;
 } },
-          
+
           { data: 'order_id', name: 'order_id' },
           { data: 'product_name', name: 'product_name' },
           { data: 'date', name: 'date' },
@@ -1665,7 +1916,7 @@ var appUrl = "{{env('APP_URL')}}";
 
 
            ],
-           
+
            aaSorting: [[0, 'desc']],
            dom: 'Bfrtip',
           buttons: [{
@@ -1697,7 +1948,7 @@ init: function(api, node, config) {
 }]
 
 
-  }); 
+  });
 }
 function getBackNotification()
 {
@@ -1792,9 +2043,9 @@ $("#view-report").hide();
 $("#list-notification").show();
 $("#view-notification").hide();
 $("#edit-profile-details").hide();
- $("#show-equipment").hide();
- $("#show-employee").hide();
- $("#show-maintenance").hide();
+$("#show-equipment").hide();
+$("#show-employee").hide();
+$("#show-maintenance").hide();
 var assetUrl = "{{env('ASSET_URL')}}";
  var profileUrl = "{{env('PROFILE_URL')}}";
 
@@ -1946,61 +2197,61 @@ console.log(data);
             $("#count").text(data.data.count);
            tab =`
            <div class="card mb-3">
-<div class="row g-0">
-<div class="col-md-3">
-  <img src="${img}" class="img-thumbnail rounded-start ml-5 mt-3" alt="..." id="${id}" width="200" style="height: 140px;">
-</div>
-<div class="col-md-9">
-  <div class="card-body">
-    <h5 style="font-size: 22px;" class="card-title">${data.data.product_name}</h5>
-    <h6 style="font-size: 14px; font-weight: 400;" class="card-title">${data.data.model} , ${data.data.brand}</h6>
-    <p  style="font-size: 16px; font-weight: 400;" class="card-text" maxlength="100">${data.data.product_description}</p>
-    <hr></hr>
+              <div class="row g-0">
+              <div class="col-md-3">
+                <img src="${img}" class="img-thumbnail rounded-start ml-5 mt-3" alt="..." id="${id}" width="200" style="height: 140px;">
+              </div>
+              <div class="col-md-9">
+                <div class="card-body">
+                  <h5 style="font-size: 22px;" class="card-title">${data.data.product_name}</h5>
+                  <h6 style="font-size: 14px; font-weight: 400;" class="card-title">${data.data.model} , ${data.data.brand}</h6>
+                  <p  style="font-size: 16px; font-weight: 400;" class="card-text" maxlength="100">${data.data.product_description}</p>
+                  <hr></hr>
 
-  </div>
-</div>
-</div>
-<div class="row g-0">
-<div class="col-md-3">
-  <img src="${vendor}" class="rounded-circle ml-5 mt-4" alt="..." id="${id}" width="50">
-</div>
-<div class="col-md-9">
-  <div class="card-body">
+                </div>
+              </div>
+              </div>
+              <div class="row g-0">
+              <div class="col-md-3">
+                <img src="${vendor}" class="rounded-circle ml-5 mt-4" alt="..." id="${id}" width="50">
+              </div>
+              <div class="col-md-9">
+                <div class="card-body">
 
-   <div class="row">
-        <div style="font-size: 20px;background-color: #F0EEFF;color: #6759FF;height: 40px;width: 40px; !important;display: flex;align-items: center;flex-wrap: wrap;" class="col-sm-12 btn ">
-        <h5 style="font-size: 20px; font-weight: 600;" class="card-title">${data.data.vname}  <small class="text-muted">(${data.data.createdAt} ${data.data.updatedAt})</small></h5>
+                <div class="row">
+                      <div style="font-size: 20px;background-color: #F0EEFF;color: #6759FF;height: 40px;width: 40px; !important;display: flex;align-items: center;flex-wrap: wrap;" class="col-sm-12 btn ">
+                      <h5 style="font-size: 20px; font-weight: 600;" class="card-title">${data.data.vname}  <small class="text-muted">(${data.data.createdAt} ${data.data.updatedAt})</small></h5>
 
-        </div>
-
-
-        </div>
-   <div style="margin-top: 24px;" class="row">
-        <div style="font-size: 20px;background-color: #F0EEFF;color: #6759FF;height: 40px;width: 40px; !important;display: flex;align-items: center;flex-wrap: wrap;" class="col-sm-12 btn ">
-        <h5 style="font-size: 20px; font-weight: 600;" class="card-title">Vendore Services:  <small class="text-muted">(${data.data.category_name})</small></h5>
-        <h5 style="font-weight: 600; padding-top: 5px;">Phone No:<a href="#" style="background-color: #6759FF;font-size: 17px; font-family: monospace; margin-left:10px;" class="btn btn-primary"><i class="fa fa-phone-alt" aria-hidden="true"></i>${data.data.vendor_phone}</a></h5>
-        </div>
+                      </div>
 
 
-        </div>
-  </div>
-</div>
+                      </div>
+                <div style="margin-top: 24px;" class="row">
+                      <div style="font-size: 20px;background-color: #F0EEFF;color: #6759FF;height: 40px;width: 40px; !important;display: flex;align-items: center;flex-wrap: wrap;" class="col-sm-12 btn ">
+                      <h5 style="font-size: 20px; font-weight: 600;" class="card-title">Vendore Services:  <small class="text-muted">(${data.data.category_name})</small></h5>
+                      <h5 style="font-weight: 600; padding-top: 5px;">Phone No:<a href="#" style="background-color: #6759FF;font-size: 17px; font-family: monospace; margin-left:10px;" class="btn btn-primary"><i class="fa fa-phone-alt" aria-hidden="true"></i>${data.data.vendor_phone}</a></h5>
+                      </div>
 
-            <div  style="margin-top: 25px;"class="row g-0">
-  <div class="col-md-3" style="padding: 30px 15px 5px 27px;">
-        <h5 class="card-title" style="text-align: initial;font-weight: 600; text-align: end;">Message:</h5>
-        </div>
 
-        <div class="col-md-9" style="padding: 5px 15px 5px 40px;">
-        <hr></hr>
-        <h5 class="card-title" style="text-align: initial;font-weight: 400;">${data.data.message}</h5>
-        </div>
+                      </div>
+                </div>
+              </div>
 
-  </div>
+                          <div  style="margin-top: 25px;"class="row g-0">
+                <div class="col-md-3" style="padding: 30px 15px 5px 27px;">
+                      <h5 class="card-title" style="text-align: initial;font-weight: 600; text-align: end;">Message:</h5>
+                      </div>
 
-    </div>
-</div>
-</div>`;
+                      <div class="col-md-9" style="padding: 5px 15px 5px 40px;">
+                      <hr></hr>
+                      <h5 class="card-title" style="text-align: initial;font-weight: 400;">${data.data.message}</h5>
+                      </div>
+
+                </div>
+
+                  </div>
+              </div>
+           </div>`;
            document.getElementById("getsingleNotification").innerHTML = tab;
 
       } else {
@@ -2125,7 +2376,7 @@ if(koopId == 'show')
       $("#show-report").hide();
       $("#view-report").hide();
      $("#all-orders h5").css("color","white");
-   
+
     function readURL(input) {
       if (input.files && input.files[0]) {
         var reader = new FileReader();
@@ -2154,7 +2405,7 @@ if(koopId == 'show')
     $("#show-profile").hide();
     $("#edit-profile-details").hide();
 
-   
+
     $("#proposal").click(function() {
       location.reload();
       if($('.proposal-card-div').css('display') == 'none')
@@ -2194,7 +2445,7 @@ if(koopId == 'show')
       $("#show-profile").hide();
       $("#show-report").hide();
       $("#view-report").hide();
-     
+
     });
     $("#history").click(function() {
 
@@ -2299,46 +2550,45 @@ if(koopId == 'show')
             time = r.time==null?time:r.time;
 
             tab += `
-  <div class="proOuterBox">
-  <div class="row g-0" onclick="getfulldetails(this.id)" id="${r.order_id}" style="cursor: pointer;">
-    <div class="col-md-3">
-      <img src="${img}" class="productImg" alt="..." id="${id}" >
-    </div>
-    <div class="col-md-9">
-      <div class="card-body">
-        <h5  class="card-title">${r.product_name}</h5>
-        <h6  class="card-title">${r.order_id}</h6>
-      
-        <hr>
-        <div class="metaInfo">
-         <h5 style="font-size: 20px;" class="card-title">${r.first_name} ${r.last_name}<a href="#" class="badge badge-primary float-right"><i class="fa fa-phone-alt" aria-hidden="true"></i> Call</a></h5>
-            <span class="badge badge-secondary priceBdge">  ${r.order_amount} </span>
-          <a href="#" class="badge">${status}</a>
-            
-        </div>
-         ${img2}
-        
-      </div>
-    </div>
-  </div>
- 
-</div>`;
-            document.getElementById("Proposal-card").innerHTML = tab;
-          
+                      <div class="proOuterBox">
+                          <div class="row g-0" onclick="getfulldetails(this.id)" id="${r.order_id}" style="cursor: pointer;">
+                            <div class="col-md-3">
+                              <img src="${img}" class="productImg" alt="..." id="${id}" >
+                            </div>
+                            <div class="col-md-9">
+                              <div class="card-body">
+                                <h5  class="card-title">${r.product_name}</h5>
+                                <h6  class="card-title">${r.order_id}</h6>
 
-        } 
+                                <hr>
+                                <div class="metaInfo">
+                                <h5 style="font-size: 20px;" class="card-title">${r.first_name} ${r.last_name}<a href="#" class="badge badge-primary float-right"><i class="fa fa-phone-alt" aria-hidden="true"></i> Call</a></h5>
+                                    <span class="badge badge-secondary priceBdge">  ${r.order_amount} </span>
+                                  <a href="#" class="badge">${status}</a>
+
+                                </div>
+                                ${img2}
+
+                              </div>
+                            </div>
+                      </div>
+
+                    </div>`;
+            document.getElementById("Proposal-card").innerHTML = tab;
+
+
+        }
       }else {
           console.log(data.message);
-          tab += ` <div class="vendor-name-history"><div class="images-div"></div>
-
-<p><img src="${assetUrl}nodata.png" alt="" width="200" class="rounded-circle" id="">${data.message}
-</p>
-</div>`;
+          tab += `<div class="vendor-name-history"><div class="images-div"></div>
+                    <p><img src="${assetUrl}nodata.png" alt="" width="200" class="rounded-circle" id="">${data.message}
+                    </p>
+                  </div>`;
           document.getElementById("Proposal-card").innerHTML = tab;
         }
       }
-     
-   
+
+
     });
     $("#all-orders").click(function() {
       $("#history").removeClass("main-Button-1");
@@ -2403,41 +2653,41 @@ function show(data) {
       let productImg = r.image == null ? assetUrl + "default-profile.png" : r.image;
       let vendor = r.vendor_image == null ? assetUrl + "default-profile.png" : r.vendor_image;
 
-      tab += ` <div class=" proposal-hover">
-<div class="Proposal-card-01">
-<img src="${img}" class="rounded-start" alt="..." id="${id}" height="180" width="180">
+      tab += `<div class=" proposal-hover">
+                  <div class="Proposal-card-01">
+                             <img src="${img}" class="rounded-start" alt="..." id="${id}" height="180" width="180">
 
-            <h4>${r.product_name}</h4>
-            <p>Code:${r.order_id}</p>
-            <ul>
-                <li style="color:#6F767E; display:inline-block;white-space: nowrap;overflow: hidden;text-overflow: ellipsis;max-width: 13ch; color:#6F767E">${r.product_description}</li>
+                              <h4>${r.product_name}</h4>
+                              <p>Code:${r.order_id}</p>
+                              <ul>
+                                  <li style="color:#6F767E; display:inline-block;white-space: nowrap;overflow: hidden;text-overflow: ellipsis;max-width: 13ch; color:#6F767E">${r.product_description}</li>
 
-            </ul>
-            <div class="vendor-class">
-                <div class="vendor-name">
-                    <div class="row g-0">
-                        <div class="col-md-2">
-                            <div class="Group-img ml-5"></div>
-                        </div>
-                        <div class="col-md-10">
-                            <h4 class="card-title" style="width: 100%;">${r.vendor_name}</h4>
-                             <p>Code: #D-${r.vendor_id}</p>
-                        </div>
+                              </ul>
+                              <div class="vendor-class">
+                                  <div class="vendor-name">
+                                      <div class="row g-0">
+                                          <div class="col-md-2">
+                                              <div class="Group-img ml-5"></div>
+                                             </div>
+                                          <div class="col-md-10">
+                                              <h4 class="card-title" style="width: 100%;">${r.vendor_name}</h4>
+                                              <p>Code: #D-${r.vendor_id}</p>
+                                           </div>
+                                       </div>
+                                   </div>
+                               </div>
+                              </div>
                     </div>
-                </div>
-            </div> </div>
-            </div>
-        </div>`;
+               </div>`;
       document.getElementById("Proposal-card").innerHTML = tab;
     }
 
   } else {
     console.log(data.message);
     tab += ` <div class="vendor-name-history" ><div class="images-div"></div>
-
-<p><img src="${assetUrl}nodata.png" alt="" width="200" class="rounded-circle" id="">${data.message}
-</p>
-</div>`;
+              <p><img src="${assetUrl}nodata.png" alt="" width="200" class="rounded-circle" id="">${data.message}
+              </p>
+            </div>`;
     document.getElementById("Proposal-card").innerHTML = tab;
   }
 }
@@ -2525,13 +2775,13 @@ function show(data) {
       $(".Logout").css("background-color", "#ffffff");
       $(".pending-color").css("color", "#000");
       $(".Pending").css("background-color", "#ffffff");
-       $(".report-color").css("color", "#000");
+      $(".report-color").css("color", "#000");
       $(".Report").css("background-color", "#ffffff");
       $(".history-color").css("color", "#000");
       $(".History").css("background-color", "#ffffff");
       $("#main-tab").hide();
       $("#show-new-workorder").hide();
-        $("#show-maintenance").hide();
+      $("#show-maintenance").hide();
       $("#show-notification").show();
       $("#show-history").hide();
       $("#show-confirm").hide();
@@ -2578,36 +2828,36 @@ function show(data) {
           for (let r of data.data) {
             let img = r.image == null ? assetUrl + "product-dummy.png" : r.image;
             tab += ` <div class="card mb-3 pl-5" style="max-width: 540px;">
-  <div class="row g-0">
-    <div class="col-md-4">
-    <input type="hidden" value="${r.id}" id="not-id">
-      <img src="${img}" class="img-fluid rounded-start" alt="...">
-    </div>
-    <div class="col-md-6">
+                        <div class="row g-0">
+                          <div class="col-md-4">
+                          <input type="hidden" value="${r.id}" id="not-id">
+                            <img src="${img}" class="img-fluid rounded-start" alt="...">
+                          </div>
+                          <div class="col-md-6">
 
-      <div class="card-body">
-        <h5 class="card-title">${r.vendor_name}</h5>
-        <p class="card-text">${r.message}</p>
+                            <div class="card-body">
+                              <h5 class="card-title">${r.vendor_name}</h5>
+                              <p class="card-text">${r.message}</p>
 
-      </div>
-    </div>
-    <div class="col-md-2 pt-4">
-    <div id="del-not" class="btn btn-success" onclick="del()"><i class="fa fa-trash" aria-hidden="true"></i></div>
-    </div>
+                            </div>
+                          </div>
+                          <div class="col-md-2 pt-4">
+                          <div id="del-not" class="btn btn-success" onclick="del()"><i class="fa fa-trash" aria-hidden="true"></i></div>
+                          </div>
 
-  </div>
+                        </div>
 
-</div>`;
+                    </div>`;
             document.getElementById("show-data").innerHTML = tab;
           }
         } else {
           console.log(data.message);
-          tab += ` <div class="vendor-name-history" style="
-    text-align: center;><div class="images-div"></div>
+          tab += `<div class="vendor-name-history" style="
+                      text-align: center;><div class="images-div"></div>
 
-<p><img src="${assetUrl}nodata.png" alt="" width="200" class="float-start rounded-circle" id="">${data.message}
-</p>
-</div>`;
+                      <p><img src="${assetUrl}nodata.png" alt="" width="200" class="float-start rounded-circle" id="">${data.message}
+                      </p>
+                  </div>`;
           document.getElementById("show-data").innerHTML = tab;
         }
       }
@@ -2661,29 +2911,28 @@ function show(data) {
           for (let r of data.data) {
             let img = r.image == null ? assetUrl + "product-dummy.png" : r.image;
             tab += ` <div class="card mb-3 pl-5" style="max-width: 540px;">
-  <div class="row g-0">
-    <div class="col-md-4">
-      <img src="${img}" class="img-fluid rounded-start" alt="..." id="${id}">
-    </div>
-    <div class="col-md-8">
-      <div class="card-body">
-        <h5 class="card-title">${r.vendor_name}</h5>
-        <p class="card-text">${r.message}</p>
+                        <div class="row g-0">
+                          <div class="col-md-4">
+                            <img src="${img}" class="img-fluid rounded-start" alt="..." id="${id}">
+                          </div>
+                          <div class="col-md-8">
+                            <div class="card-body">
+                              <h5 class="card-title">${r.vendor_name}</h5>
+                              <p class="card-text">${r.message}</p>
 
-      </div>
-    </div>
-  </div>
-</div>`;
+                            </div>
+                          </div>
+                        </div>
+                      </div>`;
             document.getElementById("show-data").innerHTML = tab;
           }
         } else {
           console.log(data.message);
-          tab += ` <div class="vendor-name-history" style="
-    text-align: center;><div class="images-div"></div>
-
-<p><img src="${assetUrl}nodata.png" alt="" width="200" class="float-start rounded-circle" id="">${data.message}
-</p>
-</div>`;
+          tab += `<div class="vendor-name-history" style="
+                    text-align: center;><div class="images-div"></div>
+                    <p><img src="${assetUrl}nodata.png" alt="" width="200" class="float-start rounded-circle" id="">${data.message}
+                    </p>
+                   </div>`;
           document.getElementById("show-data").innerHTML = tab;
         }
       }
@@ -2739,58 +2988,57 @@ function show(data) {
               let img = r.thumbnail_image == null ? assetUrl + "product-dummy.png" : r.thumbnail_image;
               let vendor = r.mage == null ? assetUrl + "default-profile.png" : r.image;
               tab += ` <div class="card mb-3">
-<div class="row g-0">
-<div class="col-md-3">
-  <img src="${img}" class="img-thumbnail rounded-start ml-5 mt-3" alt="..." id="${id}" width="150">
-</div>
-<div class="col-md-9">
-  <div class="card-body">
-    <h5 class="card-title">${r.product_name}</h5>
-    <h6 class="card-title">${r.order_id}</h6>
-    <p class="card-text">${r.product_description}</p>
-    <hr></hr>
+                          <div class="row g-0">
+                            <div class="col-md-3">
+                              <img src="${img}" class="img-thumbnail rounded-start ml-5 mt-3" alt="..." id="${id}" width="150">
+                            </div>
+                            <div class="col-md-9">
+                              <div class="card-body">
+                                <h5 class="card-title">${r.product_name}</h5>
+                                <h6 class="card-title">${r.order_id}</h6>
+                                <p class="card-text">${r.product_description}</p>
+                                <hr></hr>
 
-  </div>
-</div>
-</div>
-<div class="row g-0">
-<div class="col-md-3">
-  <img src="${vendor}" class="rounded-circle ml-5 mt-4" alt="..." id="${id}" width="80">
-</div>
-<div class="col-md-9">
-  <div class="card-body">
-    <h5 class="card-title">${r.first_name} ${r.last_name} <small class="text-muted">(${r.date}${r.time})</small></h5>
-    <h5 class="card-title">Notes:<small class="text-muted"> ${r.note}</small></h5>
-    <p class="card-text">${r.description}</p>
-    <hr></hr>
-    <div class="row">
-        <div class="col-sm-4 btn btn-secondary text-white">
-        Price: ${r.order_amount}
-        </div>
-        <div class="col-sm-4">
-        <a href="#" class="btn btn-primary">${r.order_status}</a>
-        </div>
-        <div class="col-sm-4">
-        <a href="#" class="btn btn-primary"><i class="fa fa-phone-alt" aria-hidden="true"></i>Call</a>
-        </div>
-        </div>
-  </div>
-</div>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="row g-0">
+                          <div class="col-md-3">
+                            <img src="${vendor}" class="rounded-circle ml-5 mt-4" alt="..." id="${id}" width="80">
+                          </div>
+                          <div class="col-md-9">
+                            <div class="card-body">
+                              <h5 class="card-title">${r.first_name} ${r.last_name} <small class="text-muted">(${r.date}${r.time})</small></h5>
+                              <h5 class="card-title">Notes:<small class="text-muted"> ${r.note}</small></h5>
+                              <p class="card-text">${r.description}</p>
+                              <hr></hr>
+                              <div class="row">
+                                  <div class="col-sm-4 btn btn-secondary text-white">
+                                  Price: ${r.order_amount}
+                                  </div>
+                                  <div class="col-sm-4">
+                                  <a href="#" class="btn btn-primary">${r.order_status}</a>
+                                  </div>
+                                  <div class="col-sm-4">
+                                  <a href="#" class="btn btn-primary"><i class="fa fa-phone-alt" aria-hidden="true"></i>Call</a>
+                                  </div>
+                                  </div>
+                            </div>
+                          </div>
 
-</div>
-</div>`;
+                          </div>
+                        </div>`;
 
               document.getElementById("get-confirm").innerHTML = tab;
             }
 
           } else {
             console.log(data.message);
-            tab += ` <div class="vendor-name-history" style="
-text-align: center;><div class="images-div"></div>
-
-<p><img src="${assetUrl}nodata.png" alt="" width="200" class="float-start rounded-circle" id="">${data.message}
-</p>
-</div>`;
+            tab += `<div class="vendor-name-history" style="
+                      text-align: center;><div class="images-div"></div>
+                      <p><img src="${assetUrl}nodata.png" alt="" width="200" class="float-start rounded-circle" id="">${data.message}
+                      </p>
+                    </div>`;
             document.getElementById("get-confirm").innerHTML = tab;
           }
         }
@@ -2829,59 +3077,58 @@ text-align: center;><div class="images-div"></div>
             for (let r of data.data) {
               let img = r.thumbnail_image == null ? assetUrl + "product-dummy.png" : r.thumbnail_image;
               let vendor = r.mage == null ? assetUrl + "default-profile.png" : r.image;
-              tab += ` <div class="card mb-3">
-<div class="row g-0">
-<div class="col-md-3">
-  <img src="${img}" class="img-thumbnail rounded-start ml-5 mt-3" alt="..." id="${id}" width="150">
-</div>
-<div class="col-md-9">
-  <div class="card-body">
-    <h5 class="card-title">${r.product_name}</h5>
-    <h6 class="card-title">${r.order_id}</h6>
-    <p class="card-text">${r.product_description}</p>
-    <hr></hr>
+              tab += `<div class="card mb-3">
+                       <div class="row g-0">
+                          <div class="col-md-3">
+                            <img src="${img}" class="img-thumbnail rounded-start ml-5 mt-3" alt="..." id="${id}" width="150">
+                          </div>
+                          <div class="col-md-9">
+                            <div class="card-body">
+                              <h5 class="card-title">${r.product_name}</h5>
+                              <h6 class="card-title">${r.order_id}</h6>
+                              <p class="card-text">${r.product_description}</p>
+                              <hr></hr>
 
-  </div>
-</div>
-</div>
-<div class="row g-0">
-<div class="col-md-3">
-  <img src="${vendor}" class="rounded-circle ml-5 mt-4" alt="..." id="${id}" width="80">
-</div>
-<div class="col-md-9">
-  <div class="card-body">
-   <h5 class="card-title">${r.vendor_name}  <small class="text-muted">(${r.date}${r.time})</small></h5>
-    <h6 class="card-title">Service Note:<small class="text-muted"> ${r.note}</small></h6>
-    <p class="card-text">${r.description}</p>
-    <hr></hr>
-    <div class="row">
-        <div class="col-sm-4 btn btn-secondary text-white">
-        Price: ${r.order_amount}
-        </div>
-        <div class="col-sm-4">
-        <a href="#" class="btn btn-primary">${r.order_status}</a>
-        </div>
-        <div class="col-sm-4">
-        <a href="#" class="btn btn-primary"><i class="fa fa-phone-alt" aria-hidden="true"></i>Call</a>
-        </div>
-        </div>
-  </div>
-</div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="row g-0">
+                              <div class="col-md-3">
+                                <img src="${vendor}" class="rounded-circle ml-5 mt-4" alt="..." id="${id}" width="80">
+                              </div>
+                              <div class="col-md-9">
+                                <div class="card-body">
+                                <h5 class="card-title">${r.vendor_name}  <small class="text-muted">(${r.date}${r.time})</small></h5>
+                                  <h6 class="card-title">Service Note:<small class="text-muted"> ${r.note}</small></h6>
+                                  <p class="card-text">${r.description}</p>
+                                  <hr></hr>
+                                <div class="row">
+                                      <div class="col-sm-4 btn btn-secondary text-white">
+                                      Price: ${r.order_amount}
+                                      </div>
+                                      <div class="col-sm-4">
+                                      <a href="#" class="btn btn-primary">${r.order_status}</a>
+                                      </div>
+                                      <div class="col-sm-4">
+                                      <a href="#" class="btn btn-primary"><i class="fa fa-phone-alt" aria-hidden="true"></i>Call</a>
+                                      </div>
+                                      </div>
+                                </div>
+                             </div>
 
-</div>
-</div>`;
+                          </div>
+                      </div>`;
 
               document.getElementById("get-confirm").innerHTML = tab;
             }
 
           } else {
             console.log(data.message);
-            tab += ` <div class="vendor-name-history" style="
-text-align: center;><div class="images-div"></div>
-
-<p><img src="${assetUrl}nodata.png" alt="" width="200" class="float-start rounded-circle" id="">${data.message}
-</p>
-</div>`;
+            tab += `<div class="vendor-name-history" style="
+                      text-align: center;><div class="images-div"></div>
+                      <p><img src="${assetUrl}nodata.png" alt="" width="200" class="float-start rounded-circle" id="">${data.message}
+                      </p>
+                    </div>`;
             document.getElementById("get-confirm").innerHTML = tab;
           }
         }
@@ -2902,8 +3149,6 @@ text-align: center;><div class="images-div"></div>
       var assetUrl = "{{env('ASSET_URL')}}";
 
       var appUrl = "{{env('APP_URL')}}";
-
-
       if (vid == 1) {
         const api_url =
           appUrl + "/owner/search_vendor_Proposal?vendor_id=" + id + "&status=pending&search=" + search;;
@@ -2949,41 +3194,41 @@ text-align: center;><div class="images-div"></div>
               let img1 = r.order_image == null ? assetUrl + "product-dummy.png" : r.order_image;
               let vendor = r.mage == null ? assetUrl + "default-profile.png" : r.image;
 
-              tab += ` <div class="card mb-3">
-  <div class="row g-0">
-    <div class="col-md-4">
-      <img src="${img}" class="img-fluid rounded-start" alt="..." id="${r.id}" style="padding:5px;">
-    </div>
-    <div class="col-md-8">
-      <div class="card-body">
-        <h5 class="card-title">${r.product_name}</h5>
-        <h6 class="card-title">${r.order_id}</h6>
-        <p class="card-text">${r.product_description}</p>
-        <hr></hr>
-        <h5 class="card-title"><img src="{{ asset('images') }}/image/calendar.png" alt="" width="40"><small class="text-muted" style="
-    padding: 0px 10px 5px 10px;font-weight: 900;"> (${r.date}${r.time})  Paid: $ ${r.order_amount}</small></h5>
+              tab += `<div class="card mb-3">
+                      <div class="row g-0">
+                        <div class="col-md-4">
+                          <img src="${img}" class="img-fluid rounded-start" alt="..." id="${r.id}" style="padding:5px;">
+                        </div>
+                        <div class="col-md-8">
+                          <div class="card-body">
+                            <h5 class="card-title">${r.product_name}</h5>
+                            <h6 class="card-title">${r.order_id}</h6>
+                            <p class="card-text">${r.product_description}</p>
+                            <hr></hr>
+                            <h5 class="card-title"><img src="{{ asset('images') }}/image/calendar.png" alt="" width="40"><small class="text-muted" style="
+                        padding: 0px 10px 5px 10px;font-weight: 900;"> (${r.date}${r.time})  Paid: $ ${r.order_amount}</small></h5>
 
-      </div>
-    </div>
-  </div>
-  <div class="row g-0">
-    <div class="col-md-2" style="padding: 5px 15px 5px 27px; text-align:end;">
-      <img src="${vendor}" class="rounded-circle" alt="..." id="${id}" style="height:80px;width: 80px;">
-    </div>
-    <div class="col-md-8">
-      <div class="card-body">
-        <h5 class="card-title">${r.first_name} ${r.last_name}<small class="text-muted"> (${r.date}${r.time})</small></h5>
-        <h5 class="card-title"><small class="text-muted"> ${r.note}</small></h5>
-        <p class="card-text">${r.description}</p>
-        <img src="${img1}" height="100" width="100" alt="" class="img-thumbnail hover-zoom" style="height: 100px !important;">
-        <hr></hr>
-    </div>
-  </div>
-  <div class="col-md-2 mt-20">
-           <a href="{{url('/')}}/product-details?id=${r.product_id}&order_id=${r.order_id}" class="btn btn-primary">Add Quote</a>
-            </div>
-  </div>
-</div>`;
+                          </div>
+                        </div>
+                      </div>
+                      <div class="row g-0">
+                        <div class="col-md-2" style="padding: 5px 15px 5px 27px; text-align:end;">
+                          <img src="${vendor}" class="rounded-circle" alt="..." id="${id}" style="height:80px;width: 80px;">
+                        </div>
+                        <div class="col-md-8">
+                          <div class="card-body">
+                            <h5 class="card-title">${r.first_name} ${r.last_name}<small class="text-muted"> (${r.date}${r.time})</small></h5>
+                            <h5 class="card-title"><small class="text-muted"> ${r.note}</small></h5>
+                            <p class="card-text">${r.description}</p>
+                            <img src="${img1}" height="100" width="100" alt="" class="img-thumbnail hover-zoom" style="height: 100px !important;">
+                            <hr></hr>
+                        </div>
+                      </div>
+                      <div class="col-md-2 mt-20">
+                              <a href="{{url('/')}}/product-details?id=${r.product_id}&order_id=${r.order_id}" class="btn btn-primary">Add Quote</a>
+                                </div>
+                      </div>
+                    </div>`;
 
               document.getElementById("get-pending").innerHTML = tab;
 
@@ -2992,12 +3237,11 @@ text-align: center;><div class="images-div"></div>
 
           } else {
             console.log(data.message);
-            tab += ` <div class="vendor-name-history" style="
-    text-align: center;><div class="images-div"></div>
-
-<p><img src="${assetUrl}nodata.png" alt="" width="200" class="float-start rounded-circle" id="">${data.message}
-</p>
-</div>`;
+            tab += `<div class="vendor-name-history" style="
+                      text-align: center;><div class="images-div"></div>
+                      <p><img src="${assetUrl}nodata.png" alt="" width="200" class="float-start rounded-circle" id="">${data.message}
+                      </p>
+                    </div>`;
             document.getElementById("get-pending").innerHTML = tab;
           }
 
@@ -3054,42 +3298,42 @@ text-align: center;><div class="images-div"></div>
               let img1 = r.order_image == null ? assetUrl + "product-dummy.png" : r.order_image;
               let vendor = r.mage == null ? assetUrl + "default-profile.png" : r.image;
               let status = r.note == null ? r.order_status : 'Accept'
-              tab += ` <div class="card mb-3">
-  <div class="row g-0">
-    <div class="col-md-3">
-      <img src="${img}" class="img-thumbnail rounded-start ml-5 mt-3" alt="..." id="${id}" style="padding:5px;" width="150">
-    </div>
-    <div class="col-md-9">
-      <div class="card-body">
-        <h5 class="card-title">${r.product_name}</h5>
-        <h6 class="card-title">${r.order_id}</h6>
-        <p class="card-text">${r.product_description}</p>
-        <hr></hr>
-        <h5 class="card-title"><img src="{{ asset('images') }}/image/calendar.png" alt="" width="40"><small class="text-muted" style="
-    padding: 0px 10px 5px 10px;font-weight: 900;"> (${r.date}${r.time})  Paid: $ ${r.order_amount}</small></h5>
+              tab += `<div class="card mb-3">
+                        <div class="row g-0">
+                          <div class="col-md-3">
+                            <img src="${img}" class="img-thumbnail rounded-start ml-5 mt-3" alt="..." id="${id}" style="padding:5px;" width="150">
+                          </div>
+                          <div class="col-md-9">
+                            <div class="card-body">
+                              <h5 class="card-title">${r.product_name}</h5>
+                              <h6 class="card-title">${r.order_id}</h6>
+                              <p class="card-text">${r.product_description}</p>
+                              <hr></hr>
+                              <h5 class="card-title"><img src="{{ asset('images') }}/image/calendar.png" alt="" width="40"><small class="text-muted" style="
+                          padding: 0px 10px 5px 10px;font-weight: 900;"> (${r.date}${r.time})  Paid: $ ${r.order_amount}</small></h5>
 
-      </div>
-    </div>
-  </div>
-  <div class="row g-0">
-    <div class="col-md-2" style="padding: 5px 15px 5px 27px; text-align:end;">
-      <img src="${vendor}" class="rounded-circle ml-5 mt-3"" alt="..." id="${id}" width="80">
-    </div>
-    <div class="col-md-8">
-      <div class="card-body">
-        <h5 class="card-title">${r.vendor_name}<small class="text-muted"> (${r.date}${r.time})</small></h5>
-        <h5 class="card-title"><small class="text-muted"> ${r.note}</small></h5>
-        <p class="card-text">${r.description}</p>
-        <img src="${img1}" height="100" width="100" alt="" class="img-thumbnail hover-zoom" style="height: 100px !important;">
-        <hr></hr>
-    </div>
-  </div>
-  <div class="col-md-2 mt-20">
- ${count}
+                            </div>
+                          </div>
+                        </div>
+                        <div class="row g-0">
+                          <div class="col-md-2" style="padding: 5px 15px 5px 27px; text-align:end;">
+                            <img src="${vendor}" class="rounded-circle ml-5 mt-3"" alt="..." id="${id}" width="80">
+                          </div>
+                          <div class="col-md-8">
+                            <div class="card-body">
+                              <h5 class="card-title">${r.vendor_name}<small class="text-muted"> (${r.date}${r.time})</small></h5>
+                              <h5 class="card-title"><small class="text-muted"> ${r.note}</small></h5>
+                              <p class="card-text">${r.description}</p>
+                              <img src="${img1}" height="100" width="100" alt="" class="img-thumbnail hover-zoom" style="height: 100px !important;">
+                              <hr></hr>
+                          </div>
+                        </div>
+                        <div class="col-md-2 mt-20">
+                      ${count}
 
-  </div>
-  </div>
-</div>`;
+                        </div>
+                        </div>
+                   </div>`;
 
               document.getElementById("get-pending").innerHTML = tab;
 
@@ -3098,12 +3342,11 @@ text-align: center;><div class="images-div"></div>
 
           } else {
             console.log(data.message);
-            tab += ` <div class="vendor-name-history" style="
-    text-align: center;><div class="images-div"></div>
-
-<p><img src="${assetUrl}nodata.png" alt="" width="200" class="float-start rounded-circle" id="">${data.message}
-</p>
-</div>`;
+            tab += `<div class="vendor-name-history" style="
+                      text-align: center;><div class="images-div"></div>
+                      <p><img src="${assetUrl}nodata.png" alt="" width="200" class="float-start rounded-circle" id="">${data.message}
+                      </p>
+                    </div>`;
             document.getElementById("get-pending").innerHTML = tab;
           }
         }
@@ -3163,7 +3406,7 @@ text-align: center;><div class="images-div"></div>
             let vendor = r.mage == null ? assetUrl + "default-profile.png" : r.image;
 
             tab += ` <div class="Proposal-card-01 text-center">
-<img src="${img}" class="img-thumbnail rounded-start" alt="..." id="${id}" height="180" width="180">
+                      <img src="${img}" class="img-thumbnail rounded-start" alt="..." id="${id}" height="180" width="180">
 
                 <h4>${r.product_name}</h4>
                 <p>Code:${r.order_id}</p>
@@ -3175,7 +3418,6 @@ text-align: center;><div class="images-div"></div>
                     <div class="vendor-name">
                         <div class="Group-img"><img src="${vendor}" width="50"
                            alt="" class="float-start rounded-circle"></div>
-
                         <h4 class="card-title ml-5">${r.vendor_name}</h4>
                         <h4 class="card-text"><small class="text-muted">${r.schedule}</small></h4>
                         <p>Code: #D-${r.vendor_id}</p>
@@ -3187,12 +3429,11 @@ text-align: center;><div class="images-div"></div>
 
         } else {
           console.log(data.message);
-          tab += ` <div class="vendor-name-history" style="
-text-align: center;><div class="images-div"></div>
-
-<p><img src="${assetUrl}nodata.png" alt="" width="200" class="float-start rounded-circle" id="">${data.message}
-</p>
-</div>`;
+          tab += `<div class="vendor-name-history" style="
+                  text-align: center;><div class="images-div"></div>
+                  <p><img src="${assetUrl}nodata.png" alt="" width="200" class="float-start rounded-circle" id="">${data.message}
+                  </p>
+                  </div>`;
           document.getElementById("Proposal-card").innerHTML = tab;
         }
       }
@@ -3223,10 +3464,10 @@ text-align: center;><div class="images-div"></div>
       $("#Workorder h5").css("color", "#000");
       $("#Workorder span").removeClass("count-color-change");
       $("#Workorder span").addClass("count-color");
-      
+
       $("#all-orders").removeClass("main-Button-1");
       $("#all-orders").addClass("main-Button-2");
-    
+
       $("#Workorder").removeClass("main-Button-1");
       $("#Workorder").addClass("main-Button-3");
       $(".New-Work-Order").css("background-color", "#ffffff");
@@ -3253,7 +3494,7 @@ text-align: center;><div class="images-div"></div>
       var assetUrl = "{{env('ASSET_URL')}}";
 
       var appUrl = "{{env('APP_URL')}}";
-     
+
         const api_url =
           appUrl + "/owner/get_pending_Proposal?order_status=pending";
 
@@ -3323,35 +3564,34 @@ text-align: center;><div class="images-div"></div>
               let note = r.note == null ? "There is no notes" : r.note;
               let status = r.note == null ? r.order_status : 'Accept';
 
-              tab += ` <div class="proOuterBox">
-  <div class="row g-0" onclick="getfulldetails(this.id)" id="${r.order_id}" style="cursor: pointer;">
-    <div class="col-md-3">
-      <img src="${img}" class="productImg" alt="..." id="${id}"  >
-    </div>
-    <div class="col-md-9">
-      <div class="card-body">
-        <h5 class="card-title">${r.product_name}</h5>
-        <h6  class="card-title">${r.order_id}</h6>
+              tab += `<div class="proOuterBox">
+                        <div class="row g-0" onclick="getfulldetails(this.id)" id="${r.order_id}" style="cursor: pointer;">
+                          <div class="col-md-3">
+                            <img src="${img}" class="productImg" alt="..." id="${id}"  >
+                          </div>
+                          <div class="col-md-9">
+                            <div class="card-body">
+                              <h5 class="card-title">${r.product_name}</h5>
+                              <h6  class="card-title">${r.order_id}</h6>
 
-        <div class="metaInfo">
-         <h5 style="font-size: 20px;" class="card-title">${r.vendor_name} </h5>
-            <span>   ${reject} </span><span > ${count}</span></div><h5 class="card-title" >${note}</h5>
-  <div class="container mt-3" id="multi-img">  ${img2}</div> </div> </div></div>
-  </div>  </div>
-</div>`;
+                              <div class="metaInfo">
+                              <h5 style="font-size: 20px;" class="card-title">${r.vendor_name} </h5>
+                                  <span>   ${reject} </span><span > ${count}</span></div><h5 class="card-title" >${note}</h5>
+                        <div class="container mt-3" id="multi-img">  ${img2}</div> </div> </div></div>
+                        </div>  </div>
+                      </div>`;
  document.getElementById("Proposal-card").innerHTML = tab;
             }
 
           } else {
             console.log(data.message);
-            tab += ` <div class="vendor-name-history"><div class="images-div"></div>
-
-<p><img src="${assetUrl}nodata.png" alt="" width="200" class="rounded-circle" id="">${data.message}!
-</p>
-</div>`;
+            tab += `<div class="vendor-name-history"><div class="images-div"></div>
+                    <p><img src="${assetUrl}nodata.png" alt="" width="200" class="rounded-circle" id="">${data.message}!
+                    </p>
+                  </div>`;
             document.getElementById("Proposal-card").innerHTML = tab;
           }
-        
+
       }
 
 
@@ -3411,14 +3651,14 @@ text-align: center;><div class="images-div"></div>
         $('#example').DataTable({
             retrieve:true,
             destroy:true,
-            
+
             ajax: '{!! route('report') !!}',
             columns: [
                 { data: 'id', name: 'id',
                   render: function (data, type, row, meta) {
         return meta.row + meta.settings._iDisplayStart + 1;
     } },
-                
+
                 { data: 'order_id', name: 'order_id' },
                 { data: 'product_name', name: 'product_name' },
                 { data: 'date', name: 'date' },
@@ -3435,7 +3675,7 @@ text-align: center;><div class="images-div"></div>
 
 
                  ],
-                 
+
                  aaSorting: [[0, 'desc']],
                  dom: 'Bfrtip',
                 buttons: [{
@@ -3482,7 +3722,7 @@ text-align: center;><div class="images-div"></div>
       $(".setting-color").css("color", "#000");
       // $(".Setting").css("background-color", "#e4e6ef");
       $(".Proposal").css("background-color", "#e4e6ef");
-    
+
       $(".Proposal-color").css("color", "#6759ff");
       $("#main-tab").show();
       $("#show-notification").hide();
@@ -3538,7 +3778,7 @@ text-align: center;><div class="images-div"></div>
       var profileUrl = "{{env('PROFILE_URL')}}";
       let id = $("#owner_id").val();
       var appUrl = "{{env('APP_URL')}}";
-  
+
       const api_url =
         appUrl + "/owner/Get_owner_details?id=" + id;
 
@@ -3662,34 +3902,29 @@ text-align: center;><div class="images-div"></div>
           for (let r of data.data) {
             let img = r.thumbnail_image == null ? assetUrl + "product-dummy.png" : r.thumbnail_image;
             let user = r.image == null ? assetUrl + "default-profile.png" : r.image;
-
-
-
-           $('#profile-pic1').attr('src', user);
-          $('#profile-pic2').attr('src', user);
-          $('#profile-pic').attr('src', user);
-            tab += `<div class="settingForm">
-        <p>Full Name</p>
-        <input placeholder="Your First Name" name="first-name"value="${r.first_name} " type="text" id="first-name">
-        <input placeholder="Your Last Name" name="last-name"value="${r.last_name}" type="text" id="last-name">
-        <p>E-mail</p>
-        <input placeholder="Your email" type="email" name="email"value="${r.email}" id="email">
-        <p>Password</p>
-        <input placeholder="Your Password" type="password" value="${r.password}" name="password" id="password" maxlength="10">
-    </div>
-    `;
+            $('#profile-pic1').attr('src', user);
+            $('#profile-pic2').attr('src', user);
+            $('#profile-pic').attr('src', user);
+      tab += `<div class="settingForm">
+                <p>Full Name</p>
+                <input placeholder="Your First Name" name="first-name"value="${r.first_name} " type="text" id="first-name">
+                <input placeholder="Your Last Name" name="last-name"value="${r.last_name}" type="text" id="last-name">
+                <p>E-mail</p>
+                <input placeholder="Your email" type="email" name="email"value="${r.email}" id="email">
+                <p>Password</p>
+                <input placeholder="Your Password" type="password" value="${r.password}" name="password" id="password" maxlength="10">
+            </div>`;
 
             document.getElementById("update-profile").innerHTML = tab;
           }
 
         } else {
           console.log(data.message);
-          tab += ` <div class="vendor-name-history" style="
-text-align: center;><div class="images-div"></div>
-
-<p><img src="${assetUrl}nodata.png" alt="" width="200" class="float-start rounded-circle" id="">${data.message}
-</p>
-</div>`;
+          tab += `<div class="vendor-name-history" style="
+                    text-align: center;><div class="images-div"></div>
+                    <p><img src="${assetUrl}nodata.png" alt="" width="200" class="float-start rounded-circle" id="">${data.message}
+                    </p>
+                   </div>`;
           document.getElementById("update-profile").innerHTML = tab;
         }
       }
@@ -3808,45 +4043,44 @@ text-align: center;><div class="images-div"></div>
                let note = r.note == null ?"There is no note" : r.note;
 
               tab += ` <div class="proOuterBox">
-<div class="row g-0" onclick="getfulldetails(this.id)" id="${r.order_id}" style="cursor: pointer;">
-    <div class="col-md-3">
-      <img src="${img}" class="productImg" alt="..." id="${id}" >
-    </div>
-    <div class="col-md-9">
-      <div class="card-body">
-        <h5  class="card-title">${r.product_name}</h5>
-        <h6 class="card-title">${r.order_id}</h6>
-     
-        <hr>
-         
-         <div class="metaInfo">
-         <h5 style="font-size: 20px;" class="card-title">${r.vendor_name}  <small class="text-muted">(${date}${time})</small> <a href="#" class="badge badge-primary float-right" style="font-size:12px"><i class="fa fa-phone-alt" aria-hidden="true"></i> Call</a></h5>
-            <span class="badge badge-secondary priceBdge"> Price: ${r.order_amount} </span>
-            <a href="#"  class="badge badge-primary">${r.order_status}</a>
-            
-        </div>
+                          <div class="row g-0" onclick="getfulldetails(this.id)" id="${r.order_id}" style="cursor: pointer;">
+                              <div class="col-md-3">
+                                <img src="${img}" class="productImg" alt="..." id="${id}" >
+                              </div>
+                              <div class="col-md-9">
+                                <div class="card-body">
+                                  <h5  class="card-title">${r.product_name}</h5>
+                                  <h6 class="card-title">${r.order_id}</h6>
 
-        <div class="comment">
-          <h5 class="card-title">${note}</h5>
-          <div class="container mt-3" id="multi-img">      ${img2}               </div>
-        </div>
-      </div>
-    </div>
-    </div>
-</div>`;
+                                  <hr>
+
+                                  <div class="metaInfo">
+                                  <h5 style="font-size: 20px;" class="card-title">${r.vendor_name}  <small class="text-muted">(${date}${time})</small> <a href="#" class="badge badge-primary float-right" style="font-size:12px"><i class="fa fa-phone-alt" aria-hidden="true"></i> Call</a></h5>
+                                      <span class="badge badge-secondary priceBdge"> Price: ${r.order_amount} </span>
+                                      <a href="#"  class="badge badge-primary">${r.order_status}</a>
+
+                                  </div>
+
+                                  <div class="comment">
+                                    <h5 class="card-title">${note}</h5>
+                                    <div class="container mt-3" id="multi-img">      ${img2}               </div>
+                                  </div>
+                                </div>
+                              </div>
+                              </div>
+                          </div>`;
            document.getElementById("Proposal-card").innerHTML = tab;
             }
 
           } else {
             console.log(data.message);
-            tab += ` <div class="vendor-name-history"><div class="images-div"></div>
-
-<p><img src="${assetUrl}nodata.png" alt="" width="200" class="rounded-circle" id="">${data.message}
-</p>
-</div>`;
+            tab += `<div class="vendor-name-history"><div class="images-div"></div>
+                    <p><img src="${assetUrl}nodata.png" alt="" width="200" class="rounded-circle" id="">${data.message}
+                    </p>
+                    </div>`;
             document.getElementById("Proposal-card").innerHTML = tab;
           }
-        
+
       }
 
 
@@ -3865,7 +4099,7 @@ text-align: center;><div class="images-div"></div>
       let id = $("#owner_id").val();
 
       formData.append('id', id);
-     
+
       formData.append('first_name', first_name);
       formData.append('last_name', last_name);
       formData.append('address', 'indore');
@@ -3900,12 +4134,12 @@ text-align: center;><div class="images-div"></div>
                       text: 'rofile datails updated successfull',
                       icon: 'success',
                       position:"top-center",
-                      timer: 3000,  
+                      timer: 3000,
                       offset: 40,
                       loader: true,        // Change it to false to disable loader
-                      loaderBg: '#9EC600'   
+                      loaderBg: '#9EC600'
               });
-         
+
            $("#show-profile").show();
           $("#edit-profile-details").hide();
         } else {
@@ -4004,7 +4238,7 @@ text-align: center;><div class="images-div"></div>
       $("#show-confirm").hide();
       $("#show-pending").hide();
       $("#show-profile").hide();
-    
+
     });
     /*----------Maintenance End----------*/
 
@@ -4044,13 +4278,13 @@ text-align: center;><div class="images-div"></div>
       $("#show-pending").hide();
       $("#show-profile").hide();
       getEmployee();
-    
+
     });
     /*----------Employee End----------*/
 
     /*----------Work Order----------*/
     $("#NewWorkorder").click(function(){
-      
+
       $("#history").removeClass("main-Button-1");
       $("#all-orders").removeClass("main-Button-1");
       $("#all-orders").addClass("main-Button-2");
@@ -4062,7 +4296,7 @@ text-align: center;><div class="images-div"></div>
       $("#confirm").removeClass("main-Button-1");
       $("#Workorder").removeClass("main-Button-3");
       $("#Workorder").addClass("main-Button-1");
-    
+
       $(".New-Work-Order").css("background-color", "#e4e6ef");
       $(".order-color").css("color", "#6759ff");
       $(".Proposal").css("background-color", "#ffffff");
@@ -4118,7 +4352,7 @@ function show(data) {
 
             tab += `<div class="proposal-hover workorder"> <a href="../product-details?id=${r.id}" style="text-decoration: none;"><div class="Proposal-card-01">
 
-<img src="${img}" class="rounded-start" alt="..." id="${id}" height="180" width="300">
+             <img src="${img}" class="rounded-start" alt="..." id="${id}" height="180" width="300">
 
             <h4>${r.product_name}</h4>
             <p>Code:${r.brand}</p>
@@ -4146,7 +4380,7 @@ function show(data) {
 
   });
 
-  
+
 
   function accept(orderId) {
 
@@ -4233,7 +4467,7 @@ function show(data) {
 
 
             }
-/*-----------Get Count Data-----------*/ 
+/*-----------Get Count Data-----------*/
 function getcountdata()
 {
   let counturl =
@@ -4248,11 +4482,11 @@ async function getcount(counturl) {
   // Storing data in form of JSON
   var data = await response.json();
   console.log(data);
-  
+
   showcount(data);
 }
 // Calling that async function
-getcount(counturl); 
+getcount(counturl);
 function showcount(data) {
 
 let tab = '';
@@ -4267,14 +4501,14 @@ if (data.status == 'true') {
   $("#confirmed-count").text(data.data.confirmed);
   $("#history-count").text(data.data.history);
   $("#work-count").text(data.data.work_order);
- 
+
 } else {
   alert("failed")
   $("#show-report").show();
-  
+
 }
 }
-}  
+}
 
  /*--------Reject Order Api Integration End-----------*/
  function getPending()
@@ -4328,10 +4562,10 @@ if (data.status == 'true') {
              }else{
               img2 += `<img src="${assetUrl + 'product-dummy.png'}" height="100" width="100" alt="" class="img-thumbnail hover-zoom proposal-hover" style="height: 100px !important;">`;
              }
-        for (let i of x) {
-          img2 += `<img src="${i}" height="100" width="100" alt="" class="img-thumbnail hover-zoom proposal-hover" style="height: 100px !important;">`;
+            for (let i of x) {
+              img2 += `<img src="${i}" height="100" width="100" alt="" class="img-thumbnail hover-zoom proposal-hover" style="height: 100px !important;">`;
 
-        }
+            }
 
               let img = r.thumbnail_image == null ? assetUrl + "product-dummy.png" : r.thumbnail_image;
               // let img1 = r.image == null ? assetUrl + "product-dummy.png" : r.image;
@@ -4343,50 +4577,42 @@ if (data.status == 'true') {
                   time = r.time
               }
 
-              tab += ` <div class="card mb-3">
-    <div class="row g-0">
-    <div class="col-md-4 text-right">
-      <img src="${img}" class="product-pending rounded-start" alt="..." id="${r.id}" style="padding:5px;">
-    </div>
-    <div class="col-md-8">
-      <div class="card-body">
-        <h5 class="card-title">${r.product_name}</h5>
-        <h6 class="card-title">${r.order_id}</h6>
-       
+              tab += `<div class="card mb-3">
+                        <div class="row g-0">
+                        <div class="col-md-4 text-right">
+                          <img src="${img}" class="product-pending rounded-start" alt="..." id="${r.id}" style="padding:5px;">
+                        </div>
+                        <div class="col-md-8">
+                          <div class="card-body">
+                            <h5 class="card-title">${r.product_name}</h5>
+                            <h6 class="card-title">${r.order_id}</h6>
+                            <hr></hr>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="row g-0">
+                        <div class="col-md-2">
 
-        <hr></hr>
-
-
-      </div>
-    </div>
-  </div>
-  <div class="row g-0">
-    <div class="col-md-2">
-     
-    </div>
-    <div class="col-md-6">
-      <div class="card-body">
-        <h5 class="card-title">${r.first_name} ${r.last_name}</h5>
-
-
-
-        <hr></hr>
-    </div>
-  </div>
-  <div class="col-md-4 mt-20">
-           <a href="{{url('/')}}/product-details?id=${r.product_id}&order_id=${r.order_id}" class="btn btn-primary">Add Quote</a>
-
-                <div onclick="reject(this.id)"class="btn btn-primary" id="${r.order_id}">Cancel Order</div>
-            </div>
-            <div class="row g-0">
-        <div class="col-md-4" style="padding: 5px 15px 5px 27px; text-align:end;">
-        <h5 class="card-title">${img2}</h5>
-        </div>
-        <div class="col-md-8" style="padding: 5px 15px 5px 27px; text-align:end;">
-        <h5 class="card-title" style="text-align: initial;">${r.description}</h5>
-        </div>
-  </div>
-</div>`;
+                        </div>
+                        <div class="col-md-6">
+                          <div class="card-body">
+                            <h5 class="card-title">${r.first_name} ${r.last_name}</h5>
+                            <hr></hr>
+                        </div>
+                      </div>
+                    <div class="col-md-4 mt-20">
+                    <a href="{{url('/')}}/product-details?id=${r.product_id}&order_id=${r.order_id}" class="btn btn-primary">Add Quote</a>
+                          <div onclick="reject(this.id)"class="btn btn-primary" id="${r.order_id}">Cancel Order</div>
+                    </div>
+                  <div class="row g-0">
+                    <div class="col-md-4" style="padding: 5px 15px 5px 27px; text-align:end;">
+                    <h5 class="card-title">${img2}</h5>
+                    </div>
+                    <div class="col-md-8" style="padding: 5px 15px 5px 27px; text-align:end;">
+                    <h5 class="card-title" style="text-align: initial;">${r.description}</h5>
+                    </div>
+                </div>
+              </div>`;
 
               document.getElementById("Proposal-card").innerHTML = tab;
 
@@ -4395,22 +4621,19 @@ if (data.status == 'true') {
 
           } else {
             console.log(data.message);
-            tab += ` <div class="vendor-name-history" style="
-    text-align: center;><div class="images-div"></div>
-
-<p><img src="${assetUrl}nodata.png" alt="" width="200" class="float-start rounded-circle" id="">${data.message}
-</p>
-</div>`;
+            tab += `<div class="vendor-name-history" style="
+                    text-align: center;><div class="images-div"></div>
+                    <p><img src="${assetUrl}nodata.png" alt="" width="200" class="float-start rounded-circle" id="">${data.message}
+                    </p>
+                  </div>`;
             document.getElementById("Proposal-card").innerHTML = tab;
           }
-
-
         }
       } else{
-        
+
         const api_url = appUrl + "/owner/get_Proposal?order_status=pending &owner_id=" + id;
         let limit = $("#approval_limit").val();
-       
+
         // Defining async function
         async function getapi(url) {
 
@@ -4436,7 +4659,7 @@ if (data.status == 'true') {
 
           let tab = '';
           let tab1 = '';
-         
+
           let tab3 = '';
           let date = '';
           let reject = '';
@@ -4478,51 +4701,44 @@ if (data.status == 'true') {
               let status = r.note == null ? r.order_status : 'Accept';
 
               tab += ` <div class="card mb-3">
-  <div class="row g-0">
-    <div class="col-md-3">
-      <img src="${img}" class="img-thumbnail rounded-start ml-5 mt-3" alt="..." id="${id}"  style="padding:5px;" width="200" height: 170px;>
-    </div>
-    <div class="col-md-9">
-      <div class="card-body">
-        <h5 style="font-size: 22px; class="card-title">${r.product_name}</h5>
-        <h6 style="font-size: 14px; font-weight: 400;" class="card-title">${r.order_id}</h6>
-       
-        <hr></hr>
-
-
-      </div>
-    </div>
-  </div>
-  <div style="margin-top: -10px;" class="row g-0">
-    <div style="margin-top: -20px; margin-left: 226px;" class="col-md-2">
-    
-    </div>
-    <div class="col-md-8">
-      <div style="margin-top: -57px; margin-left: 320px;" class="card-body">
-        <h5 style="font-size: 20px;" class="card-title">${r.vendor_name}</h5>
-
-    </div>
-  </div>
-  <div class="col-md-2 mt-20">
- ${count}
- ${reject}
-  </div>
-  <div"class="row g-0">
-  <div class="col-md-12" style="padding: 5px 15px 5px 27px;">
-        <h5 class="card-title" style="margin-top: -30px;margin-left: 270px;text-align: initial;font-weight: 400;">${note}</h5>
-        </div>
-
-  </div>
-  <div style="margin-top: -15px;margin-left: 230px;"class="row g-0">
-
-        <div class="col-md-12" style="padding: 5px 15px 5px 27px;">
-        <div class="container mt-3" id="multi-img">
-       ${img2}
-               </div>
-        </div>
-        </div>
-  </div>
-</div>`;
+                        <div class="row g-0">
+                          <div class="col-md-3">
+                            <img src="${img}" class="img-thumbnail rounded-start ml-5 mt-3" alt="..." id="${id}"  style="padding:5px;" width="200" height: 170px;>
+                          </div>
+                          <div class="col-md-9">
+                            <div class="card-body">
+                              <h5 style="font-size: 22px; class="card-title">${r.product_name}</h5>
+                              <h6 style="font-size: 14px; font-weight: 400;" class="card-title">${r.order_id}</h6>
+                              <hr></hr>
+                            </div>
+                          </div>
+                        </div>
+                        <div style="margin-top: -10px;" class="row g-0">
+                          <div style="margin-top: -20px; margin-left: 226px;" class="col-md-2">
+                          </div>
+                          <div class="col-md-8">
+                            <div style="margin-top: -57px; margin-left: 320px;" class="card-body">
+                              <h5 style="font-size: 20px;" class="card-title">${r.vendor_name}</h5>
+                          </div>
+                        </div>
+                        <div class="col-md-2 mt-20">
+                      ${count}
+                      ${reject}
+                        </div>
+                        <div"class="row g-0">
+                        <div class="col-md-12" style="padding: 5px 15px 5px 27px;">
+                              <h5 class="card-title" style="margin-top: -30px;margin-left: 270px;text-align: initial;font-weight: 400;">${note}</h5>
+                              </div>
+                        </div>
+                        <div style="margin-top: -15px;margin-left: 230px;"class="row g-0">
+                              <div class="col-md-12" style="padding: 5px 15px 5px 27px;">
+                              <div class="container mt-3" id="multi-img">
+                            ${img2}
+                                    </div>
+                              </div>
+                              </div>
+                        </div>
+                      </div>`;
 
               document.getElementById("Proposal-card").innerHTML = tab;
 
@@ -4531,53 +4747,52 @@ if (data.status == 'true') {
 
           } else {
             console.log(data.message);
-            tab += ` <div class="vendor-name-history" style="
-    text-align: center;><div class="images-div"></div>
-
-<p><img src="${assetUrl}nodata.png" alt="" width="200" class="float-start rounded-circle" id="">${data.message}
-</p>
-</div>`;
+            tab += `<div class="vendor-name-history" style="
+                      text-align: center;><div class="images-div"></div>
+                      <p><img src="${assetUrl}nodata.png" alt="" width="200" class="float-start rounded-circle" id="">${data.message}
+                      </p>
+                     </div>`;
             document.getElementById("Proposal-card").innerHTML = tab;
           }
         }
       }
       }
-     
+
   function invoice(id)
  {
   $('#order_id').val(id);
 
-  
+
   var assetUrl = "{{env('ASSET_URL')}}";
       var purl = "{{env('PROFILE_URL')}}";
-      var appUrl = "{{env('APP_URL')}}";       
+      var appUrl = "{{env('APP_URL')}}";
             $.ajax({
                 type: "GET",
                 url: '{!! route("get.single.order")!!}?id=' + id,
-               
+
                 success: function(data) {
                     console.log(data);
                      $('#owner-name').val(data.data.owner_name);
 
                        $('#owner-description').val(data.data.description);
                        $('#inv-product_name').val(data.data.product_name);
-                         $('#inv-order_amount').val(data.data.order_amount);
-                           $('#sub_total').val(data.data.price);
-                            $('#total_amount').val(data.data.order_amount);
-                    $('#exampleModal').modal('show');
-      //        
-    }
-  });
+                       $('#inv-order_amount').val(data.data.order_amount);
+                       $('#sub_total').val(data.data.price);
+                       $('#total_amount').val(data.data.order_amount);
+                       $('#exampleModal').modal('show');
+      //
+                        }
+                    });
 }
- 
+
  $(function () {
-  
-  
+
+
        $('#submit').click(function() {
-   var uid = $("#ownerid").val();
+       var uid = $("#ownerid").val();
        var assetUrl = "{{env('ASSET_URL')}}";
-      var purl = "{{env('PROFILE_URL')}}";
-      var appUrl = "{{env('APP_URL')}}";       
+       var purl = "{{env('PROFILE_URL')}}";
+       var appUrl = "{{env('APP_URL')}}";
             $.ajax({
                 type: "POST",
                 url: '{!! route("invoice.generate")!!}',
@@ -4585,22 +4800,19 @@ if (data.status == 'true') {
                 success: function(data) {
                     console.log(data);
                     $('#exampleModal').modal('hide');
-                   
                       let tab = '';
       let count = 0;
       // Loop to access all rows
       if (data.status == 'true') {
         $('#exampleModalInvoice').modal('show');
         getcountdata();
- console.log(data.data.order_status)
-  console.log(data.data.order_amount)
             let pimg = data.data.thumbnail_image == null ? assetUrl + "product-dummy.png" : assetUrl+'images/products/'+data.data.thumbnail_image;
             // let user = data.data.image == null ? purl + "default-profile.png" : data.data.image;
             let name = uid == 4?data.data.vname:data.data.owner_name;
             let phone = uid == 4?data.data.vendor_phone:data.data.phone;
             let address = uid == 4?data.data.vendor_street_address:data.data.street_address;
 
-           tab =`
+      tab =`
       <div class="row d-flex align-items-baseline">
         <div class="col-xl-8">
 
@@ -4703,7 +4915,7 @@ if (data.status == 'true') {
             <p>Thank you for your Maintenance</p>
           </div>
           <div class="col-xl-2">
-            
+
           </div>
         </div>
 
@@ -4729,7 +4941,7 @@ if (data.status == 'true') {
         });
      });
      function myfunction1() {
-  
+
   var doc = new jsPDF();
   var specialElementHandlers = {
     '#editor': function (element, renderer) {
@@ -4755,7 +4967,7 @@ if (data.status == 'true') {
   $("#getinvoicedetails").printThis();
 
  }
- 
+
 function calc()
 {
   $('#tab_logic tbody tr').each(function(i, element) {
@@ -4765,7 +4977,7 @@ function calc()
       var qty = $(this).find('.qty').val();
       var price = $(this).find('.price').val();
       $(this).find('.total').val(qty*price);
-      
+
       calc_total();
     }
     });
@@ -4800,16 +5012,16 @@ function  getequipment()
    var table = $('#equipment-table').DataTable({
             retrieve:true,
             destroy:true,
-            
+
             ajax: '{!! route('get.equipment') !!}',
             columns: [
                 { data: 'id', name: 'id',
                   render: function (data, type, row, meta) {
         return meta.row + meta.settings._iDisplayStart + 1;
     } },
-                
+
                 { data: 'product_name', name: 'product_name' },
-              
+
                 { data: 'images', name: 'images',
                  render: function( data, type, full, meta ) {
                         return "<img src=\"" + data + "\" height=\"50\" class=\"rounded-circle\"/>";
@@ -4821,11 +5033,12 @@ function  getequipment()
                   { data: 'qrcode', name: 'qrcode' },
                 { data: 'action', name: 'action' },
                 ],
-                aaSorting: [[0, 'desc']], }); 
+                aaSorting: [[0, 'desc']], });
                 table.ajax.reload();
 
 }
 $('#add-equipment').click(function(){
+ 
          $("#single-detail").hide();
         let ownerid = $('#owner_id').val();
         var files = $('#equipment-image').prop('files');
@@ -4840,25 +5053,34 @@ $('#add-equipment').click(function(){
          }
         }else{
           formData.append('images', $('#equipment-image').text());
-          
+
         }
-        
+
          console.log(formData);
-        let name = $('#equipment-name').val();
-        let user_id = ownerid;
-        let stock = $('#equipment-stock').val();
-        let qty = $('#equipment-qty').val();
-        let price = $('#equipment-price').val();
-        let model = $('#equipment-model').val();
-        let description = $('#equipment-description').val();
-        formData.append('name', name);
-        formData.append('id', ID);
+         let user_id = ownerid;
+        let product_name = $('#equipment-product_name').val();
+      
+        let model_number = $('#equipment-model_number').val();
+         let category = $('#equipment-category').val();
+        let status = $('#radio1').val(); 
+        let shop_id = $('#equipment-shop_id').val();
+        let brand = $('#equipment-brand').val();
+        let product_description = $('#equipment-product_description').val();
+        let warranty = $('#warranty').val();
+        let serial_number = $('#equipment-serial_number').val();
+         let purchase_date = $('#equipment-purchase_date').val();
+        formData.append('product_name', product_name);
         formData.append('user_id', user_id);
-        formData.append('price', price);
-        formData.append('description', description);
-        formData.append('model_no', model);
-        formData.append('stock', stock);
-        formData.append('qty', qty);
+          formData.append('id', ID);
+          formData.append('warranty', warranty);
+         formData.append('status', status);
+        formData.append('model_number', model_number);
+        formData.append('shop_id', shop_id);
+        formData.append('brand', brand);
+           formData.append('category', category);
+        formData.append('product_description', product_description);
+        formData.append('serial_number', serial_number);
+         formData.append('purchase_date', purchase_date);
         console.log(formData);
         var appUrl ="{{env('APP_URL')}}";
        $.ajaxSetup({
@@ -4874,18 +5096,20 @@ $('#add-equipment').click(function(){
                 contentType: false,
                 success: function(data) {
                     console.log(data);
-                 
+
                  if(data.status== 'true')
                  {
-                 $('#equipment-name').val('');
+                 $('#equipment-product_name').val('');
+                  $('#equipment-purchase_date').val('');
+                   $('#equipment-category').val('');
                  $('#equipment-image').text('')
                  $('#frame').attr('src', '')
                  $('#equipmentId').val('');
-                 $('#equipment-stock').val('');
-                 $('#equipment-qty').val('');
-                 $('#equipment-price').val('');
-                 $('#equipment-model').val('');
-                 $('#equipment-description').val('');
+                 $('#equipment-serial_number').val('');
+                 $('#equipment-model_number').val('');
+                 $('#equipment-product_description').val('');
+                 $('#equipment-brand').val('');
+                 $('#equipment-warranty').val('');
                  $("#equipmentModal").modal('hide');
 
                    getequipment()
@@ -4895,14 +5119,14 @@ $('#add-equipment').click(function(){
                       text: 'Record has been Updated',
                       icon: 'success',
                       position:"top-center",
-                      timer: 3000,  
+                      timer: 3000,
                       offset: 40,
                       loader: true,        // Change it to false to disable loader
                       loaderBg: '#9EC600'
-                 
+
               });
-              
-             
+
+
                 }else{
                   Swal.fire({
                      title: 'Failed!',
@@ -4910,7 +5134,7 @@ $('#add-equipment').click(function(){
                   text: data.message,
                   icon: 'warning',
                   offset: 50,
-                  loader: true, 
+                  loader: true,
                   timer: 5000,       // Change it to false to disable loader
                   loaderBg: '#9EC600'
                   });
@@ -4918,34 +5142,42 @@ $('#add-equipment').click(function(){
 
 
    }
-});  
+});
       }else{
 
-    $("#ename").css('display', 'none')
-    $("#eimg").css('display', 'none')
-    $("#eqty").css('display', 'none')
-    $("#emodel").css('display', 'none')
-    $("#eprice").css('display', 'none')
+          $("#ename").css('display', 'none')
+          $("#eimg").css('display', 'none')
+          $("#eqty").css('display', 'none')
+          $("#emodel").css('display', 'none')
+          $("#eprice").css('display', 'none')
          for(i=0; i<files.length; i++) {
-         formData.append('images', files[i]);
+         formData.append('thumbnail_image', files[i]);
          }
-        
-        
+
+
          console.log(formData);
-        let name = $('#equipment-name').val();
+        let product_name = $('#equipment-product_name').val();
         let user_id = ownerid;
-        let stock = $('#equipment-stock').val();
-        let qty = $('#equipment-qty').val();
-        let price = $('#equipment-price').val();
-        let model = $('#equipment-model').val();
-        let description = $('#equipment-description').val();
-        formData.append('name', name);
+        let model_number = $('#equipment-model_number').val();
+         let category = $('#equipment-category').val();
+        let status = $('#radio1').val(); 
+        let shop_id = $('#equipment-shop_id').val();
+        let brand = $('#equipment-brand').val();
+        let product_description = $('#equipment-product_description').val();
+        let warranty = $('#equipment-warranty').val();
+        let serial_number = $('#equipment-serial_number').val();
+         let purchase_date = $('#equipment-purchase_date').val();
+        formData.append('product_name', product_name);
         formData.append('user_id', user_id);
-        formData.append('price', price);
-        formData.append('description', description);
-        formData.append('model_no', model);
-        formData.append('stock', stock);
-        formData.append('qty', qty);
+         formData.append('status', status);
+        formData.append('model_number', model_number);
+         formData.append('warranty', warranty);
+        formData.append('shop_id', shop_id);
+        formData.append('brand', brand);
+           formData.append('category', category);
+        formData.append('product_description', product_description);
+        formData.append('serial_number', serial_number);
+         formData.append('purchase_date', purchase_date);
         console.log(formData);
         var appUrl ="{{env('APP_URL')}}";
        $.ajaxSetup({
@@ -4961,20 +5193,20 @@ $('#add-equipment').click(function(){
                 contentType: false,
                 success: function(data) {
                     console.log(data);
-                 
+
                  if(data.status== true)
                  {
-                 $('#equipment-name').val('');
-                 $('#equipment-image').text('')
+                 $('#equipment-product_name').val('');
+                 $('#equipment-images').text('')
                  $('#frame').attr('src', '')
-                 $('#equipmentId').val('');
-                 $('#equipment-stock').val('');
-                 $('#equipment-qty').val('');
-                 $('#equipment-price').val('');
-                 $('#equipment-model').val('');
-                 $('#equipment-description').val('');
+                 $('#equipment-brand').val('');
+                 $('#equipment-shop_id').val('');
+                 $('#equipment-serial_number').val('');
+                 $('#equipment-model_number').val('');
+                 $('#equipment-warranty').val('');
+                 $('#equipment-product_description').val('');
                  $("#equipmentModal").modal('hide');
-                  
+
                    getequipment()
                   Swal.fire({
                       title: 'Added',
@@ -4982,66 +5214,53 @@ $('#add-equipment').click(function(){
                       text: 'Equipment has been added',
                       icon: 'success',
                       position:"top-center",
-                      timer: 3000,  
+                      timer: 3000,
                       offset: 40,
                       loader: true,        // Change it to false to disable loader
                       loaderBg: '#9EC600'
-                 
+
               });
-              
-             
+
+
                 }else{
 
       $.each(data.data, function (i) {
       $.each(data.data[i], function (key, val) {
-    
-      if(i == 'name')
-          { 
-             $("#ename").css('display', 'block')
-              $("#ename").css('color', 'red')
-              $("#ename").text(val)
-          }else if(i == 'images'){
-             $("#eimg").css('display', 'block')
-              $("#eimg").css('color', 'red')
-              $("#eimg").text(val)
-          }else if(i == 'model_no'){
-             $("#emodel").css('display', 'block')
-              $("#emodel").css('color', 'red')
-              $("#emodel").text(val)
-          }else if(i == 'price'){
-             $("#eprice").css('display', 'block')
-              $("#eprice").css('color', 'red')
-              $("#eprice").text(val)
-          }
-          else{
-            $("#eqty").css('display', 'block')
-              $("#eqty").css('color', 'red')
-              $("#eqty").text(val)
-          }         
+
+          if(i == 'name')
+              {
+                $("#ename").css('display', 'block')
+                  $("#ename").css('color', 'red')
+                  $("#ename").text(val)
+              }else if(i == 'images'){
+                $("#eimg").css('display', 'block')
+                  $("#eimg").css('color', 'red')
+                  $("#eimg").text(val)
+              }else if(i == 'model_no'){
+                $("#emodel").css('display', 'block')
+                  $("#emodel").css('color', 'red')
+                  $("#emodel").text(val)
+              }else if(i == 'price'){
+                $("#eprice").css('display', 'block')
+                  $("#eprice").css('color', 'red')
+                  $("#eprice").text(val)
+              }
+              else{
+                $("#eqty").css('display', 'block')
+                  $("#eqty").css('color', 'red')
+                  $("#eqty").text(val)
+              }
     });
 });
 
-
-
-
-                  // Swal.fire({
-                  //    title: 'Failed!',
-                  //     heading: 'Alert',
-                  // text: data.message,
-                  // icon: 'warning',
-                  // offset: 50,
-                  // loader: true, 
-                  // timer: 5000,       // Change it to false to disable loader
-                  // loaderBg: '#9EC600'
-                  // });
-                }
+      }
 
 
    }
 });
       }
-       
-        
+
+
  });
 function getSingleEquipment(id)
 {
@@ -5050,7 +5269,7 @@ function getSingleEquipment(id)
     var assetUrl = "{{env('ASSET_URL')}}/images/products/";
      var asset = "{{env('ASSET_URL')}}/";
       var appUrl = "{{env('APP_URL')}}";
-     
+
         const api_url =
           '{!! route("get.single")!!}?id=' + id;
 
@@ -5063,7 +5282,7 @@ function getSingleEquipment(id)
           // Storing data in form of JSON
           var data = await response.json();
           console.log(data);
-         
+
           show(data);
         }
         // Calling that async function
@@ -5075,43 +5294,57 @@ function getSingleEquipment(id)
           let tab3 = '';
           let date = '';
           let reject = '';
+          let cat = '';
           let time = '';
           let count = 0;
           // Loop to access all rows
-          if (data.status == 'true') {
+          // cat = `<option>Select Category</option>`;
+           if (data.status == 'true') {
+         
+             $('#equipment-product_name').val(data.data.product_name);
+                 $('#equipment-images').text('')
+                 $('#frame').attr('src', assetUrl+''+data.data.thumbnail_image);
+                 $('#equipment-brand').val(data.data.brand);
+                 $('#equipment-shop_id').val(data.data.shop_id);
+                  $('#equipment-category').val(data.data.category);
+                   $('#warranty').val(data.data.warranty);
+                 $('#equipment-serial_number').val(data.data.serial_number);
+                 $('#equipment-model_number').val(data.data.model_number);
+                 $('#equipment-purchase_date').val(data.data.purchase_date);
+                 $('#equipment-product_description').val(data.data.product_description);
+             let btn =  '<div onclick="editEquipment('+data.data.id+')" style="padding: 14px 20px 0px 20px"><button class="btn btn-primary" style="float: right;padding: 10px 35px 10px 35px;"><i class="fa fa-plus" id="edit_e"></i> Edit Equipment</button></div>';
 
-          
               let img2 = '';
               var x = new Array();
              if(data.data.images != null){
-                 img2 = `<img src="${data.data.thumbnail_images}" height="100" width="100" alt="">`;
+                 img2 = `<img src="${data.data.thumbnail_image}" height="100" width="100" alt="">`;
              }else{
               img2 = `<img src="${assetUrl + 'product-dummy.png'}" height="100" width="100" alt="" >`;
              }
-              tab = ` <div class="proOuterBox">
-  <div class="row g-0">
-    <div class="col-md-3">
-      <img src="${assetUrl + data.data.thumbnail_images}" class="productImg" alt="..." id="${id}"  >
-    </div>
-    <div class="col-md-9">
-      <div class="card-body">
-        <h2 class="card-title">${data.data.product_name}</h2>
-        <h5  class="card-title">${data.data.model_number}</h5>
-        <h4 style="font-size: 20px; color: #453d3d;" class="card-title"> Title: ${data.data.title} </div></h4>
-        <p>${data.data.product_description}</p>
-        <div class="metaInfo dmetaInfo">
-         <h4 style="font-size: 20px;" class="card-title">Category: ${data.data.category_name} </h5>
-            <h4 style="font-size: 20px; color: #453d3d;" class="card-title"> Shop: ${data.data.shop} &nbsp; &nbsp;Brand:${data.data.brand}</div></h4>
-  <div class="container mt-3" id="multi-img">${data.data.qrcode} </div> </div> </div></div>
-  </div>  </div>
-</div>`;
- document.getElementById("get-single-equipment").innerHTML = tab;
+              tab = `<div class="proOuterBox">
+                      <div class="row g-0">
+                        <div class="col-md-3">
+                          <img src="${assetUrl + data.data.thumbnail_image}" class="productImg" alt="..." id="${id}"  >
+                        </div>
+                        <div class="col-md-9">
+                          <div class="card-body">
+                          ${btn}
+                            <h2 class="card-title">${data.data.product_name}</h2>
+                            <h5  class="card-title">${data.data.model_number}</h5>
+                            <h4 style="font-size: 20px; color: #453d3d;" class="card-title"> Title: ${data.data.title} </div></h4>
+                            <p>${data.data.product_description}</p>
+                            <div class="metaInfo dmetaInfo">
+                            <h4 style="font-size: 20px;" class="card-title">Category: ${data.data.category_name} </h5>
+                                <h4 style="font-size: 20px; color: #453d3d;" class="card-title"> Shop: ${data.data.shop} &nbsp; &nbsp;Brand:${data.data.brand}</div></h4>
+                      <div class="container mt-3" id="multi-img">${data.data.qrcode} </div> </div> </div></div>
+                      </div>  </div>
+                    </div>`;
+             document.getElementById("get-single-equipment").innerHTML = tab;
             }else{
-                tab = ` <div class="vendor-name-history"><div class="images-div"></div>
-
-<p><img src="${asset}nodata.png" alt="" width="200" class="rounded-circle" id="">${data.message}
-</p>
-</div>`;
+                tab = `<div class="vendor-name-history"><div class="images-div"></div>
+                    <p><img src="${asset}nodata.png" alt="" width="200" class="rounded-circle" id="">${data.message}
+                    </p>
+                    </div>`;
           document.getElementById("get-single-equipment").innerHTML = tab;
             }
 
@@ -5119,13 +5352,13 @@ function getSingleEquipment(id)
 }
 function editEquipment(id)
 {
- 
-  $("#single-detail").hide();
+
+  // $("#single-detail").hide();
   $("#show-equipment").hide();
     var assetUrl = "{{env('ASSET_URL')}}/images/products/";
 
       var appUrl = "{{env('APP_URL')}}";
-     
+
         const api_url =
           '{!! route("get.single")!!}?id=' + id;
 
@@ -5138,19 +5371,21 @@ function editEquipment(id)
           // Storing data in form of JSON
           var data = await response.json();
           console.log(data);
-         
+
           show(data);
         }
         // Calling that async function
         getapi(api_url);
         function show(data) {
-          
+
            // frame.src=URL.createObjectURL(event.target.data.data.images);
-        $("#equipment-image").text(data.data.images)
+           
+        $("#equipment-image").text(data.data.thumbnail_image);
            // $('input:file').val(data.data.images);
-        $("#frame").css('display','block')
-        $("#frame").attr('src',assetUrl+''+data.data.images)
+        $("#frame").css('display','block');
+        $("#frame").attr('src',assetUrl+''+data.data.thumbnail_image);
         $('#equipment-name').val(data.data.name);
+         $('#warranty').val(data.data.warranty);
         $('#equipmentId').val(data.data.id);
         $('#equipment-stock').val(data.data.stock);
         $('#equipment-qty').val(data.data.qty);
@@ -5166,9 +5401,9 @@ function addPlan()
   $("#addPlanModal").modal('show')
 }
 function CreatePlan()
-{ 
+{
  let id = $("#plan-id").val();
- 
+
  if(id != '')
  {
   $.ajax({
@@ -5186,19 +5421,19 @@ function CreatePlan()
                  $('#plan-description').val('');
                     $('#addPlanModal').modal('hide');
                     getPlan()
-                  
-                  
+
+
                     Swal.fire({
                       title: 'Added',
                       heading: 'success',
                       text: 'Plan has been updated successfully',
                       icon: 'success',
                       position:"top-center",
-                      timer: 3000,  
+                      timer: 3000,
                       offset: 40,
                       loader: true,        // Change it to false to disable loader
                       loaderBg: '#9EC600'
-                 
+
               });
                     getCardPlan()
                     getPlan()
@@ -5209,19 +5444,19 @@ function CreatePlan()
                   text: data.message,
                   icon: 'warning',
                   offset: 50,
-                  loader: true, 
+                  loader: true,
                   timer: 5000,       // Change it to false to disable loader
                   loaderBg: '#9EC600'
                   });
                 }
               }
               });
-                 
+
  }else{
-   $("#pname").css('display', 'none')
-   $("#pstart").css('display', 'none')
-   $("#pend").css('display', 'none')
-    $("#pprice").css('display', 'none')
+          $("#pname").css('display', 'none')
+          $("#pstart").css('display', 'none')
+          $("#pend").css('display', 'none')
+            $("#pprice").css('display', 'none')
    $.ajax({
                 type: "POST",
                 url: '{!! route("add.plan")!!}',
@@ -5239,77 +5474,77 @@ function CreatePlan()
                     $('#addPlanModal').modal('hide');
                     getPlan()
                     getCardPlan()
-                  
+
                     Swal.fire({
                       title: 'Added',
                       heading: 'success',
                       text: 'Plan has been added successfully',
                       icon: 'success',
                       position:"top-center",
-                      timer: 3000,  
+                      timer: 3000,
                       offset: 40,
                       loader: true,        // Change it to false to disable loader
                       loaderBg: '#9EC600'
-                 
+
               });
                     getPlan()
                 }else{
               $.each(data.data, function (i) {
     $.each(data.data[i], function (key, val) {
       if(i == 'name')
-{ 
-   $("#pname").css('display', 'block')
-    $("#pname").css('color', 'red')
-    $("#pname").text(val)
-}else if(i == 'start_date'){
-   $("#pstart").css('display', 'block')
-    $("#pstart").css('color', 'red')
-    $("#pstart").text(val)
-}else if(i == 'price'){
-   $("#pprice").css('display', 'block')
-    $("#pprice").css('color', 'red')
-    $("#pprice").text(val)
-}else{
-  $("#pend").css('display', 'block')
-    $("#pend").css('color', 'red')
-    $("#pend").text(val)
-}
-      
-   
-                 
+          {
+            $("#pname").css('display', 'block')
+              $("#pname").css('color', 'red')
+              $("#pname").text(val)
+          }else if(i == 'start_date'){
+            $("#pstart").css('display', 'block')
+              $("#pstart").css('color', 'red')
+              $("#pstart").text(val)
+          }else if(i == 'price'){
+            $("#pprice").css('display', 'block')
+              $("#pprice").css('color', 'red')
+              $("#pprice").text(val)
+          }else{
+            $("#pend").css('display', 'block')
+              $("#pend").css('color', 'red')
+              $("#pend").text(val)
+        }
+
+
+
     });
 });
                 }
                   }
                   });
  }
-  
-     
-           
-            
+
+
+
+
 }
 function getPlan()
 {
     var table = $('#maintenance-table').DataTable({
             retrieve:true,
             destroy:true,
-            
+
             ajax: '{!! route('get.plan') !!}',
             columns: [
                 { data: 'id', name: 'id' },
-                
+
                 { data: 'name', name: 'name' },
-              
+
                 { data: 'start_date', name: 'start_date' },
                 { data: 'end_date', name: 'end_date' },
                 { data: 'price', name: 'price' },
                 { data: 'description', name: 'description' },
                 { data: 'action', name: 'action' },
                 ],
-                
-               
-             });  
-              table.ajax.reload();    
+
+
+             });
+              table.ajax.reload();
 }
 
 function editPlan(id)
@@ -5327,7 +5562,7 @@ function editPlan(id)
           // Storing data in form of JSON
           var data = await response.json();
           console.log(data);
-         
+
           show(data);
         }
         // Calling that async function
@@ -5340,17 +5575,17 @@ function editPlan(id)
             count = count+1;
              tab += `<tr id="addrr${counts}"><td>${count}</td><td> Features: <input type="text" class="form-control" id="plan-freaturs"name="features[]" value="${r}"><td></tr>`;
              counts = counts+1;
-          
+
         }
          document.getElementById("tab_logics").innerHTML = tab;
-       
+
                  $('#plan-name').val(data.data.name);
                  $('#plan-start').val(data.data.start_date);
                  $('#plan-end').val(data.data.end_date);
                  $('#plan-price').val(data.data.price);
                  $('#plan-description').val(data.data.description);
                  $('#addPlanModal').modal('show');
-          
+
           }
 }
 function getCardPlan()
@@ -5373,7 +5608,7 @@ function getCardPlan()
       function show(data) {
 console.log(data)
         let tab = '';
-       
+
         let count = 0;
         // Loop to access all rows
         if (data.status == 'true') {
@@ -5389,9 +5624,9 @@ console.log(data)
              }else{
               feature = `<li>25GB Storage</li> <li>25 Emails</li><li>25 Domains</li><li>2GB Bandwidth</li>`;
              }
-       
 
-           
+
+
 
             tab += ` <div class="columns">
                 <ul class="prices">
@@ -5402,9 +5637,9 @@ console.log(data)
                 </ul>
               </div>`;
             document.getElementById("get-plan-card").innerHTML = tab;
-          
 
-        } 
+
+        }
       }else {
           console.log(data.message);
           tab += `  <div class="columns">
@@ -5426,13 +5661,17 @@ function addEmployee()
 {
   $("#employeeModal").modal('show')
 }
+function addEquipment()
+{
+  $("#equipmentModal").modal('show')
+}
 function CreateEmp()
-{ 
+{
  let id = $("#emp-id").val();
 
  if(id != '')
  {
-   
+
   $.ajax({
                 type: "POST",
                 url: '{!! route("update.employee")!!}',
@@ -5448,19 +5687,19 @@ function CreateEmp()
                  $('#plan-description').val('');
                     $('#addPlanModal').modal('hide');
                     getPlan()
-                  
-                  
+
+
                     Swal.fire({
                       title: 'Added',
                       heading: 'success',
                       text: 'Employee has been updated successfully',
                       icon: 'success',
                       position:"top-center",
-                      timer: 3000,  
+                      timer: 3000,
                       offset: 40,
                       loader: true,        // Change it to false to disable loader
                       loaderBg: '#9EC600'
-                 
+
               });
                     $("#employeeModal").modal('hide')
                     getCardPlan()
@@ -5473,20 +5712,20 @@ function CreateEmp()
                   text: data.message,
                   icon: 'warning',
                   offset: 50,
-                  loader: true, 
+                  loader: true,
                   timer: 5000,       // Change it to false to disable loader
                   loaderBg: '#9EC600'
                   });
                 }
               }
               });
-                 
- }else{
-   $("#fname").css('display', 'none')
-    $("#lname").css('display', 'none')
-   $("#pass").css('display', 'none')
-   $("#phone").css('display', 'none')
-    $("#email").css('display', 'none')
+
+      }else{
+        $("#fname").css('display', 'none')
+          $("#lname").css('display', 'none')
+        $("#pass").css('display', 'none')
+        $("#phone").css('display', 'none')
+          $("#email").css('display', 'none')
    $.ajax({
                 type: "POST",
                 url: '{!! route("add.employee")!!}',
@@ -5504,18 +5743,18 @@ function CreateEmp()
                     $('#addPlanModal').modal('hide');
                     getPlan()
                     getCardPlan()
-                  
+
                     Swal.fire({
                       title: 'Added',
                       heading: 'success',
                       text: 'Employee has been created successfully',
                       icon: 'success',
                       position:"top-center",
-                      timer: 3000,  
+                      timer: 3000,
                       offset: 40,
                       loader: true,        // Change it to false to disable loader
                       loaderBg: '#9EC600'
-                 
+
               });
                    $("#employeeModal").modal('hide')
                     getCardPlan()
@@ -5524,9 +5763,9 @@ function CreateEmp()
                 }else{
       $.each(data.data, function (i) {
       $.each(data.data[i], function (key, val) {
-    
+
       if(i == 'first_name')
-          { 
+          {
              $("#fname").css('display', 'block')
               $("#fname").css('color', 'red')
               $("#fname").text(val)
@@ -5548,25 +5787,25 @@ function CreateEmp()
               $("#email").css('color', 'red')
               $("#email").text(val)
           }
-      
-   
-                 
+
+
+
     });
 });
  }
    }
       });
- }          
+ }
 }
 function getEmployee()
 {
 var table = $('#employee-table').DataTable({
             retrieve:true,
             destroy:true,
-            
+
             ajax: '{!! route('get.employee') !!}',
             columns: [
-                { data: 'id', name: 'id', 
+                { data: 'id', name: 'id',
                render: function (data, type, row, meta) {
         return meta.row + meta.settings._iDisplayStart + 1;
     } },
@@ -5574,15 +5813,15 @@ var table = $('#employee-table').DataTable({
                  { data: 'company', name: 'company' },
                    { data: 'email', name: 'email' },
                 { data: 'phone', name: 'phone' },
-              
+
                    { data: 'role', name: 'role' },
-               
+
                 { data: 'action', name: 'action' },
                 ],
-                
-               
-             });  
-              table.ajax.reload();      
+
+
+             });
+              table.ajax.reload();
 }
 function editEmp(id)
 {
@@ -5600,7 +5839,7 @@ $("#emp-id").val(id);
           // Storing data in form of JSON
           var data = await response.json();
           console.log(data);
-         
+
           show(data);
         }
         // Calling that async function
@@ -5612,10 +5851,10 @@ $("#emp-id").val(id);
             let role2 = '';
             let tab = '';
             for (let i of data.data.cmp) {
-            
-                let name = i.id ==data.data.company_id?'selected':'' 
+
+                let name = i.id ==data.data.company_id?'selected':''
              tab +=`<option value="${i.id}" style="color:#808080;" ${name}>${i.company_name}</option>`;
-            
+
             }
            if(data.data.roleid == 4)
            {
@@ -5627,12 +5866,12 @@ $("#emp-id").val(id);
             role2 = 'selected';
            }
              // role = data.data.roleid == 4?data.data.roleid == 3:'selected':'selected':'selected';
-           
-            
+
+
              document.getElementById("ecmp").innerHTML = tab;
              let tab1 = `<option value="" style="color:#808080;">Select Job Position</option><option value="4" style="color:#808080;" ${role}>Owner</option><option value="3" style="color:#808080;" ${role1}>District Manager</option><option value="2" style="color:#808080;" ${role2}>Manager</option>`;
               document.getElementById("ejob").innerHTML = tab1;
-             
+
                 $('#efirst').val(data.data.first_name);
                  $('#elast').val(data.data.last_name);
                  $('#e-email').val(data.data.email);
@@ -5640,7 +5879,7 @@ $("#emp-id").val(id);
                  $('#ecnt').val(data.data.phone);
                  $('#eabout').val(data.data.desc);
            $('#employeeModal').modal('show');
-          
+
           }
 
 }
@@ -5649,21 +5888,21 @@ function getfulldetails(id)
 $("#exampleModalPopups").modal('show');
  var assetUrl = "http://209.97.156.170/WeFix/public/images/products/";
       var purl = "{{env('PROFILE_URL')}}";
-      var appUrl = "{{env('APP_URL')}}";  
-      var placeholder = window.location.origin+'/WeFix';     
+      var appUrl = "{{env('APP_URL')}}";
+      var placeholder = window.location.origin+'/WeFix';
             $.ajax({
                 type: "GET",
                 url: '{!! route("get.single.order")!!}?id=' + id,
-               
+
                 success: function(data) {
                     console.log(data);
-                    
+
                       let tab = '';
                       let tab1 = '';
                       let count = 0;
-      
+
       if (data.status == 'true') {
-       
+
             let img1 = '';
             let img3 = '';
             let order_date = '';
@@ -5672,7 +5911,7 @@ $("#exampleModalPopups").modal('show');
               var y = new Array();
              if((data.data.order_images).length>0){
                 x = data.data.order_images
-                
+
              }else{
               img1 = `<img src="${placeholder + '/public/product-dummy.png'}" height="100" width="100" alt=""  style="height: 100px !important;">`;
              }
@@ -5691,8 +5930,8 @@ $("#exampleModalPopups").modal('show');
           img3 += `<img src="${assetUrl + i.vendor_images}" height="100" width="100" alt="">`;
 
         }
-      
-              
+
+
               let note =  data.data.note == null ? "There is no any note!" :  data.data.note;
               if(data.data.note != null || data.data.note != null)
               {
@@ -5723,7 +5962,7 @@ $("#exampleModalPopups").modal('show');
     </div>
     <div class="col-md-9">
       <div class="card-body">
-       
+
         <div class="row g-0">
         <div class="col-sm-9">
          <h2 class="card-title">
@@ -5734,10 +5973,10 @@ $("#exampleModalPopups").modal('show');
          ${data.data.qrcode}
         </div>
         </div>
-         
+
         <h5  class="card-title">Model: ${data.data.model_number} Brand: ${data.data.brand}</h5>
         <h4 style="font-size: 20px; color: #453d3d;" class="card-title"> Title: ${data.data.title} </div></h4>
-       
+
         <div class="metaInfo dmetaInfo">
          <h4 style="font-size: 20px;color: #453d3d;" class="card-title">Order Details</h4>
          <hr>

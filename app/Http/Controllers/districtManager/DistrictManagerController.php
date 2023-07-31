@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Model\Equipment;
 use App\Model\Product;
+use App\Model\ProductImage;
 use App\Model\Shop;
 use QrCode;
 use App\Model\Category;
@@ -75,23 +76,30 @@ class DistrictManagerController extends Controller
         // dd($request->all());
          if ($request->isMethod('post')) {
             $request->validate([
-                'name' => 'required',
-                'images' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-                'model_no' => 'required',
-                'price' => 'required',
-                 'qty' => 'required',
+                'product_name' => 'required',
+                'thumbnail_image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+                'category' => 'required',
+                'brand' => 'required',
+                 'shop_id' => 'required',
 
             ]);
            
         $input = $request->all();
+        // $input['qr_code'] = $request->all();
+         $input['roleid'] = auth('owner')->user()->roleid;
       
-        $imageName = time().'.'.$request->images->extension();  
-         $input['images'] = $imageName;
+        $imageName = time().'.'.$request->thumbnail_image->extension();  
+         $input['thumbnail_image'] = $imageName;
            
-        $request->images->move(public_path('images/products'), $imageName);
+        $request->thumbnail_image->move(public_path('images/products'), $imageName);
     
-        $store = Equipment::create($input);
-         
+        $store = Product::create($input);
+        ProductImage::create(['[pid' => $store->id, 'images' =>  $input['thumbnail_image']]);
+          $data = Product::find($store->id);
+          $qr =QrCode::size(80)->backgroundColor(255,90,0)->generate(env('BASE_URL').'product-details?id='.$data->id);
+        
+         $updata = $data->update(['qrcode' => $qr]);
+
         /* 
             Write Code Here for
             Store $imageName name in DATABASE from HERE 
@@ -99,10 +107,10 @@ class DistrictManagerController extends Controller
       }
     if ($store) {
 
-            $response['status'] = 'true';
+            $response['status'] = true;
             $response['data'] = $store;
         } else {
-            $response['error'] = 'false';
+            $response['error'] = false;
             $response['message'] = 'Addition of Equipment is failed!';
         }
         return response()->json($response);
@@ -152,6 +160,8 @@ class DistrictManagerController extends Controller
         {
           $viewReport = Product::find($request->id);
         $cat = Category::where('id', $viewReport->category)->first();
+        $viewReport['categories'] = Category::get();
+         $viewReport['shops'] = Shop::get();
              $shop = Shop::where('id', $viewReport->shop_id)->first();
             
             $viewReport['category_name'] = $cat->name;
@@ -196,15 +206,17 @@ class DistrictManagerController extends Controller
      */
     public function update(Request $request)
     {
+
          $input = $request->all();
+       
          if ($request->file('images')) {
          $imageName = time().'.'.$request->images->extension();  
-         $input['images'] = $imageName;
+         $input['thumbnail_image'] = $imageName;
          $request->images->move(public_path('images/products'), $imageName);
         }else{
-         $input['images'] = $request->images;
+         $input['thumbnail_image'] = $request->images;
         }
-       $data = Equipment::find($request->id);
+       $data = Product::find($request->id);
         unset($input['id']);
         $updata = $data->update($input);
           if ($updata) {

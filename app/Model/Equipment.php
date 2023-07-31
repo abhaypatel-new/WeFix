@@ -17,6 +17,7 @@ class Equipment extends Model
         'stock',
         'qty',
         'description',
+        'warranty',
         'user_id',
         'action',
         'status'

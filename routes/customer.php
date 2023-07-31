@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\customer\CustomerController;
+use App\Http\Controllers\customer\ReportController;
 use App\Http\Controllers\districtManager\DistrictManagerController;
 
 /*
@@ -14,11 +15,12 @@ use App\Http\Controllers\districtManager\DistrictManagerController;
 | contains the "web" middleware group. Now create something great!
 |
 */
-
-
+ 
+ Route::post('invoice', [CustomerController::class, 'generateInvoice'])->name('invoices.generate');
 Route::middleware(['guest:owner'])->group(function () {
 
     Route::get('/', [CustomerController::class, 'showLoginForm'])->name('owner.login');
+  
     Route::post('/login', [CustomerController::class, 'owner_login'])->name('owner.signin');
     
  });

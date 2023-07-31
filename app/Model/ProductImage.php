@@ -10,7 +10,12 @@ class ProductImage extends Model
     use HasFactory;
 
     protected $table = 'product_images';
+ protected $fillable = [
+        'pid',
+        'images',
+        
 
+    ];
 
       public function Order()
     {

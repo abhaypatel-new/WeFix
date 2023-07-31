@@ -44135,6 +44135,42 @@ ck-blurred:110px;
   display: flex;
   align-items: center;
 }
+.Reports h3 {
+  font-family: 'Inter', sans-serif;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 20px;
+  line-height: 150%;
+  /* identical to box height, or 21px */
+
+  color: rgb(0, 0, 0);
+}
+.Reports a {
+  font-family: 'Inter', sans-serif;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 20px;
+  line-height: 150%;
+  /* identical to box height, or 21px */
+
+  color: rgb(0, 0, 0);
+}
+.Reports img {
+    height: 27px;
+    width: 50px;
+    padding-right: 20px;
+    margin-left: 20px;
+}
+.Reports {
+  margin-top: 10px;
+  height: 60px;
+  width: 250px;
+  background: none;
+  border: 2px solid #efefef;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+}
 /*profile css*/
 .list-div {
   width: 92%;
@@ -44508,7 +44544,9 @@ color:#000;
   width: 100%;
   flex-wrap: wrap;
 }
-
+.datepicker td, .datepicker th {
+    color: black !important;
+}
 /*.Proposal-card-01 {
   height: 410px;
   width: 295px;

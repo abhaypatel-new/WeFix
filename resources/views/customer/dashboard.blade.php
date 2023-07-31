@@ -6,22 +6,21 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>WeFix</title>
- 
-  <!-- <link rel="stylesheet" href="{{ asset('css/vendors_css.css') }}"> -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" >
   <!-- Style-->
-  <!-- <link rel="stylesheet" href="{{ asset('css/style.css') }}"> -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.css"  />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-toast-plugin/1.3.2/jquery.toast.css"  />
   <link rel="stylesheet" href="{{ asset('css/skin_color.css') }}">
-  <!-- <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin> -->
-  <!-- <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600&display=swap" rel="stylesheet"> -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.10.0/css/bootstrap-datepicker.min.css" integrity="sha512-34s5cpvaNG3BknEWSuOncX28vz97bRI59UnVtEEpFX536A7BtZSJHsDyFoCl8S7Dt2TPzcrCEoHBGeM4SUBDBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
   <link href="https://cdn.datatables.net/1.13.3/css/jquery.dataTables.min.css" rel="stylesheet">
    <link rel="stylesheet" href="{{ asset('css/style_index.css') }}">
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.css" />
+
   <script src="{{ asset('js/font.js') }}" crossorigin='anonymous'></script>
   <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.3/dist/jquery.slim.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+
+
 
   <style>
 
@@ -45,7 +44,7 @@
 
       <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
         <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
-        
+
 
 
 
@@ -72,7 +71,7 @@
           </div>
 
           @else
-        
+
       <script>window.location = "{{ url('owner') }}";</script>
           @endif
 
@@ -112,7 +111,11 @@
               <h3 class="report-color">Report</h3>
               <!-- <img class="dropdown-img" src="./image/dropdown.png" alt=""> -->
             </div>
-
+            <div class="sidebarBtn Reports" style="cursor: pointer;" id="FilterReport">
+              <img src="{{ asset('images') }}/image/report.png" alt="">
+              <h3 class="reports-color">All Report</h3>
+              <!-- <img class="dropdown-img" src="./image/dropdown.png" alt=""> -->
+            </div>
             <div class="sidebarBtn Setting Logout" style="cursor: pointer;">
               <img src="{{ asset('images') }}/image/SignOut.png" alt="">
               <h3><a href="{{ url('owner/logout') }}" class="logout-color hide-effect">Log Out</a></h3>
@@ -122,13 +125,13 @@
           </div>
       </div>
       <div class="col-md-9">
-     
+
             <div class="d-flex justify-content-center">
               <div class="spinner-border" role="status" id="bodyloading">
                 <span class="sr-only text-dark">Loading...</span>
               </div>
             </div>
-      
+
           <div class="card dn" id="show-notification" style="display:none;">
             <h5 class="card-header">Notification</h5>
             <div class="d-flex justify-content-center">
@@ -174,8 +177,8 @@
           <a class="btn btn-primary text-capitalize" data-mdb-ripple-color="dark"  onclick="getBackReport()"><i
               class="fa fa-arrow-left"></i> Back</a>
              </div>
-         
-          
+
+
             <div class="card-body" id="getsingledetails">
             </div>
           </div>
@@ -185,14 +188,79 @@
               <button class="btn btn-primary" style="float: right;padding: 10px 35px 10px 35px;"><i
               class="fa fa-arrow-left"></i> Back</button>
             </div>
-          
+
             <div class="card-body" id="getsingleNotification">
+            </div>
+          </div>
+          <div class="card dn" id="show-all-report" style="display:none;">
+            <h5 class="card-header">Report</h5>
+
+            <div class="card" id="get-all-report">
+  <table class="inputs">
+     <tr>
+       <td>
+          <input type='text' id='fromdate' class="datepicker" placeholder='From date'>
+       </td>
+       <td>
+          <input type='text' id='product_name' placeholder='Enter Equipment' class="trackInput">
+       </td>
+        <td>
+          <input type='text' id='district' placeholder='Enter District' class="trackInput">
+       </td>
+        <td>
+          <input type='text' id='store' placeholder='Enter Store Name' class="trackInput">
+       </td>
+       <td>
+          <input type='text' id='todate' class="datepicker" placeholder='To date'>
+       </td>
+       <td>
+          <input type='button' value="Search" id="All-Filter">
+       </td>
+     </tr>
+   </table>
+              <table id="example-all">
+            <thead>
+                <tr>
+                    <th>No</th>
+                    <th>OrderId</th>
+                    <th>Product</th>
+                    <th>Store</th>
+                    <th>District</th>
+                    <th>Date</th>
+                    <th>Submitted By</th>
+                    <th>Vendor</th>
+                    <th>Amount</th>
+                    <th>Status</th>
+                    <th>Action</th>
+
+                </tr>
+            </thead>
+            <tbody>
+
+            </tbody>
+          </table>
             </div>
           </div>
            <div class="card dn" id="show-report" style="display:none;">
             <h5 class="card-header">Report</h5>
 
             <div class="card" id="get-report">
+            <table class="inputs">
+     <tr>
+       <td>
+          <input type='text' id='search_fromdate' class="datepicker" placeholder='From date'>
+       </td>
+       <td>
+          <input type='text' id='search_name' placeholder='Type name here' class="trackInput">
+       </td>
+       <td>
+          <input type='text' id='search_todate' class="datepicker" placeholder='To date'>
+       </td>
+       <td>
+          <input type='button' id="btn_search" value="Search">
+       </td>
+     </tr>
+   </table>
               <table id="example">
             <thead>
                 <tr>
@@ -331,11 +399,11 @@
               <div class="title-div">
                 <div class="list-div-today">
                   <div class="row">
-                    
+
                     <!--   <img src="@if(auth('owner')->user()->image != null){{env('PROFILE_URL')}}/{{auth('owner')->user()->image}}@else  {{env('ASSET_URL')}}default-profile.png @endif" height="80" alt="" id="get-upload"> -->
                         <!-- <img src="" height="80" alt="" id="profile-pic1">
                       <input type="file" name="file" id="upload" style="width:90px; margin-left:25px;"> -->
-                   
+
                     <div class="col-sm-12 mt-5">
                       <div class="list-title">
                         <h6>@if(auth('owner')->user()){{auth('owner')->user()->first_name}}@else User @endif</h6>
@@ -371,7 +439,7 @@
               <h1>Dashboard</h1>
             </div>
 
-          
+
     <div class="card">
      <div class="row dashboardCard" id="BoxdivCount">
     <div class="col-md-3" >
@@ -386,7 +454,7 @@
          <div class="box bg-secondary-light pull-up boxActive"    id="pending" style="cursor: pointer;pointer;padding: 20px 15px 20px 20px; width: 200px;"> <h5 class="pending-count">Pending &nbsp;&nbsp;&nbsp;&nbsp;<span id="pending-count"  class="count-color"></span>
             </h5>
 </div>
-    
+
 </div>
     </div>
     <div class="col-md-3">
@@ -396,26 +464,26 @@
 </div>
     </div>
     </div>
-  
-   
+
+
     <div class="col-md-3">
 <div class="card-body text-center">
         <div class="box bg-secondary-light pull-up boxActive"    id="Workorder" style="cursor: pointer;pointer;padding: 20px 15px 20px 20px; width: 200px;"> <h5 class="">Work Order &nbsp;&nbsp;&nbsp;&nbsp;<span id="work-count"  class="count-color"></span>
             </h5>
 </div>
     </div>
-       
+
   </div>
   </div>
   <hr class="mt-0">
  <div class="" id="Proposal-card">
-  
+
 <div class="row">
   <div class="col-sm-6">
     <div class="card">
       <div class="card-body">
         <h5 class="card-title">Spending Chart</h5>
-       
+
          <canvas id="myChart" height="100px"></canvas>
       </div>
     </div>
@@ -424,7 +492,7 @@
     <div class="card">
       <div class="card-body">
         <h5 class="card-title">Last Month Spending</h5>
-        
+
          <canvas id="myPieChart" height="100px"></canvas>
       </div>
     </div>
@@ -456,7 +524,7 @@
       <div class="">
        <div class="card-body" id="getPopupDetails">
     </div>
-        
+
     </div>
   </div>
 </div>
@@ -546,7 +614,7 @@
           <a class="btn btn-primary text-capitalize" data-mdb-ripple-color="dark"  onclick="getBackReport()"><i
               class="fa fa-arrow-left"></i> Back</a>
              </div>
-            
+
             <div class="card" id="getsingledetails">
             </div>
           </div>
@@ -565,10 +633,10 @@
             <button class="btn btn-primary" style="float: right;padding: 10px 35px 10px 35px;"><i
               class="fa fa-plus"></i> Add Plan</button>
             </div>
-            
+
          <!--    <h2 style="text-align:center">Maintenance Plans</h2>
               <div class="card" id="get-plan-card" style="flex-direction: initial !important;">
-              
+
               </div>
              <hr> -->
             <div class="card" id="get-maintenance">
@@ -591,7 +659,7 @@
           </table>
             </div>
           </div>
-           
+
           <div class="card " id="show-report">
             <h5 class="card-header">Report</h5>
 
@@ -699,7 +767,7 @@
                 <div class="title-div" style="
             padding-bottom: 40px;">
                   <div class="list-div-today">
-                
+
 
                     <div class="list-title">
                       <h6>@if(auth('owner')->user()){{auth('owner')->user()->first_name}}@else User @endif</h6>
@@ -786,7 +854,7 @@
          <div class="box bg-secondary-light pull-up" id="pending" style="cursor: pointer;pointer;padding: 20px 15px 20px 20px; width: 265px;"> <h5 class="pending-count">Pending &nbsp;&nbsp;&nbsp;&nbsp;<span id="pending-count"  class="count-color"></span>
             </h5>
        </div>
-    
+
 </div>
     </div>
     <div class="col-md-4">
@@ -794,20 +862,20 @@
         <div class="box bg-secondary-light pull-up" id="history" style="cursor: pointer;pointer;padding: 20px 15px 20px 20px; width: 265px;"> <h5 class="">History &nbsp;&nbsp;&nbsp;&nbsp;<span id="history-count"  class="count-color"></span>
             </h5>
        </div>
-    
+
 </div>
     </div></div>
-  
-   </div> 
+
+   </div>
   <hr class="mt-0">
     <div class="" id="Proposal-card">
-  
+
 <div class="row">
   <div class="col-sm-6">
     <div class="card">
       <div class="card-body">
         <h5 class="card-title">Earnings Chart</h5>
-       
+
          <canvas id="myChart" height="100px"></canvas>
       </div>
     </div>
@@ -816,7 +884,7 @@
     <div class="card">
       <div class="card-body">
         <h5 class="card-title">Last Month Earnings</h5>
-        
+
          <canvas id="myPieChart" height="100px"></canvas>
       </div>
     </div>
@@ -840,11 +908,11 @@
         </button>
       </div>
       <div class="modal-body">
-      
+
         <form method="post" id="form_id">
                                         @csrf
            <input type="hidden" class="form-control" name="order_id"id="order_id">
-        
+
           <div class="">
    <div class="row clearfix" style="margin-bottom:20px;">
     <div class="pull-right col-md-6" style="width:100% !important;">
@@ -854,7 +922,7 @@
                     <p class="mb-0">{{auth('owner')->user()->address}}</p>
                     <p class="mb-0">{{auth('owner')->user()->phone}}</p>
                     <p class="mb-0">{{auth('owner')->user()->email}}</p>
-   
+
   </div>
     </div>
     <div class="pull-right col-md-6" style="width:100% !important;">
@@ -912,20 +980,20 @@
             <th class="text-center">Track Charges</th>
             <td class="text-center"><div class="input-group mb-2 mb-sm-0">
                 <input type="number" class="form-control" id="track" placeholder='0.00' name="track" value="0.00">
-               
+
               </div></td>
           </tr>
           <tr>
             <th class="text-center">Labour Charges</th>
             <td class="text-center"><div class="input-group mb-2 mb-sm-0">
                 <input type="number" class="form-control" id="labour" placeholder='0.00' name="labour" value="0.00">
-               
+
               </div></td>
           </tr>
            <th class="text-center">Extra Charges</th>
             <td class="text-center"><div class="input-group mb-2 mb-sm-0">
                 <input type="number" class="form-control" id="extra" placeholder='0.00' name="extra" value="0.00">
-                
+
               </div></td>
           </tr>
           <tr>
@@ -935,7 +1003,7 @@
                 <div class="input-group-addon">%</div>
               </div></td>
           </tr>
-          
+
           <tr>
             <th class="text-center">Tax Amount</th>
             <td class="text-center"><input type="number" name='tax_amount' id="tax_amount" placeholder='0.00' class="form-control" readonly/></td>
@@ -949,12 +1017,12 @@
     </div>
   </div>
 </div>
-      
+
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <!-- <input type="button" id="submit" name="submit" value="Submit"> -->
-         <button type="button" class="btn btn-primary" id="submit">Submit</button>
+        <input type="button" id="submit" name="submit" value="Submit">
+         <!-- <button type="button" class="btn btn-primary" id="#submit">Submit</button> -->
       </div>
         </form>
     </div>
@@ -981,7 +1049,7 @@
             <input type="text" class="form-control" id="plan-name" name="name"><span id="pname" style="display:none;"></span>
           </div>
              @csrf
-         
+
            <div class="mb-3">
              <div class="row">
     <div class="col">
@@ -992,24 +1060,24 @@
      <label for="plan-name" class="col-form-label">Duration</label>
             <input type="date" class="form-control" id="plan-end" name="end_date"><span id="pend" style="display:none;"></span>
     </div>
-    
+
   </div>
-           
+
           </div>
            <div class="mb-3">
             <label for="plan-price" class="col-form-label">Price:</label>
             <input type="number" class="form-control" id="plan-price" maxlength="10" name="price"><span id="pprice" style="display:none;"></span>
           </div>
-        
+
            <div class="mb-3">
               <table class="table table-bordered table-hover" id="tab_logics">
         <thead>
-          
+
         </thead>
         <tbody>
           <tr id='addrr0'>
             <td >1</td>
-            <td> 
+            <td>
            Features: <input type="text" class="form-control" id="plan-freaturs"name="features[]"></td>
           </tr>
           <tr id='addrr1'></tr>
@@ -1034,8 +1102,8 @@
       </div>
        </form>
       </div>
-      
-        
+
+
     </div>
   </div>
 </div>
@@ -1056,7 +1124,7 @@
       <div class="modal-body">
        <div class="card-body" id="getinvoicedetails">
     </div>
-        
+
     </div>
   </div>
 </div>
@@ -1079,21 +1147,25 @@
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
    -->
-  <script src="https://code.jquery.com/jquery-1.9.1.min.js"></script>
+  <!-- <script src="https://code.jquery.com/jquery-1.9.1.min.js"></script> -->
+ <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.5.3/jspdf.min.js"></script>
 <script type="text/javascript" src="https://html2canvas.hertzen.com/dist/html2canvas.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/printThis/1.15.0/printThis.min.js" integrity="sha512-d5Jr3NflEZmFDdFHZtxeJtBzk0eB+kkRXWFQqEc1EKmolXjHm2IKCA7kTvXBNjIYzjXfD5XzIjaaErpkZHCkBg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
   </script>
   <script src="{{ asset('assets/vendor_components/datatable/datatables.min.js')}}"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.10.0/js/bootstrap-datepicker.min.js" integrity="sha512-LsnSViqQyaXpD4mBBdRYeP6sRwJiJveh2ZIbW41EBrNmKxgr/LFZIiWT6yr+nycvhvauz8c2nYMhrP80YhG7Cw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
   <script type="text/javascript">
-    $(window).load(function(){
+    $(window).on('load', function(){
        // getCardPlan()
       getPlan()
+
     $("#dashboard-body").css('backgrount', 'transparent');
     $(".dn").css('display', 'none');
     $("#show-history").hide();
@@ -1109,19 +1181,118 @@
     $("#show-profile").hide();
     $("#edit-profile-details").hide();
     setTimeout(
-  function() 
+  function()
   {
     $('#dashboard-body').removeClass('loading-body');
     $("#dashboard-body").css('backgrount', '#f1f3f5')
   }, 500);
-   
-   
+
+
    $('#bodyloading').fadeOut(500);
 });
   $(document).ready(function() {
+
+
+    $("#fromdate" ).datepicker({
+      dateFormat: 'yy-mm-dd'
+
+   });
+   $("#todate" ).datepicker({
+      'dateFormat': 'yy-mm-dd'
+
+   });
+  $("#todate , #fromdate, .ui-corner-all" ).click(function(){
+    $(".ui-datepicker-calendar thead").css('background-color', 'black');
+     $(".ui-datepicker-title span").css('color', 'black')
+  });
+
+   $("#btn_search").click(function(){
+  var table = $('#example').DataTable().ajax.reload();
+
+        var start = $('#search_fromdate').val();
+        var end = $('#search_todate').val();
+
+        var From = new Date(start);
+        var To = new Date(end);
+        month = '' + (From.getMonth() + 1),
+        day = '' + From.getDate(),
+        year = From.getFullYear();
+        month1 = '' + (To.getMonth() + 1),
+        day1 = '' + To.getDate(),
+        year1 = To.getFullYear();
+
+    if (month.length < 2)
+        month = '0' + month;
+    if (day.length < 2)
+        day = '0' + day;
+    if (month1.length < 2)
+        month1 = '0' + month1;
+    if (day1.length < 2)
+        day1 = '0' + day1;
+var formattedFrom = year + '-' + month + '-' + day;
+var formattedTo = year1 + '-' + month1 + '-' + day1;
+        console.log( "&&&&& = "+formattedFrom)
+        console.log( "&&&&& = "+formattedTo)
+        // table.column(3).search(formattedFrom, formattedTo, true, false).draw();
+
+        // table.column(3).search(formattedTo, true, false).draw();
+        $.fn.dataTable.ext.search.push(function (settings, data, dataIndex) {
+    // var min = parseInt(minEl.val(), 10);
+    // var max = parseInt(maxEl.val(), 10);
+   console.log('data'+data)
+    var age = parseFloat(data[3]) || 0; // use data for the age column
+
+    if (
+        (isNaN(month) && isNaN(month1)) ||
+        (isNaN(month) && age <= month1) ||
+        (month <= age && isNaN(month1)) ||
+        (month <= age && age <= month1)
+    ) {
+        return true;
+    }
+
+    return false;
+});
+
+
+      });
+//  var start = $('#search_fromdate').val();
+//         var end = $('#search_todate').val();
+//         var From = new Date(start);
+//         var To = new Date(end);
+//         month = '' + (From.getMonth() + 1),
+//         day = '' + From.getDate(),
+//         year = From.getFullYear();
+//         month1 = '' + (To.getMonth() + 1),
+//         day1 = '' + To.getDate(),
+//         year1 = To.getFullYear();
+
+//     if (month.length < 2)
+//         month = '0' + month;
+//     if (day.length < 2)
+//         day = '0' + day;
+//     if (month1.length < 2)
+//         month1 = '0' + month1;
+//     if (day1.length < 2)
+//         day1 = '0' + day1;
+// var formattedFrom = year + '-' + month + '-' + day;
+// var formattedTo = year1 + '-' + month1 + '-' + day1;
+//         console.log( "&&&&& = "+formattedFrom)
+//         console.log( "&&&&& = "+formattedTo)
+
+        var st = $('#search_fromdate');
+        var en = $('#search_todate');
+st.on('input', function () {
+  alert("df")
+    table.draw();
+});
+en.on('input', function () {
+  alert("154")
+    table.draw();
+});
     $("#show-new-workorder").hide();
     $("#main-tab").show();
-   
+
     $("#show-history").hide();
     $("#view-notification").hide();
     $("#show-notification").hide();
@@ -1137,22 +1308,22 @@
   '{!! route("get.chart")!!}';
 
 // Defining async function
-async function getchart(counturl) {
+async function getchart(charturl) {
 
   // Storing response
-  const response = await fetch(counturl);
+  const response = await fetch(charturl);
 
   // Storing data in form of JSON
   var data = await response.json();
   console.log(data);
-  
+
   showchart(data);
 }
 // Calling that async function
 getchart(charturl);
  function showchart(data)
  {
-  
+
    console.log(data.data.value)
     const datas = {
         labels: data.data.labels,
@@ -1163,13 +1334,13 @@ getchart(charturl);
           data: data.data.value,
         }]
       };
-  
+
       const config = {
         type: 'line',
         data: datas,
         options: {}
       };
-  
+
       const myChart = new Chart(
         document.getElementById('myChart'),
         config
@@ -1185,14 +1356,14 @@ getchart(charturl);
   // Storing data in form of JSON
   var data = await response.json();
   console.log(data);
-  
+
   showpiechart(data);
 }
 // Calling that async function
 getpiechart(charturl);
  function showpiechart(data)
  {
-  
+
    console.log(data.data.value)
     const datas = {
         labels: data.data.labels,
@@ -1203,24 +1374,24 @@ getpiechart(charturl);
           data: data.data.value,
         }]
       };
-  
+
       const config = {
         type: 'pie',
         data: datas,
         options: {}
       };
-  
+
       const myChart = new Chart(
         document.getElementById('myPieChart'),
         config
       );
  }
-    
+
   });
 </script>
 <script>
   $(document).ready(function() {
-    
+
     $("#main-tab").show();
     $("#show-new-workorder").hide();
      $("#show-maintenances").hide();
@@ -1239,7 +1410,7 @@ getpiechart(charturl);
     $("#add_row").click(function(){b=i-1;
         $('#addr'+i).html($('#addr'+b).html()).find('td:first-child').html(i+1);
         $('#tab_logic').append('<tr id="addr'+(i+1)+'"></tr>');
-        i++; 
+        i++;
     });
     $("#delete_row").click(function(){
       if(i>1){
@@ -1248,7 +1419,7 @@ getpiechart(charturl);
     }
     calc();
   });
-  
+
   $('#tab_logic tbody').on('keyup change',function(){
     calc();
   });
@@ -1256,7 +1427,7 @@ getpiechart(charturl);
     calc_total();
   });
 
- 
+
   });
   function getNotification() {
     let id = '<?php echo auth('owner')->user()->id; ?>';
@@ -1439,7 +1610,7 @@ getpiechart(charturl);
 
 
            let pimg = data.data.thumbnail_image == null ? assetUrl + "product-dummy.png" : assetUrl+'images/products/'+data.data.thumbnail_image;
-            let user = data.data.image == null ? purl + "default-profile.png" : data.data.image; 
+            let user = data.data.image == null ? purl + "default-profile.png" : data.data.image;
             let name = uid == 4?data.data.vname:data.data.owner_name;
             let notes = uid == 4?'<p>Thank you for your Maintenance</p>':'<p>Thank you</p>';
             let phone = uid == 4?data.data.vendor_phone:data.data.phone;
@@ -1454,7 +1625,7 @@ getpiechart(charturl);
         <div class="col-xl-12">
           <p style="color: #6759FF;font-size: 20px; margin-left:5px;">Invoice >> <strong class="text-danger">ID: #${data.data.order_id}</strong></p>
         </div>
-      
+
         </div>
         <hr>
       </div>
@@ -1534,7 +1705,7 @@ getpiechart(charturl);
               <li class="text-muted ms-3 mt-2"><span class="text-dark me-4 p-10">Tax</span>$${data.data.tax}</li>
             </ul>
             <hr>
-          
+
             <p class="text-black "><span class="text-dark me-3 p-10"> Total Amount</span><span
                 style="font-size: 20px; font-weight: 600;" class="text-dark">$${data.data.order_amount}</span></p>
           </div>
@@ -1546,7 +1717,7 @@ getpiechart(charturl);
           <div class="col-xl-10">
            ${notes}
           </div>
-         
+
         </div>
 
 
@@ -1599,14 +1770,14 @@ var appUrl = "{{env('APP_URL')}}";
   $('#example').DataTable({
       retrieve:true,
       destroy:true,
-      
+
       ajax: '{!! route('report') !!}',
       columns: [
           { data: 'id', name: 'id',
             render: function (data, type, row, meta) {
   return meta.row + meta.settings._iDisplayStart + 1;
 } },
-          
+
           { data: 'order_id', name: 'order_id' },
           { data: 'product_name', name: 'product_name' },
           { data: 'date', name: 'date' },
@@ -1618,7 +1789,7 @@ var appUrl = "{{env('APP_URL')}}";
 
 
            ],
-           
+
            aaSorting: [[0, 'desc']],
            dom: 'Bfrtip',
           buttons: [{
@@ -1650,7 +1821,7 @@ init: function(api, node, config) {
 }]
 
 
-  }); 
+  });
 }
 function getBackNotification()
 {
@@ -2074,7 +2245,7 @@ $("#show-new-workorder").hide();
       $("#show-report").hide();
       $("#view-report").hide();
      $("#all-orders h5").css("color","white");
-   
+
     function readURL(input) {
       if (input.files && input.files[0]) {
         var reader = new FileReader();
@@ -2103,7 +2274,7 @@ $("#show-new-workorder").hide();
     $("#show-profile").hide();
     $("#edit-profile-details").hide();
 
-   
+
     $("#proposal").click(function() {
       location.reload();
       if($('.proposal-card-div').css('display') == 'none')
@@ -2117,6 +2288,8 @@ $("#show-new-workorder").hide();
       $(".Proposal-color").css("color", "#6759ff");
       $(".New-Work-Order").css("background-color", "#ffffff");
       $(".order-color").css("color", "#000");
+      $(".Reports").css("background-color", "#ffffff");
+     $(".reports-color").css("color", "#000");
       $(".notification-color").css("color", "#000");
       $(".Notification").css("background-color", "#ffffff");
       $(".setting-color").css("color", "#000");
@@ -2349,7 +2522,7 @@ text-align: center;><div class="images-div"></div>
         }
       }
      }else{
-    
+
       const api_url =
       appUrl + "/owner/vendor_history?vendor_id=" + id;
 
@@ -2414,20 +2587,20 @@ text-align: center;><div class="images-div"></div>
       <div class="card-body">
         <h5  class="card-title">${r.product_name}</h5>
         <h6  class="card-title">${r.order_id}</h6>
-      
+
         <hr>
         <div class="metaInfo">
          <h5 style="font-size: 20px;" class="card-title">${r.first_name} ${r.last_name}<a href="#" class="badge badge-primary float-right"><i class="fa fa-phone-alt" aria-hidden="true"></i> Call</a></h5>
             <span class="badge badge-secondary priceBdge">  ${r.order_amount} </span>
           <a href="#" class="badge">${status}</a>
-            
+
         </div>
          ${img2}
-        
+
       </div>
     </div>
   </div>
- 
+
 </div>`;
             document.getElementById("Proposal-card").innerHTML = tab;
           }
@@ -2443,7 +2616,7 @@ text-align: center;><div class="images-div"></div>
         }
       }
      }
-   
+
     });
     $("#all-orders").click(function() {
       $("#history").removeClass("main-Button-1");
@@ -2616,7 +2789,7 @@ function show(data) {
             <h4>${r.product_name}</h4>
             <p>Code:${r.order_id}</p>
             <ul>
-               
+
 
             </ul>
             <div class="vendor-class">
@@ -2678,6 +2851,8 @@ text-align: center;><div class="images-div"></div>
     $("#link").click(function() {
       $(".proposal-card-div").css("display", "none");
       $(".New-Work-Order").css("background-color", "#ffffff");
+      $(".Reports").css("background-color", "#ffffff");
+      $(".reports-color").css("color", "#000");
       $(".order-color").css("color", "#000");
       $(".Notification").css("background-color", "#e4e6ef");
       $(".notification-color").css("color", "#6759ff");
@@ -3390,9 +3565,9 @@ text-align: center;><div class="images-div"></div>
 
       $("#main-tab").hide();
       $("#show-maintenance").show();
-     
+
       $("#show-report").hide();
-   
+
       $("#show-notification").hide();
       $("#list-notification").hide();
       $("#view-notification").hide();
@@ -3404,24 +3579,24 @@ text-align: center;><div class="images-div"></div>
         var table = $('#maintenance-table').DataTable({
             retrieve:true,
             destroy:true,
-            
+
             ajax: '{!! route('get.plan') !!}',
             columns: [
                 { data: 'id', name: 'id' },
-                
+
                 { data: 'name', name: 'name' },
-              
+
                 { data: 'start_date', name: 'start_date' },
                 { data: 'end_date', name: 'end_date' },
                 { data: 'price', name: 'price' },
                 { data: 'description', name: 'description' },
                 { data: 'action', name: 'action' },
                 ],
-                
-               
-             });  
-              table.ajax.reload();    
-    
+
+
+             });
+              table.ajax.reload();
+
     });
     /*----------Maintenance End----------*/
     /*------Get Pending Proposal---------*/
@@ -3447,10 +3622,10 @@ text-align: center;><div class="images-div"></div>
       $("#Workorder h5").css("color", "#000");
       $("#Workorder span").removeClass("count-color-change");
       $("#Workorder span").addClass("count-color");
-      
+
       $("#all-orders").removeClass("main-Button-1");
       $("#all-orders").addClass("main-Button-2");
-    
+
       $("#Workorder").removeClass("main-Button-1");
       $("#Workorder").addClass("main-Button-3");
       $(".New-Work-Order").css("background-color", "#ffffff");
@@ -3551,8 +3726,8 @@ text-align: center;><div class="images-div"></div>
         <h5 class="card-title">${r.product_name}</h5>
         <h6 class="card-title">${r.order_id}</h6>
         <hr>
-       
-           
+
+
              <a href="{{url('/')}}/product-details?id=${r.product_id}&order_id=${r.order_id}" class="btn btn-primary">Add Quote</a>
              <div onclick="reject(this.id)"class="btn btn-primary" id="${r.order_id}">Cancel Order</div>
              <div class="commentOuter">
@@ -3564,7 +3739,7 @@ text-align: center;><div class="images-div"></div>
       </div>
     </div>
   </div>
-  
+
 </div>`;
 
               document.getElementById("Proposal-card").innerHTML = tab;
@@ -3668,22 +3843,22 @@ text-align: center;><div class="images-div"></div>
          <h5 style="font-size: 20px;" class="card-title">${r.vendor_name} </h5>
             <span>   ${reject} </span>
             <span >    ${count}</span>
-         
-            
+
+
         </div>
-         
-         
+
+
 
   <h5 class="card-title" >${note}</h5>
   <div class="container mt-3" id="multi-img">      ${img2}               </div>
       </div>
     </div>
 
-  
-    
- 
-  
- 
+
+
+
+
+
         </div>
   </div>  </div>
 </div>`;
@@ -3710,6 +3885,135 @@ text-align: center;><div class="images-div"></div>
     });
 
     /*------End Pending Proposal---------*/
+    // FilterReport
+
+   /*--------Start-Report---------------*/
+
+   $("#FilterReport").click(function() {
+
+$(".proposal-card-div").css("display", "none");
+
+$(".Reports").css("background-color", "#e4e6ef");
+$(".reports-color").css("color", "#6759ff");
+$(".Report").css("background-color", "#ffffff");
+$(".report-color").css("color", "#000");
+$(".New-Work-Order").css("background-color", "#ffffff");
+$(".order-color").css("color", "#000");
+$(".Setting").css("background-color", "#ffffff");
+$(".Proposal").css("background-color", "#ffffff");
+$(".Notification").css("background-color", "#ffffff");
+$(".Proposal-color").css("color", "#000");
+$(".setting-color").css("color", "#000");
+$(".notification-color").css("color", "#000");
+$(".logout-color").css("color", "#000");
+$(".Logout").css("background-color", "#ffffff");
+ $(".maintenance-color").css("color", "#000");
+$(".Maintenance").css("background-color", "#ffffff");
+$("#main-tab").hide();
+$("#show-notification").hide();
+$("#show-new-workorder").hide();
+ $("#show-maintenance").hide();
+$("#show-history").hide();
+$("#show-proposal").hide();
+$("#show-confirm").hide();
+$("#show-pending").hide();
+$("#show-profile").hide();
+$("#show-report").hide();
+$("#show-all-report").show();
+$("#list-notification").hide();
+$("#view-report").hide();
+$("#view-notification").hide();
+$("#edit-profile-details").hide();
+});
+
+$("#All-Filter").click(function(){
+
+$('#example-all').DataTable().destroy();
+  var fromdate = $("#fromdate").val();
+  var todate = $("#todate").val();
+  var district = $("#district").val();
+  var product = $("#product_name").val();
+  var store = $("#store").val();
+  var assetUrl = "{{env('ASSET_URL')}}";
+  var profileUrl = "{{env('PROFILE_URL')}}";
+   if(fromdate != '' && todate == '')
+        {
+           Swal.fire({
+    title: 'Warning',
+    text: 'Please select End date.',
+    icon: 'error',
+    loader: true,        // Change it to false to disable loader  // To change the background
+});
+          return false
+        }
+var appUrl = "{{env('APP_URL')}}";
+
+ const api_url = '{{route('report')}}/?from='+fromdate+'&todate='+todate+'&product='+product+'&store='+store+'&district='+district;
+
+  var table = $('#example-all').DataTable({
+      retrieve:true,
+      destroy:true,
+
+      // ajax: '{!! route('report') !!}',
+      ajax: api_url,
+      columns: [
+          { data: 'id', name: 'id',
+            render: function (data, type, row, meta) {
+  return meta.row + meta.settings._iDisplayStart + 1;
+} },
+
+          { data: 'order_id', name: 'order_id' },
+          { data: 'product_name', name: 'product_name' },
+          { data: 'store_name', name: 'store_name' },
+          { data: 'dname', name: 'dname' },
+          { data: 'fdate', name: 'fdate' },
+          { data: 'owner_name', name: 'owner_name' },
+          { data: 'vendor_name', name: 'vendor_name' },
+          { data: 'order_amount', name: 'order_amount' },
+          { data: 'order_status', name: 'order_status' },
+          { data: 'action', name: 'action' },
+
+
+           ],
+
+           aaSorting: [[0, 'desc']],
+           dom: 'Bfrtip',
+          buttons: [{
+extend: "excel",
+extend: "pdf",
+extend: "print",
+className: "btn-sm btn-primary p-2",
+titleAttr: 'Export in Excel',
+text: 'Excel',
+init: function(api, node, config) {
+ $(node).removeClass('btn-secondary')
+}
+},{
+extend: "pdf",
+className: "btn-sm btn-primary p-2",
+titleAttr: 'Export in Pdf',
+text: 'PDF',
+init: function(api, node, config) {
+ $(node).removeClass('btn-secondary')
+}
+},{
+extend: "print",
+className: "btn-sm btn-primary p-2",
+titleAttr: 'Export in Print',
+text: 'Print',
+init: function(api, node, config) {
+ $(node).removeClass('btn-secondary')
+}
+}]
+
+
+  });
+  table.ajax.reload();
+});
+
+/*-------------End-Report-----------*/
+
+
 
     /*--------Start-Report---------------*/
 
@@ -3719,6 +4023,8 @@ text-align: center;><div class="images-div"></div>
 
       $(".Report").css("background-color", "#e4e6ef");
       $(".report-color").css("color", "#6759ff");
+      $(".Reports").css("background-color", "#ffffff");
+      $(".reports-color").css("color", "#000");
       $(".New-Work-Order").css("background-color", "#ffffff");
       $(".order-color").css("color", "#000");
       $(".Setting").css("background-color", "#ffffff");
@@ -3755,14 +4061,14 @@ text-align: center;><div class="images-div"></div>
         $('#example').DataTable({
             retrieve:true,
             destroy:true,
-            
+
             ajax: '{!! route('report') !!}',
             columns: [
                 { data: 'id', name: 'id',
                   render: function (data, type, row, meta) {
         return meta.row + meta.settings._iDisplayStart + 1;
     } },
-                
+
                 { data: 'order_id', name: 'order_id' },
                 { data: 'product_name', name: 'product_name' },
                 { data: 'date', name: 'date' },
@@ -3774,7 +4080,7 @@ text-align: center;><div class="images-div"></div>
 
 
                  ],
-                 
+
                  aaSorting: [[0, 'desc']],
                  dom: 'Bfrtip',
                 buttons: [{
@@ -3821,7 +4127,7 @@ text-align: center;><div class="images-div"></div>
       $(".setting-color").css("color", "#000");
       // $(".Setting").css("background-color", "#e4e6ef");
       $(".Proposal").css("background-color", "#e4e6ef");
-    
+
       $(".Proposal-color").css("color", "#6759ff");
       $("#main-tab").show();
       $("#show-notification").hide();
@@ -3839,6 +4145,8 @@ text-align: center;><div class="images-div"></div>
     $("#profile").click(function() {
       $(".proposal-card-div").css("display", "none");
       $(".Setting").css("background-color", "#e4e6ef");
+      $(".Reports").css("background-color", "#ffffff");
+      $(".reports-color").css("color", "#000");
       $(".Proposal").css("background-color", "#ffffff");
       $(".New-Work-Order").css("background-color", "#ffffff");
       $(".oreder-color").css("color", "#000");
@@ -4156,15 +4464,15 @@ text-align: center;><div class="images-div"></div>
            ${img2}
            <div class="ml-4">
             <div class="btnPanel"><span class="badge badge-secondary priceBdge">  Price: ${r.order_amount}</span>
-             <span class="badge badge-primary" id="WFID9701S">${r.order_status}</span>  
+             <span class="badge badge-primary" id="WFID9701S">${r.order_status}</span>
               <a href="#" class="badge badge-primary text-center" onclick="invoice(this.id)" id="${r.order_id}">Generate Invoice</a></div>
              <p>  ${r.description} </p> </div>
          </div>
-         
-          
-            
-         
-            
+
+
+
+
+
         </div>
   </div>
 </div>
@@ -4255,14 +4563,14 @@ text-align: center;><div class="images-div"></div>
       <div class="card-body">
         <h5  class="card-title">${r.product_name}</h5>
         <h6 class="card-title">${r.order_id}</h6>
-     
+
         <hr>
-         
+
          <div class="metaInfo">
          <h5 style="font-size: 20px;" class="card-title">${r.vendor_name}  <small class="text-muted">(${date}${time})</small> <a href="#" class="badge badge-primary float-right" style="font-size:12px"><i class="fa fa-phone-alt" aria-hidden="true"></i> Call</a></h5>
             <span class="badge badge-secondary priceBdge"> Price: ${r.order_amount} </span>
             <a href="#"  class="badge badge-primary">${r.order_status}</a>
-            
+
         </div>
 
         <div class="comment">
@@ -4276,7 +4584,7 @@ text-align: center;><div class="images-div"></div>
   </div>
 
 
-            
+
     `;
 
               document.getElementById("Proposal-card").innerHTML = tab;
@@ -4310,7 +4618,7 @@ text-align: center;><div class="images-div"></div>
       // var files = $('#upload')[0].files[0];
 
       formData.append('id', id);
-     
+
       formData.append('first_name', first_name);
       formData.append('last_name', last_name);
       formData.append('address', 'indore');
@@ -4346,7 +4654,7 @@ text-align: center;><div class="images-div"></div>
             loader: true, // Change it to false to disable loader
             loaderBg: '#9EC600' // To change the background
           });
-          
+
           $("#edit-profile-details").show();
         } else {
 
@@ -4437,7 +4745,7 @@ function show(data) {
 
       //   link =`<a href="#" style="text-decoration: none;"><img src="${img}" alt="" width="150px" height="150px" id="${r.id}">`;
       //  }
-       
+
 
             tab += `<div class="proposal-hover workorder"> <a href="../product-details?id=${r.id}" style="text-decoration: none;"><div class="Proposal-card-01">
 
@@ -4450,12 +4758,12 @@ function show(data) {
 -webkit-box-orient: vertical;">${r.product_description}</li>
 
             </ul>
-           
+
             </div>
             </a>
             </div>
-       
-            
+
+
           `;
 
 
@@ -4473,7 +4781,7 @@ function show(data) {
 
     /*----------Work Order----------*/
     $("#NewWorkorder").click(function(){
-      
+
       $("#history").removeClass("main-Button-1");
       $("#all-orders").removeClass("main-Button-1");
       $("#all-orders").addClass("main-Button-2");
@@ -4485,9 +4793,11 @@ function show(data) {
       $("#confirm").removeClass("main-Button-1");
       $("#Workorder").removeClass("main-Button-3");
       $("#Workorder").addClass("main-Button-1");
-    
+
       $(".New-Work-Order").css("background-color", "#e4e6ef");
       $(".order-color").css("color", "#6759ff");
+      $(".Reports").css("background-color", "#ffffff");
+      $(".reports-color").css("color", "#000");
       $(".Proposal").css("background-color", "#ffffff");
       $(".Proposal-color").css("color", "#000");
       $(".Setting").css("background-color", "#ffffff");
@@ -4546,7 +4856,7 @@ function show(data) {
 
       //   link =`<a href="#" style="text-decoration: none;"><img src="${img}" alt="" width="150px" height="150px" id="${r.id}">`;
       //  }
-       
+
 
             tab += `<div class="proposal-hover workorder"> <a href="../product-details?id=${r.id}" style="text-decoration: none;"><div class="Proposal-card-01">
 
@@ -4559,12 +4869,12 @@ function show(data) {
 -webkit-box-orient: vertical;">${r.product_description}</li>
 
             </ul>
-           
+
             </div>
             </a>
             </div>
-       
-            
+
+
           `;
 
 
@@ -4594,7 +4904,7 @@ function show(data) {
 
   });
 
-  
+
 
   function accept(orderId) {
 
@@ -4714,7 +5024,7 @@ function show(data) {
 
 
             }
-/*-----------Get Count Data-----------*/ 
+/*-----------Get Count Data-----------*/
 function getcountdata()
 {
   let counturl =
@@ -4729,11 +5039,11 @@ async function getcount(counturl) {
   // Storing data in form of JSON
   var data = await response.json();
   console.log(data);
-  
+
   showcount(data);
 }
 // Calling that async function
-getcount(counturl); 
+getcount(counturl);
 function showcount(data) {
 
 let tab = '';
@@ -4748,14 +5058,14 @@ if (data.status == 'true') {
   $("#confirmed-count").text(data.data.confirmed);
   $("#history-count").text(data.data.history);
   $("#work-count").text(data.data.work_order);
- 
+
 } else {
   alert("failed")
   $("#show-report").show();
-  
+
 }
 }
-}  
+}
 /*---End Count Data----*/
  let counturl =
   '{!! route("get.count")!!}';
@@ -4769,11 +5079,11 @@ async function getcount(counturl) {
   // Storing data in form of JSON
   var data = await response.json();
   console.log(data);
-  
+
   showcount(data);
 }
 // Calling that async function
-getcount(counturl); 
+getcount(counturl);
 function showcount(data) {
 
 let tab = '';
@@ -4788,11 +5098,11 @@ if (data.status == 'true') {
   $("#confirmed-count").text(data.data.confirmed);
   $("#history-count").text(data.data.history);
   $("#work-count").text(data.data.work_order);
- 
+
 } else {
   alert("failed")
   $("#show-report").show();
-  
+
 }
 }
  /*--------Reject Order Api Integration End-----------*/
@@ -4873,7 +5183,7 @@ if (data.status == 'true') {
       <div class="card-body">
         <h5 class="card-title">${r.product_name}</h5>
         <h6 class="card-title">${r.order_id}</h6>
-       
+
 
         <hr></hr>
 
@@ -4883,7 +5193,7 @@ if (data.status == 'true') {
   </div>
   <div class="row g-0">
     <div class="col-md-2">
-     
+
     </div>
     <div class="col-md-6">
       <div class="card-body">
@@ -4928,10 +5238,10 @@ if (data.status == 'true') {
 
         }
       } else{
-        
+
         const api_url = appUrl + "/owner/get_Proposal?order_status=pending &owner_id=" + id;
         let limit = $("#approval_limit").val();
-       
+
         // Defining async function
         async function getapi(url) {
 
@@ -4957,7 +5267,7 @@ if (data.status == 'true') {
 
           let tab = '';
           let tab1 = '';
-         
+
           let tab3 = '';
           let date = '';
           let reject = '';
@@ -5007,7 +5317,7 @@ if (data.status == 'true') {
       <div class="card-body">
         <h5 style="font-size: 22px; class="card-title">${r.product_name}</h5>
         <h6 style="font-size: 14px; font-weight: 400;" class="card-title">${r.order_id}</h6>
-       
+
         <hr></hr>
 
 
@@ -5016,7 +5326,7 @@ if (data.status == 'true') {
   </div>
   <div style="margin-top: -10px;" class="row g-0">
     <div style="margin-top: -20px; margin-left: 226px;" class="col-md-2">
-    
+
     </div>
     <div class="col-md-8">
       <div style="margin-top: -57px; margin-left: 320px;" class="card-body">
@@ -5063,19 +5373,19 @@ if (data.status == 'true') {
         }
       }
       }
-     
+
   function invoice(id)
  {
   $('#order_id').val(id);
 
-  
+
   var assetUrl = "{{env('ASSET_URL')}}";
       var purl = "{{env('PROFILE_URL')}}";
-      var appUrl = "{{env('APP_URL')}}";       
+      var appUrl = "{{env('APP_URL')}}";
             $.ajax({
                 type: "GET",
                 url: '{!! route("get.single.order")!!}?id=' + id,
-               
+
                 success: function(data) {
                     console.log(data);
                      $('#owner-name').val(data.data.owner_name);
@@ -5091,19 +5401,20 @@ if (data.status == 'true') {
       // Loop to access all rows
 //       if (data.status == 'true') {
 // alert("sdfs")
- 
+
 //                 }
     }
   });
 }
- 
+
  $(function () {
-  
+
        $('#submit').click(function() {
+       
    var uid = $("#ownerid").val();
        var assetUrl = "{{env('ASSET_URL')}}";
       var purl = "{{env('PROFILE_URL')}}";
-      var appUrl = "{{env('APP_URL')}}";       
+      var appUrl = "{{env('APP_URL')}}";
             $.ajax({
                 type: "POST",
                 url: '{!! route("invoice.generate")!!}',
@@ -5111,7 +5422,7 @@ if (data.status == 'true') {
                 success: function(data) {
                     console.log(data);
                     $('#exampleModal').modal('hide');
-                   
+
                       let tab = '';
       let count = 0;
       // Loop to access all rows
@@ -5125,7 +5436,15 @@ if (data.status == 'true') {
             let name = uid == 4?data.data.vname:data.data.owner_name;
             let phone = uid == 4?data.data.vendor_phone:data.data.phone;
             let address = uid == 4?data.data.vendor_street_address:data.data.street_address;
-
+            let qty = '';
+            let price = '';
+            let total = '';
+            alert((data.data.qty).length)
+            for (let i = 0; i < (data.data.qty).length; i++) {
+   qty += `<tr><td scope="row">${i+1}</td>
+                <td><img src="${pimg}" height="50" width="50" alt="" class="img-thumbnail hover-zoom"></td><td>${data.data.title[i]}</td><td></td><td>${data.data.qty[i]}</td><td>${data.data.price[i]}</td><td>${data.data.total[i]}</td><tr>`;
+}
+            
            tab =`
       <div class="row d-flex align-items-baseline">
         <div class="col-xl-8">
@@ -5189,15 +5508,8 @@ if (data.status == 'true') {
               </tr>
             </thead>
             <tbody>
-              <tr>
-                <td scope="row">1</td>
-                <td><img src="${pimg}" height="50" width="50" alt="" class="img-thumbnail hover-zoom"></td>
-                <td>${data.data.product_name}</td>
-                <td>${data.data.invoice_notes}</td>
-                <td>${data.data.qty}</td>
-                <td>$${data.data.price}</td>
-                <td>$${data.data.total}</td>
-              </tr>
+            ${qty}
+             
 
             </tbody>
 
@@ -5229,7 +5541,7 @@ if (data.status == 'true') {
             <p>Thank you for your Maintenance</p>
           </div>
           <div class="col-xl-2">
-            
+
           </div>
         </div>
 
@@ -5255,7 +5567,7 @@ if (data.status == 'true') {
         });
      });
      function myfunction1() {
-  
+
   var doc = new jsPDF();
   var specialElementHandlers = {
     '#editor': function (element, renderer) {
@@ -5353,7 +5665,7 @@ if (data.status == 'true') {
   //   card.classList.toggle("hidden");
   //   // card2.classList.add("hidden");
   // });
- 
+
 
 
 
@@ -5366,7 +5678,7 @@ function calc()
       var qty = $(this).find('.qty').val();
       var price = $(this).find('.price').val();
       $(this).find('.total').val(qty*price);
-      
+
       calc_total();
     }
     });
@@ -5397,11 +5709,11 @@ function calc_total()
 //   if (event.target.tagName === 'BUTTON') {
 //     let activeButton = header.querySelector('.boxActive [data-active="active"]');
 //     const currentState = event.target.dataset.active;
-    
+
 //     if (activeButton && activeButton !== event.target ) {
 //       activeButton.dataset.active = null;
 //     }
-    
+
 //     event.target.dataset.active = currentState === 'active' ? null : 'active';
 //   }
 // });
@@ -5410,9 +5722,9 @@ function addPlan()
   $("#addPlanModal").modal('show')
 }
 function CreatePlan()
-{ 
+{
  let id = $("#plan-id").val();
- 
+
  if(id != '')
  {
   $.ajax({
@@ -5430,19 +5742,19 @@ function CreatePlan()
                  $('#plan-description').val('');
                     $('#addPlanModal').modal('hide');
                     // getPlan()
-                  
-                  
+
+
                     Swal.fire({
                       title: 'Added',
                       heading: 'success',
                       text: 'Plan has been updated successfully',
                       icon: 'success',
                       position:"top-center",
-                      timer: 3000,  
+                      timer: 3000,
                       offset: 40,
                       loader: true,        // Change it to false to disable loader
                       loaderBg: '#9EC600'
-                 
+
               });
                     getCardPlan()
                     getPlan()
@@ -5453,14 +5765,14 @@ function CreatePlan()
                   text: data.message,
                   icon: 'warning',
                   offset: 50,
-                  loader: true, 
+                  loader: true,
                   timer: 5000,       // Change it to false to disable loader
                   loaderBg: '#9EC600'
                   });
                 }
               }
               });
-                 
+
  }else{
    $("#pname").css('display', 'none')
    $("#pstart").css('display', 'none')
@@ -5483,25 +5795,25 @@ function CreatePlan()
                     $('#addPlanModal').modal('hide');
                     getPlan()
                     getCardPlan()
-                  
+
                     Swal.fire({
                       title: 'Added',
                       heading: 'success',
                       text: 'Plan has been added successfully',
                       icon: 'success',
                       position:"top-center",
-                      timer: 3000,  
+                      timer: 3000,
                       offset: 40,
                       loader: true,        // Change it to false to disable loader
                       loaderBg: '#9EC600'
-                 
+
               });
                     // getPlan()
                 }else{
               $.each(data.data, function (i) {
     $.each(data.data[i], function (key, val) {
       if(i == 'name')
-{ 
+{
    $("#pname").css('display', 'block')
     $("#pname").css('color', 'red')
     $("#pname").text(val)
@@ -5518,19 +5830,19 @@ function CreatePlan()
     $("#pend").css('color', 'red')
     $("#pend").text(val)
 }
-      
-   
-                 
+
+
+
     });
 });
                 }
                   }
                   });
  }
-  
-     
-           
-            
+
+
+
+
 }
 function getPlan()
 {
@@ -5538,23 +5850,23 @@ function getPlan()
     var table = $('#maintenance-table').DataTable({
             retrieve:true,
             destroy:true,
-            
+
             ajax: '{!! route('get.plan') !!}',
             columns: [
                 { data: 'id', name: 'id' },
-                
+
                 { data: 'name', name: 'name' },
-              
+
                 { data: 'start_date', name: 'start_date' },
                 { data: 'end_date', name: 'end_date' },
                 { data: 'price', name: 'price' },
                 { data: 'description', name: 'description' },
                 { data: 'action', name: 'action' },
                 ],
-                
-               
-             });  
-              table.ajax.reload();    
+
+
+             });
+              table.ajax.reload();
 }
 
 function editPlan(id)
@@ -5572,7 +5884,7 @@ function editPlan(id)
           // Storing data in form of JSON
           var data = await response.json();
           console.log(data);
-         
+
           show(data);
         }
         // Calling that async function
@@ -5585,17 +5897,17 @@ function editPlan(id)
             count = count+1;
              tab += `<tr id="addrr${counts}"><td>${count}</td><td> Features: <input type="text" class="form-control" id="plan-freaturs"name="features[]" value="${r}"><td></tr>`;
              counts = counts+1;
-          
+
         }
          document.getElementById("tab_logics").innerHTML = tab;
-       
+
                  $('#plan-name').val(data.data.name);
                  $('#plan-start').val(data.data.start_date);
                  $('#plan-end').val(data.data.end_date);
                  $('#plan-price').val(data.data.price);
                  $('#plan-description').val(data.data.description);
                  $('#addPlanModal').modal('show');
-          
+
           }
 }
 function getCardPlan()
@@ -5618,7 +5930,7 @@ function getCardPlan()
       function show(data) {
 console.log(data)
         let tab = '';
-       
+
         let count = 0;
         // Loop to access all rows
         if (data.status == 'true') {
@@ -5634,9 +5946,9 @@ console.log(data)
              }else{
               feature = `<li>25GB Storage</li> <li>25 Emails</li><li>25 Domains</li><li>2GB Bandwidth</li>`;
              }
-       
 
-           
+
+
 
             tab += ` <div class="columns">
                 <ul class="prices">
@@ -5647,9 +5959,9 @@ console.log(data)
                 </ul>
               </div>`;
             document.getElementById("get-plan-card").innerHTML = tab;
-          
 
-        } 
+
+        }
       }else {
           console.log(data.message);
           tab += `  <div class="columns">
@@ -5670,25 +5982,25 @@ console.log(data)
 
 function getfulldetails(id)
 {
- 
+
 $("#exampleModalPopups").modal('show');
  var assetUrl = "{{env('ASSET_URL')}}images/products/";
       var purl = "{{env('PROFILE_URL')}}";
-      var appUrl = "{{env('APP_URL')}}";  
-      var placeholder ="{{env('BASE_URL')}}";;     
+      var appUrl = "{{env('APP_URL')}}";
+      var placeholder ="{{env('BASE_URL')}}";;
             $.ajax({
                 type: "GET",
                 url: '{!! route("get.single.order")!!}?id=' + id,
-               
+
                 success: function(data) {
                     console.log(data);
-                    
+
                       let tab = '';
                       let tab1 = '';
                       let count = 0;
-      
+
       if (data.status == 'true') {
-        var orderUrl = "{{env('APP_URL')}}/uploads/pictures/"; 
+        var orderUrl = "{{env('APP_URL')}}/uploads/pictures/";
             let img1 = '';
             let img3 = '';
             let inv = '';
@@ -5698,7 +6010,7 @@ $("#exampleModalPopups").modal('show');
               var y = new Array();
              if((data.data.order_images).length>0){
                 x = data.data.order_images
-                
+
              }else{
               img1 = `<img src="${placeholder + '/public/product-dummy.png'}" height="100" width="100" alt=""  style="height: 100px !important;">`;
              }
@@ -5717,12 +6029,12 @@ $("#exampleModalPopups").modal('show');
           img3 += `<img src="${orderUrl + i.vendor_images}" height="100" width="100" class="rounded" alt="Cinque Terre" style="padding: 2px; border: 2px solid #f4f3fa;">&nbsp;&nbsp;`;
 
         }
-      
+
               if(data.data.is_generated === 0 && data.data.order_status === 'Confirmed')
               {
                 inv = `<div class="ml-4">
             <div class="btnPanel" style="float: right;"><span class="badge badge-secondary priceBdge">  Price: ${data.data.order_amount}</span>
-             <span class="badge badge-primary" id="WFID9701S">${data.data.order_status}</span>  
+             <span class="badge badge-primary" id="WFID9701S">${data.data.order_status}</span>
               <a href="#" class="badge badge-primary text-center" onclick="invoice(this.id)" id="${data.data.order_id}">Generate Invoice</a></div>
             </div>
          </div>`;
@@ -5757,7 +6069,7 @@ $("#exampleModalPopups").modal('show');
     </div>
     <div class="col-md-9">
       <div class="card-body">
-       
+
         <div class="row g-0">
         <div class="col-sm-9">
          <h2 class="card-title">
@@ -5768,10 +6080,10 @@ $("#exampleModalPopups").modal('show');
          ${data.data.qrcode}
         </div>
         </div>
-         
+
         <h5  class="card-title">Model: ${data.data.model_number} Brand: ${data.data.brand}</h5>
         <h4 style="font-size: 20px; color: #453d3d;" class="card-title"> Title: ${data.data.title} </div></h4>
-       
+
         <div class="metaInfo dmetaInfo">
          <h4 style="font-size: 20px;color: #453d3d;" class="card-title">Order Details</h4>
          <hr>
@@ -5782,18 +6094,18 @@ $("#exampleModalPopups").modal('show');
   </div>  </div>
   <div class="row g-0">
   <div class="ml-8">
-       
+
         </div>
   ${inv}
-        
+
         </div>
- 
+
 </div>`;
  document.getElementById("getPopupDetails").innerHTML = tab;
             }else{
                 tab = ` <div class="vendor-name-history"><div class="images-div"></div>
 
-<p><img src="${asset}nodata.png" alt="" width="200" class="rounded-circle" id="">${data.message}
+<p><img src="${assetUrl}nodata.png" alt="" width="200" class="rounded-circle" id="">${data.message}
 </p>
 </div>`;
           document.getElementById("getPopupDetails").innerHTML = tab;
@@ -5802,7 +6114,7 @@ $("#exampleModalPopups").modal('show');
           }
         });
 }
-   
+
 
 </script>
 

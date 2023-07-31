@@ -120,9 +120,12 @@
 								</td>
                            
 									<td colspan="5">
-										WeFix Pvt Ltd,<br />
-									in Canada Postal Code:02541<br />
-									<i class="fa fa-phone-alt" style="color:black;"></i>{{$viewReport->phone}}
+										{{$viewReport->shop_name}},<br />
+										{{$viewReport->shop_add}}<br/>
+									in {{$viewReport->shop_city}} Postal Code:{{$viewReport->postal_code}}<br />
+									<i class="fa fa-phone-alt" style="color:black;"></i>{{$viewReport->phone}}<br/>
+									<b>Store Number</b>: {{$viewReport->store_number}}
+									
 								</td>
 							</tr>
 						</table>
@@ -134,15 +137,17 @@
 					<td colspan="2">
 						<table>
 							<tr class="item">
-								<td>
-									{{$viewReport->owner_name}},<br />
-									{{$viewReport->address}} MP, India<br />
-									<i class="fa fa-phone-alt" style="color:black;"></i>{{$viewReport->phone}}
+								<td class="">
+									{{$viewReport->company}},<br />
+									{{$viewReport->vendor_street_address}}, {{$viewReport->city}}, {{$viewReport->vendor_country}}<br />
+									<i class="fa fa-phone-alt" style="color:black;"></i>{{$viewReport->vendor_phone}}
+									<br/>
+									<b>Gst Number</b>:{{$viewReport->gst_number}}
 								</td>
 
 								<td>
 									<b>Invoice #: </b>{{$viewReport->order_id}}<br />
-									<b> Created:</b>   {{$viewReport->data}} {{$viewReport->time}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br />
+									<b> Created:</b>   {{$viewReport->date}} {{$viewReport->time}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br />
 									<b> Status:</b>    {{$viewReport->payment_status}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 								</td>
 							</tr>
